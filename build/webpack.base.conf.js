@@ -18,7 +18,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.vue'],
     alias: {
-      'src': path.resolve(__dirname, '../src'),
+      'src': path.resolve(__dirname, '../src')
     }
   },
   resolveLoader: {
@@ -26,7 +26,7 @@ module.exports = {
   },
   module: {
     preLoaders: [
-/*      {
+      {
         test: /\.vue$/,
         loader: 'eslint',
         exclude: /node_modules/
@@ -35,7 +35,7 @@ module.exports = {
         test: /\.js$/,
         loader: 'eslint',
         exclude: /node_modules/
-      }*/
+      }
     ],
     loaders: [
       {
@@ -45,6 +45,10 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue'
+      },
+      {
+        test: /\.coffee$/,
+        loader: 'coffee'
       },
       {
         test: /\.js$/,
@@ -77,7 +81,9 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
-      "window.jQuery": "jquery"
+      "window.jQuery": "jquery",
+      "window._": "underscore",
+      "_": "underscore"
     })
   ],
   postcss: function () {

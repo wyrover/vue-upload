@@ -5,7 +5,6 @@ import Messages from './vue/Messages'
 import App from './App'
 
 // import Taxonomies from './components/Taxonomies/Taxonomies.vue'
-// import Progress from './components/Progress.vue'
 // import Pages from './components/Pages.vue'
 // import Content from './components/Content.vue'
 // import Mixins from './vue/Mixins.js'
@@ -14,10 +13,9 @@ import App from './App'
 new Vue({
   el: 'body',
   components: {
-    App,
+    App
     // Root child components
     // 'taxonomies': Taxonomies,
-    // 'progress': Progress,
     // Root child pages
     // 'pages': Pages,
     // 'content': Content
@@ -72,59 +70,61 @@ new Vue({
     },
     routes: Routes,
     messages: Messages,
-    countries:  [],
-    pages:      [],
-    content:    [],
-    layouts:    [],
-    views:      [],
+    countries: [],
+    pages: [],
+    content: [],
+    layouts: [],
+    views: [],
     references: [],
-    resources:  [],
+    resources: [],
     view: 'pages',
-    revealTaxonomies: false,
-    messenger: {
-      content: {},
-      type: {},
-      theme: {},
-      extraClasses: {},
-      showCloseButton: {}
-    },
-    ajaxProgress: {
-      percent: 0,
-      options: {
-        show: true,
-        canSuccess: true,
-        color: 'rgb(145, 255, 0)',
-        failedColor: 'red',
-        height: '3px'
-      }
-    }
+    revealTaxonomies: false
   },
   created () {
-      Vue.config.debug = true
-      this.fetch()
+    Vue.config.debug = true
+    this.fetch()
+
+    this.$progress.setHolder(this.ajaxProgress)
+
+    // Interceptors (middleware)
+    Vue.http.interceptors.push({
+      request: function (request) {
+        self.$broadcast('progress-start')
+        return request
+      },
+      response (response) {
+        if (response.ok) {
+          self.$broadcast('progress-stop')
+        } else {
+          self.$broadcast('progress-fail')
+        }
+        return response
+      }
+    })
   },
   events: {
     'messenger-notify' (message) {
-      console.log('bleep');
-      this.$broadcast('messenger-notify', message);
+      this.$broadcast('messenger-notify', message)
     },
     'messenger-options' (options) {
-      this.$broadcast('messenger-options', options);
+      this.$broadcast('messenger-options', options)
     },
     'close-modal' () {
-      this.$broadcast('close-modal');
+      this.$broadcast('close-modal')
     },
     'fetch' () {
       this.fetch()
     },
     'progress-start' () {
-      this.$progress.start();
+      console.log('start')
+      this.$progress.start()
     },
     'progress-stop' () {
-      this.$progress.finish();
+      console.log('stop')
+      this.$progress.finish()
     },
     'progress-fail' () {
-      this.$progress.failed();
+      this.$progress.failed()
     }
   },
   methods: {
@@ -157,7 +157,7 @@ new Vue({
       Common.fetch.layouts(this.routes.layoutsList).then(
         function (response) {
           self.$set('layouts', response.data)
-          // self.$emit('messenger-notify', { content: Messages.fetch.success('layouts'), type: 'success' })
+          self.$emit('messenger-notify', { content: Messages.fetch.success('layouts'), type: 'success' })
         },
         function () {
           self.$emit('messenger-notify', { content: Messages.fetch.failure('layouts'), type: 'error' })
@@ -170,7 +170,7 @@ new Vue({
       Common.fetch.pages(this.routes.allPages).then(
         function (response) {
           self.$set('pages', response.data)
-          // self.$emit('messenger-notify', { content: Messages.fetch.success('pages'), type: 'success' })
+          self.$emit('messenger-notify', { content: Messages.fetch.success('pages'), type: 'success' })
         },
         function () {
           self.$emit('messenger-notify', { content: Messages.fetch.failure('pages'), type: 'error' })
@@ -185,7 +185,7 @@ new Vue({
           self.$set('content', response.data)
           // Add old_slug for comparison when updating
           self.content.map(function (content) { content.old_slug = content.slug })
-          // self.$emit('messenger-notify', { content: Messages.fetch.success('content'), type: 'success' })
+          self.$emit('messenger-notify', { content: Messages.fetch.success('content'), type: 'success' })
         },
         function () {
           self.$emit('messenger-notify', { content: Messages.fetch.failure('content'), type: 'error' })
@@ -198,7 +198,7 @@ new Vue({
       Common.fetch.countries(this.routes.allCountries).then(
         function (response) {
           self.$set('countries', response.data)
-          // self.$emit('messenger-notify', { countries: Messages.fetch.success('countries'), type: 'success' })
+          self.$emit('messenger-notify', { countries: Messages.fetch.success('countries'), type: 'success' })
         },
         function () {
           self.$emit('messenger-notify', { countries: Messages.fetch.failure('countries'), type: 'error' })
@@ -211,7 +211,7 @@ new Vue({
       Common.fetch.references(this.routes.allReferences).then(
         function (response) {
           self.$set('references', response.data)
-          // self.$emit('messenger-notify', { references: Messages.fetch.success('references'), type: 'success' })
+          self.$emit('messenger-notify', { references: Messages.fetch.success('references'), type: 'success' })
         },
         function () {
           self.$emit('messenger-notify', { references: Messages.fetch.failure('references'), type: 'error' })
@@ -224,7 +224,7 @@ new Vue({
       Common.fetch.resources(this.routes.allResources).then(
         function (response) {
           self.$set('resources', response.data)
-          // self.$emit('messenger-notify', { resources: Messages.fetch.success('resources'), type: 'success' })
+          self.$emit('messenger-notify', { resources: Messages.fetch.success('resources'), type: 'success' })
         },
         function () {
           self.$emit('messenger-notify', { resources: Messages.fetch.failure('resources'), type: 'error' })

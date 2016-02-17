@@ -1,5 +1,9 @@
 <template>
   <div>
+    <!--vue-progress-->
+    <progress :percent="ajaxProgress.percent"
+              :options="ajaxProgress.options">
+    </progress>
     <!--Messenger-->
     <messenger :content="messenger.content"
                :type="messenger.type"
@@ -7,7 +11,7 @@
                :extra-classes="messenger.extraClasses"
                :show-close-button="messenger.showCloseButton">
     </messenger>
-
+    <!--dynamic component-->
     <component
       @keyup.esc="this.$broadcast('close-modal')"
       :is="view"
@@ -29,15 +33,37 @@
 import Hello from './components/Hello'
 import CodeMirror from './components/CodeMirror'
 import Messenger from './components/Messenger'
+import Progress from './components/Progress.vue'
 
 export default {
   components: {
     Hello,
     'codemirror': CodeMirror,
-    'messenger': Messenger
+    'messenger': Messenger,
+    'progress': Progress
+  },
+  data () {
+    return {
+      messenger: {
+        content: {},
+        type: {},
+        theme: {},
+        extraClasses: {},
+        showCloseButton: {}
+      },
+      ajaxProgress: {
+        percent: 0,
+        options: {
+          show: true,
+          canSuccess: true,
+          color: 'rgb(145, 255, 0)',
+          failedColor: 'red',
+          height: '3px'
+        }
+      }
+    }
   },
   props: {
-
   }
 }
 </script>
