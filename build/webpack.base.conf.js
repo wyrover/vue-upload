@@ -1,3 +1,4 @@
+var webpack = require('webpack')
 var path    = require('path')
 var autoprefixer = require('autoprefixer');
 var precss = require('precss');
@@ -17,7 +18,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.vue'],
     alias: {
-      'src': path.resolve(__dirname, '../src')
+      'src': path.resolve(__dirname, '../src'),
     }
   },
   resolveLoader: {
@@ -25,7 +26,7 @@ module.exports = {
   },
   module: {
     preLoaders: [
-      {
+/*      {
         test: /\.vue$/,
         loader: 'eslint',
         exclude: /node_modules/
@@ -34,7 +35,7 @@ module.exports = {
         test: /\.js$/,
         loader: 'eslint',
         exclude: /node_modules/
-      }
+      }*/
     ],
     loaders: [
       {
@@ -66,12 +67,18 @@ module.exports = {
   },
   vue: {
     loaders: {
+
       css:  ExtractTextPlugin.extract("css"),
       less: ExtractTextPlugin.extract("css!less")
     }
   },
   plugins: [
-    new ExtractTextPlugin("style.css")
+    new ExtractTextPlugin("style.css"),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      "window.jQuery": "jquery"
+    })
   ],
   postcss: function () {
     return [autoprefixer, precss];
