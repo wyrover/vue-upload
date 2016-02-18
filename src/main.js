@@ -87,12 +87,12 @@ new Vue({
   },
   ready () {
     var self = this
-    this.fetch()
-    this.$progress.setHolder(this.ajaxProgress)
 
+    this.fetch()
     // Interceptors (middleware)
     Vue.http.interceptors.push({
       request: function (request) {
+        console.log('req')
         self.$broadcast('progress-start')
         return request
       },
@@ -102,6 +102,8 @@ new Vue({
         } else {
           self.$broadcast('progress-fail')
         }
+        console.log('res')
+
         return response
       }
     })
