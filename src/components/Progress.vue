@@ -33,6 +33,19 @@
           }
         }
       }
+    },
+    events: {
+      'progress-start' () {
+        console.log('start')
+        Progress.start()
+      },
+      'progress-stop' () {
+        console.log('stop')
+        Progress.finish()
+      },
+      'progress-fail' () {
+        Progress.failed()
+      }
     }
   }
 </script>

@@ -1,4 +1,4 @@
-var Vue = require('vue');
+var Vue = require('vue')
 
 // Debugging
-Vue.config.debug = true;
+Vue.config.debug = true
