@@ -2,6 +2,10 @@ import Vue from 'vue'
 import Routes from './routes'
 import Common from './vue/Common'
 import Messages from './vue/Messages'
+import './vue/Config.js'
+import './vue/Filters.js'
+import './vue/Transitions.js'
+import './vue/Resources.js'
 import App from './App'
 
 // import Taxonomies from './components/Taxonomies/Taxonomies.vue'
@@ -14,6 +18,7 @@ new Vue({
   el: 'body',
   components: {
     App
+
     // Root child components
     // 'taxonomies': Taxonomies,
     // Root child pages
@@ -80,10 +85,9 @@ new Vue({
     view: 'pages',
     revealTaxonomies: false
   },
-  created () {
-    Vue.config.debug = true
+  ready () {
+    var self = this
     this.fetch()
-
     this.$progress.setHolder(this.ajaxProgress)
 
     // Interceptors (middleware)
@@ -114,17 +118,6 @@ new Vue({
     },
     'fetch' () {
       this.fetch()
-    },
-    'progress-start' () {
-      console.log('start')
-      this.$progress.start()
-    },
-    'progress-stop' () {
-      console.log('stop')
-      this.$progress.finish()
-    },
-    'progress-fail' () {
-      this.$progress.failed()
     }
   },
   methods: {

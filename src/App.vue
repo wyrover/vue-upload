@@ -1,9 +1,11 @@
 <template>
   <div>
+
     <!--vue-progress-->
     <progress :percent="ajaxProgress.percent"
               :options="ajaxProgress.options">
     </progress>
+
     <!--Messenger-->
     <messenger :content="messenger.content"
                :type="messenger.type"
@@ -11,6 +13,7 @@
                :extra-classes="messenger.extraClasses"
                :show-close-button="messenger.showCloseButton">
     </messenger>
+
     <!--dynamic component-->
     <component
       @keyup.esc="this.$broadcast('close-modal')"
