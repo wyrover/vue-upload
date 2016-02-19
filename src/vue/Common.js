@@ -1,16 +1,53 @@
-import Ajax from './Resources'
+var Vue = require('vue')
+Vue.use(require('vue-resource')) // https://github.com/vuejs/vue-resource
+
+// Config
+Vue.http.options.root = '/'
+// Legacy servers config
+Vue.http.options.emulateJSON = false
+Vue.http.options.emulateHTTP = false
+// Common, global HTTP headers
+// Vue.http.headers.common['Authorization'] = 'Basic YXBpOnBhc3N3b3Jk'
+Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
+// Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#csrf_token').getAttribute('value')
+
+// Interceptors (middleware)
+Vue.http.interceptors.push({
+  request (request) {
+    // self.$broadcast('progress-start')
+    return request
+  },
+  response (response) {
+    if (response.ok) {
+      // self.$broadcast('progress-stop')
+    } else {
+      // self.$broadcast('progress-fail')
+    }
+    return response
+  }
+})
+
+// Init
+// var resource = Vue.resource
+var http = Vue.http
 
 export default {
-  fetch: {
-    views (route) { return Ajax.get(route) },
-    layouts (route) { return Ajax.get(route) },
-    pages (route) { return Ajax.get(route) },
-    content (route) { return Ajax.get(route) },
-    countries (route) { return Ajax.get(route) },
-    references (route) { return Ajax.get(route) },
-    resources (route) { return Ajax.get(route) }
+  fetch (url, data, options) {
+    return http.get(url, data, options)
   },
-  put: {
-    reference (route) { return Ajax.put(route) }
+  post (url, data, options) {
+    return http.post(url, data, options)
+  },
+  put (url, data, options) {
+    return http.put(url, data, options)
+  },
+  patch (url, data, options) {
+    return http.patch(url, data, options)
+  },
+  destroy (url, data, options) {
+    return http.delete(url, data, options)
+  },
+  jsonp (url, data, options) {
+    return http.jsonp(url, data, options)
   }
 }

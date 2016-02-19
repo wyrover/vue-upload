@@ -1,24 +1,23 @@
 <script>
+  var Split = require('split.js')
 
-    var Split = require('split.js');
-
-    export default {
-        data: function() {
-            return {
-                code: 'var foo = "bar";'
-            }
-        },
-        props: ['elements','direction'],
-        ready: function(){
-            Split(['#one', '#two'], {
-                sizes: [50, 50],
-                minSize: 200
-            });
-        },
-        methods: {
-            init: function(){}
-        }
+  export default {
+    data () {
+      return {
+        code: 'var foo = "bar";'
+      }
+    },
+    props: ['elements', 'direction'],
+    ready () {
+      Split(['#one', '#two'], {
+        sizes: [50, 50],
+        minSize: 200
+      })
+    },
+    methods: {
+      init () {}
     }
+  }
 </script>
 
 <style scoped>
