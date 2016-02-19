@@ -21,7 +21,7 @@
             </li>
         </ul>
         <!-- Tab panes -->
-        <div class="tab-content" v-el:tabContent>
+        <div class="tab-content" v-el:tab-content>
             <slot></slot>
         </div>
     </div>
@@ -30,26 +30,26 @@
 </template>
 
 <script>
-    // https://github.com/yuche/vue-strap/blob/master/src/Tabset.vue
-    export default {
-        props: {
-            effect: {
-                type: String,
-                default: 'fadein'
-            }
-        },
-        data() {
-            return {
-                renderData: [],
-                activeIndex: 0
-            }
-        },
-        methods: {
-            handleTabListClick(index, el) {
-                if (!el.disabled) this.activeIndex = index
-            }
-        }
+  // https://github.com/yuche/vue-strap/blob/master/src/Tabset.vue
+  export default {
+    props: {
+      effect: {
+        type: String,
+        default: 'fadein'
+      }
+    },
+    data () {
+      return {
+        renderData: [],
+        activeIndex: 0
+      }
+    },
+    methods: {
+      handleTabListClick (index, el) {
+        if (!el.disabled) this.activeIndex = index
+      }
     }
+  }
 </script>
 
 <style scoped>

@@ -29,27 +29,27 @@
 </template>
 
 <script>
-    export default {
-        events: {
-          'close-modal': function() {
-              this.$set('show', false);
-          }
-        },
-        props: {
-            show: {
-                type: Boolean,
-                required: true,
-                twoWay: true
-            },
-            content: "",
-            name: ""
-        },
-        computed: {
-            update: function() {
-                this.$nextTick(() => this.show = true);
-            }
-        }
-    };
+  export default {
+    events: {
+      'close-modal' () {
+        this.$set('show', false)
+      }
+    },
+    props: {
+      show: {
+        type: Boolean,
+        required: true,
+        twoWay: true
+      },
+      content: '',
+      name: ''
+    },
+    computed: {
+      update () {
+        this.$nextTick(() => this.show = true)
+      }
+    }
+  }
 </script>
 
 <style scoped>

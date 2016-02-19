@@ -179,136 +179,137 @@
 </template>
 
 <script>
-    var _ = require('underscore');
+  var _ = require('underscore')
 
-    import Tab  from './Tab.vue';
-    import Tabs from './Tabset.vue';
+  import Common from '../vue/Common'
+  import Tab from './Tab'
+  import Tabs from './Tabset'
 
-    import * as VueFocus from 'vue-focus';
+  import * as VueFocus from 'vue-focus'
 
-    export default {
-        components: {
-            'tab' : Tab,
-            'tabs': Tabs
-        },
-        props: [
-            'shared-state',
-            'routes',
-            'references',
-            'show'
-        ],
-        data: function () {
-            return {
-                searchReferencesQuery: '',
-                focused: 0
-            }
-        },
-        mixins: [ VueFocus.mixin ],
-        methods: {
-            setSelected(reference) {
-                this.sharedState.setSelectedReference(reference);
-            },
-            updateAccessedAt(reference) {
-                //confirm("Was the source accurate? Accept this message to update the Website Accessed date")
-            },
-            setEditing(reference) {
-                this.sharedState.enableEditing(reference);
-                // Set dirty state
-                reference.dirty = false;
-                // Set an object to keep changes for rollback if necessary
-                reference.clean = {};
-                reference.clean.no = reference.no;
-                reference.clean.content = reference.content;
-                reference.clean.url= reference.url;
+  export default {
+    components: {
+      'tab': Tab,
+      'tabs': Tabs
+    },
+    props: [
+      'shared-state',
+      'routes',
+      'references',
+      'show'
+    ],
+    data () {
+      return {
+        searchReferencesQuery: '',
+        focused: 0
+      }
+    },
+    mixins: [ VueFocus.mixin ],
+    methods: {
+      setSelected (reference) {
+        this.sharedState.setSelectedReference(reference)
+      },
+      updateAccessedAt (reference) {
+        // confirm("Was the source accurate? Accept this message to update the Website Accessed date")
+      },
+      setEditing (reference) {
+        this.sharedState.enableEditing(reference)
+        // Set dirty state
+        reference.dirty = false
+        // Set an object to keep changes for rollback if necessary
+        reference.clean = {}
+        reference.clean.no = reference.no
+        reference.clean.content = reference.content
+        reference.clean.url = reference.url
 
-                if(reference.editing) {
-                    //this.$dispatch('messenger-notify', { content: `Hit 'Finished editing' to save this reference`, type: 'info' });
-                }
-            },
-            contentContainsReference(reference) {
-                return _.where(this.sharedState.state.selectedContent, { id: reference.id }).length;
-            },
-            clear() {
-                if(confirm("Are you sure you want to clear all the references from this content?")) {
-                    this.sharedState.getSelectedContent().references = [];
-                }
-            },
-            cancelEditing(reference) {
-                if(confirm("Are you sure you want to cancel editing?\nAny changes you have made to this reference will be discarded.")) {
-                    // Restore original values
-                    reference.no      = reference.clean.no;
-                    reference.content = reference.clean.content;
-                    reference.url     = reference.clean.url;
-                    // And cancel editing
-                    this.sharedState.disableEditing(reference);
-                }
-            },
-            removeReference(index) {
-                this.references.splice(index, 1)
-            },
-            addReferenceToContent(reference) {
-                this.sharedState.getSelectedContent().references.push(reference)
-            },
-            create(index) {
-                var self = this;
-                self.sharedState.disableEditing(self.sharedState.getSelectedReference());
-                Ajax.put(this.routes.createReference, JSON.stringify(self.references[index])).then(function (response) {
-                    var data = response.data;
-                    self.$dispatch('fetch');
-                    self.$dispatch('messenger-notify', { content: `Created reference: ${data.no}`, type: 'success' });
-                }, function (response) {
-                    self.$dispatch('messenger-notify', { content: "Failed creating reference, please try again", type: 'error' });
-                });
-            },
-            update(reference) {
-                var self = this;
-                if(confirm("Save changes?")) {
-                    this.sharedState.disableEditing(reference);
-                    Ajax.patch(`${this.routes.updateReference}/${reference.id}`, JSON.stringify(reference)).then(function (response) {
-                        var data = response.data;
-                        self.$dispatch('fetch');
-                        self.$dispatch('messenger-notify', { content: `Updated reference: ${data.no}`, type: 'success' });
-                    }, function (response) {
-                        self.$dispatch('messenger-notify', { content: "Failed updating reference, please try again", type: 'error' });
-                    });
-                }
-            },
-            associate(content){
-                console.log('associate');
-                var self = this;
-                console.log(content);
-                Ajax.patch(`${this.routes.associateReferences}/${content.id}`, JSON.stringify(content)).then(function (response) {
-                    var data = response.data;
-
-                    console.log(data);
-                    self.sharedState.setSelectedContent(data);
-
-                    self.$dispatch('fetch');
-                    self.$dispatch('messenger-notify', { content: `Added references to content`, type: 'success' });
-                }, function (response) {
-                    self.$dispatch('messenger-notify', { content: "Failed adding references to content, please try again", type: 'error' });
-                });
-            },
-            destroy(reference) {
-                var self = this;
-                var selectedContentReferences = this.sharedState.getSelectedContent().references;
-
-                Ajax.delete(`${this.routes.deleteReference}/${reference.id}`, JSON.stringify(reference)).then(function (response) {
-
-                    var data = response.data;
-                    // Loop through references in selectedContent and remove deleted
-
-                    if( _.where(selectedContentReferences, { id: reference.id }).length) {
-                        selectedContentReferences.$remove(reference)
-                        console.log('removed deleted reference')
-                    }
-
-                    self.$dispatch('fetch');
-                    self.$dispatch('messenger-notify', { content: `Deleted reference: ${data.no}`, type: 'success' });
-                }, function (response) {
-                    self.$dispatch('messenger-notify', { content: "Failed deleting reference, please try again", type: 'error' });
-                });
-            }
+        if (reference.editing) {
+          // this.$dispatch('messenger-notify', { content: `Hit 'Finished editing' to save this reference`, type: 'info' })
         }
+      },
+      contentContainsReference (reference) {
+        return _.where(this.sharedState.state.selectedContent, { id: reference.id }).length
+      },
+      clear () {
+        if (confirm('Are you sure you want to clear all the references from this content?')) {
+          this.sharedState.getSelectedContent().references = []
+        }
+      },
+      cancelEditing (reference) {
+        if (confirm('Are you sure you want to cancel editing?\nAny changes you have made to this reference will be discarded.')) {
+          // Restore original values
+          reference.no = reference.clean.no
+          reference.content = reference.clean.content
+          reference.url = reference.clean.url
+          // And cancel editing
+          this.sharedState.disableEditing(reference)
+        }
+      },
+      removeReference (index) {
+        this.references.splice(index, 1)
+      },
+      addReferenceToContent (reference) {
+        this.sharedState.getSelectedContent().references.push(reference)
+      },
+      create (index) {
+        var self = this
+        self.sharedState.disableEditing(self.sharedState.getSelectedReference())
+        Common.put(this.routes.createReference, JSON.stringify(self.references[index])).then(function (response) {
+          var data = response.data
+          self.$dispatch('fetch')
+          self.$dispatch('messenger-notify', { content: `Created reference: ${data.no}`, type: 'success' })
+        }, function (response) {
+          self.$dispatch('messenger-notify', { content: 'Failed creating reference, please try again', type: 'error' })
+        })
+      },
+      update (reference) {
+        var self = this
+        if (confirm('Save changes?')) {
+          this.sharedState.disableEditing(reference)
+          Common.patch(`${this.routes.updateReference}/${reference.id}`, JSON.stringify(reference)).then(function (response) {
+            var data = response.data
+            self.$dispatch('fetch')
+            self.$dispatch('messenger-notify', { content: `Updated reference: ${data.no}`, type: 'success' })
+          }, function (response) {
+            self.$dispatch('messenger-notify', { content: 'Failed updating reference, please try again', type: 'error' })
+          })
+        }
+      },
+      associate (content) {
+        console.log('associate')
+        var self = this
+        console.log(content)
+        Common.patch(`${this.routes.associateReferences}/${content.id}`, JSON.stringify(content)).then(function (response) {
+          var data = response.data
+
+          console.log(data)
+          self.sharedState.setSelectedContent(data)
+
+          self.$dispatch('fetch')
+          self.$dispatch('messenger-notify', { content: `Added references to content`, type: 'success' })
+        }, function (response) {
+          self.$dispatch('messenger-notify', { content: 'Failed adding references to content, please try again', type: 'error' })
+        })
+      },
+      destroy (reference) {
+        var self = this
+        var selectedContentReferences = this.sharedState.getSelectedContent().references
+
+        Common.delete(`${this.routes.deleteReference}/${reference.id}`, JSON.stringify(reference)).then(function (response) {
+
+          var data = response.data
+          // Loop through references in selectedContent and remove deleted
+
+          if (_.where(selectedContentReferences, { id: reference.id }).length) {
+            selectedContentReferences.$remove(reference)
+            console.log('removed deleted reference')
+          }
+
+          self.$dispatch('fetch')
+          self.$dispatch('messenger-notify', { content: `Deleted reference: ${data.no}`, type: 'success' })
+        }, function (response) {
+          self.$dispatch('messenger-notify', { content: 'Failed deleting reference, please try again', type: 'error' })
+        })
+      }
     }
+  }
 </script>

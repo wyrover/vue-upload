@@ -35,7 +35,7 @@ export default {
   patch (url, data, options) {
     return http.patch(url, data, options)
   },
-  delete (url, data, options) {
+  destroy (url, data, options) {
     return http.delete(url, data, options)
   },
   jsonp (url, data, options) {

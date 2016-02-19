@@ -52,6 +52,7 @@
 import Routes from './routes'
 import Hello from './components/Hello'
 import Pages from './components/Pages.vue'
+import Content from './components/Content.vue'
 import CodeMirror from './components/CodeMirror'
 import Messenger from './components/Messenger'
 import Progress from './components/Progress.vue'
@@ -65,7 +66,9 @@ export default {
     'codemirror': CodeMirror,
     'messenger': Messenger,
     'progress': Progress,
-    'taxonomies': Taxonomies
+    'taxonomies': Taxonomies,
+    'pages': Pages,
+    'content': Content
   },
   data () {
     return {
@@ -173,7 +176,7 @@ export default {
     fetchViews () {
       var self = this
       // Fetch views
-      Common.fetch.views(this.routes.viewsList).then(
+      Common.get(this.routes.viewsList).then(
         function (response) {
           self.$set('views', response.data)
           self.$emit('messenger-notify', { content: Messages.fetch.success('views'), type: 'success' })
@@ -186,7 +189,7 @@ export default {
     fetchLayouts () {
       var self = this
       // Fetch layouts
-      Common.fetch.layouts(this.routes.layoutsList).then(
+      Common.get(this.routes.layoutsList).then(
         function (response) {
           self.$set('layouts', response.data)
           self.$emit('messenger-notify', { content: Messages.fetch.success('layouts'), type: 'success' })
@@ -199,7 +202,7 @@ export default {
     fetchPages () {
       var self = this
       // Fetch pages
-      Common.fetch.pages(this.routes.allPages).then(
+      Common.get(this.routes.allPages).then(
         function (response) {
           self.$set('pages', response.data)
           self.$emit('messenger-notify', { content: Messages.fetch.success('pages'), type: 'success' })
@@ -212,7 +215,7 @@ export default {
     fetchContent () {
       var self = this
       // Fetch content
-      Common.fetch.content(this.routes.allContent).then(
+      Common.get(this.routes.allContent).then(
         function (response) {
           self.$set('content', response.data)
           // Add old_slug for comparison when updating
@@ -227,7 +230,7 @@ export default {
     fetchCountries () {
       var self = this
       // Fetch countries
-      Common.fetch.countries(this.routes.allCountries).then(
+      Common.get(this.routes.allCountries).then(
         function (response) {
           self.$set('countries', response.data)
           self.$emit('messenger-notify', { countries: Messages.fetch.success('countries'), type: 'success' })
@@ -240,7 +243,7 @@ export default {
     fetchReferences () {
       var self = this
       // Fetch references
-      Common.fetch.references(this.routes.allReferences).then(
+      Common.get(this.routes.allReferences).then(
         function (response) {
           self.$set('references', response.data)
           self.$emit('messenger-notify', { references: Messages.fetch.success('references'), type: 'success' })
@@ -253,7 +256,7 @@ export default {
     fetchResources () {
       var self = this
       // Fetch resources
-      Common.fetch.resources(this.routes.allResources).then(
+      Common.get(this.routes.allResources).then(
         function (response) {
           self.$set('resources', response.data)
           self.$emit('messenger-notify', { resources: Messages.fetch.success('resources'), type: 'success' })
@@ -266,7 +269,7 @@ export default {
     fetchTaxonomies () {
       var self = this
       // Fetch taxonomies
-      Common.fetch.taxonomies(this.routes.allTaxonomies).then(
+      Common.get(this.routes.allTaxonomies).then(
         function (response) {
           self.$set('taxonomies', response.data)
           self.$emit('messenger-notify', { taxonomies: Messages.fetch.success('taxonomies'), type: 'success' })
