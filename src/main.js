@@ -8,28 +8,6 @@ import App from './App'
 new Vue({
   el: 'body',
   components: { App },
-  ready () {
-    var self = this
-    // this.fetch()
-    // Interceptors (middleware)
-    Vue.http.interceptors.push({
-      request: function (request) {
-        console.log('req')
-        self.$broadcast('progress-start')
-        return request
-      },
-      response (response) {
-        if (response.ok) {
-          self.$broadcast('progress-stop')
-        } else {
-          self.$broadcast('progress-fail')
-        }
-        console.log('res')
-
-        return response
-      }
-    })
-  },
   events: {
     'messenger-notify' (message) {
       this.$broadcast('messenger-notify', message)

@@ -10,6 +10,23 @@ Vue.http.options.emulateHTTP = false
 // Vue.http.headers.common['Authorization'] = 'Basic YXBpOnBhc3N3b3Jk'
 Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
 // Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#csrf_token').getAttribute('value')
+
+// Interceptors (middleware)
+Vue.http.interceptors.push({
+  request (request) {
+    // self.$broadcast('progress-start')
+    return request
+  },
+  response (response) {
+    if (response.ok) {
+      // self.$broadcast('progress-stop')
+    } else {
+      // self.$broadcast('progress-fail')
+    }
+    return response
+  }
+})
+
 // Init
 // var resource = Vue.resource
 var http = Vue.http

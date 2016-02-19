@@ -6,6 +6,11 @@ export default {
   urls: {
     urlMatch: /((https?|ftp):\/\/|www\.)[^\s/$.?#].[^\s]*/
   },
+  strings: {
+    slugify: {
+
+    }
+  },
   references: {
     findReferenceIds: /^\s*(\d)\.*\s*/,
     findReferenceContent: /^[•\s\t]*.+$/,

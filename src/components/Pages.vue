@@ -175,7 +175,6 @@
             <button @click.prevent="removePage(page)" class="col col-right mt1 block btn border rounded">&minus;</button>
           </div>
         </div>
-        </form>
       </div>
     </div>
     <div v-else>
@@ -314,7 +313,6 @@
       },
       createPage (index) {
         var self = this
-        Common
         Common.put(this.routes.createPages, { page: self.pages[index] }).then(function (response) {
           var data = response.data
           self.pages.splice(index, 1)
