@@ -1,10 +1,16 @@
 <script>
 var CodeMirror = require('codemirror')
+require('codemirror/mode/xml/xml')
+require('codemirror/mode/javascript/javascript')
+require('codemirror/mode/css/css')
+require('codemirror/mode/htmlmixed/htmlmixed')
+require('codemirror/addon/mode/overlay')
+require('codemirror/mode/markdown/markdown')
 export default {
   replace: false,
   props: {
     model: '',
-    height: 700,
+    height: 0,
     width: -1,
     cursorPosition: {required: false, type: Number},
     mode: {required: false, type: String, default: 'gfm'}, // Default editor mode is Github Flavor Markdown
@@ -21,7 +27,7 @@ export default {
     var self = this
     this.$nextTick(
       function () {
-        CodeMirror = CodeMirror.fromTextArea(self.$el, {
+        CodeMirror = CodeMirror(self.$el, {
           mode: self.mode,
           lineNumbers: self.lineNumbers,
           lineWrapping: self.lineWrapping,
@@ -60,24 +66,19 @@ export default {
           self.$set('cursorPosition', CodeMirror.getCursor())
           // Add { silent: true }  as 3rd arg?
         })
-
         CodeMirror.on('cursorActivity', function () {
           self.$set('cursorPosition', CodeMirror.getCursor())
         })
-
         // Set the initial value (or '' if model prop value is null)
         var code = self.$get('model') ? self.$get('model') : ''
         CodeMirror.setValue(code)
-
         this.$watch('model', function (value) {
           if (value !== CodeMirror.getValue()) {
             CodeMirror.setValue(value)
           }
         })
-
         // Set size
         CodeMirror.setSize(self.$get('width'), self.$get('height'))
-
         // As we've set some properties, refresh Codemirror
         CodeMirror.refresh()
       }
@@ -95,3 +96,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  @import '../../node_modules/codemirror/lib/codemirror.css';
+</style>

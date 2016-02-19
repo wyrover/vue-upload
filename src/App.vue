@@ -71,7 +71,7 @@ export default {
   },
   data () {
     return {
-      view: 'pages',
+      view: 'content',
       routes: Routes,
       sharedState: {
         state: {
@@ -285,6 +285,7 @@ export default {
 
 <style>
   @import '../node_modules/ace-css/css/ace.min.css';
+  @import '../node_modules/animate.css/source/_base.css';
   body {
     font-family: Helvetica, sans-serif;
   }
