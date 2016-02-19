@@ -59,6 +59,7 @@ import Progress from './components/Progress.vue'
 import Taxonomies from './components/Taxonomies/Taxonomies.vue'
 import Common from './vue/Common'
 import Messages from './vue/Messages'
+import Mixins from './vue/Mixins'
 
 export default {
   components: {
@@ -152,6 +153,7 @@ export default {
   ready () {
     this.fetch()
   },
+  mixins: [ Mixins ],
   props: [],
   events: {
     'fetch' () {
@@ -176,7 +178,7 @@ export default {
     fetchViews () {
       var self = this
       // Fetch views
-      Common.get(this.routes.viewsList).then(
+      Common.fetch(this.routes.viewsList).then(
         function (response) {
           self.$set('views', response.data)
           self.$emit('messenger-notify', { content: Messages.fetch.success('views'), type: 'success' })
@@ -189,7 +191,7 @@ export default {
     fetchLayouts () {
       var self = this
       // Fetch layouts
-      Common.get(this.routes.layoutsList).then(
+      Common.fetch(this.routes.layoutsList).then(
         function (response) {
           self.$set('layouts', response.data)
           self.$emit('messenger-notify', { content: Messages.fetch.success('layouts'), type: 'success' })
@@ -202,7 +204,7 @@ export default {
     fetchPages () {
       var self = this
       // Fetch pages
-      Common.get(this.routes.allPages).then(
+      Common.fetch(this.routes.allPages).then(
         function (response) {
           self.$set('pages', response.data)
           self.$emit('messenger-notify', { content: Messages.fetch.success('pages'), type: 'success' })
@@ -215,7 +217,7 @@ export default {
     fetchContent () {
       var self = this
       // Fetch content
-      Common.get(this.routes.allContent).then(
+      Common.fetch(this.routes.allContent).then(
         function (response) {
           self.$set('content', response.data)
           // Add old_slug for comparison when updating
@@ -230,7 +232,7 @@ export default {
     fetchCountries () {
       var self = this
       // Fetch countries
-      Common.get(this.routes.allCountries).then(
+      Common.fetch(this.routes.allCountries).then(
         function (response) {
           self.$set('countries', response.data)
           self.$emit('messenger-notify', { countries: Messages.fetch.success('countries'), type: 'success' })
@@ -243,7 +245,7 @@ export default {
     fetchReferences () {
       var self = this
       // Fetch references
-      Common.get(this.routes.allReferences).then(
+      Common.fetch(this.routes.allReferences).then(
         function (response) {
           self.$set('references', response.data)
           self.$emit('messenger-notify', { references: Messages.fetch.success('references'), type: 'success' })
@@ -256,7 +258,7 @@ export default {
     fetchResources () {
       var self = this
       // Fetch resources
-      Common.get(this.routes.allResources).then(
+      Common.fetch(this.routes.allResources).then(
         function (response) {
           self.$set('resources', response.data)
           self.$emit('messenger-notify', { resources: Messages.fetch.success('resources'), type: 'success' })
@@ -269,7 +271,7 @@ export default {
     fetchTaxonomies () {
       var self = this
       // Fetch taxonomies
-      Common.get(this.routes.allTaxonomies).then(
+      Common.fetch(this.routes.allTaxonomies).then(
         function (response) {
           self.$set('taxonomies', response.data)
           self.$emit('messenger-notify', { taxonomies: Messages.fetch.success('taxonomies'), type: 'success' })

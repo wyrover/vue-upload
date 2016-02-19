@@ -1,9 +1,7 @@
 import Vue from 'vue'
-
 import './vue/Config.js'
 import './vue/Filters.js'
 import './vue/Transitions.js'
-import './vue/Resources.js'
 import App from './App'
 
 /* eslint-disable no-new */

@@ -46,6 +46,11 @@ Vue.filter('referenced', function (value) {
 Vue.filter('reverse', function (value) {
   return value.split('').reverse().join('')
 })
+
+// Reverse a string
+Vue.filter('slugify', function (value) {
+  return value.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-')
+})
 /*
 
  Vue.filter('filterByIncludingNull', function (arr, search, delimiter) {

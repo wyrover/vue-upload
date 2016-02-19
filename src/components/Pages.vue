@@ -146,11 +146,11 @@
           </div>
           <div class="col col-2">
             <!--Name-->
-            <input type="text" v-model="page.name" v-on:keyup="page.slug = $root.slugify(page.name)" name="name" class="border-none bold p0" placeholder="Enter name">
+            <input type="text" v-model="page.name" v-on:keyup="page.slug = page.name" name="name" class="border-none bold p0" placeholder="Enter name">
           </div>
           <div class="col col-2">
             <!--Slug-->
-            <input type="text" v-model="page.slug" name="slug" class="border-none p0">
+            <input type="text" v-model="page.slug | slugify 'page.name'" name="slug" class="border-none p0">
           </div>
           <div class="col col-right">
             <!--Language-->
