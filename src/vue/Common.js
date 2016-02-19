@@ -8,7 +8,8 @@ export default {
     content (route) { return Ajax.get(route) },
     countries (route) { return Ajax.get(route) },
     references (route) { return Ajax.get(route) },
-    resources (route) { return Ajax.get(route) }
+    resources (route) { return Ajax.get(route) },
+    taxonomies (route) { return Ajax.get(route) }
   },
   put: {
     reference (route) { return Ajax.put(route) }

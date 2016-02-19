@@ -23,5 +23,7 @@ export default {
   updateContent: `${domain}/admin/content/update`,
   updatePages: `${domain}/admin/pages/update`,
   updateReference: `${domain}/admin/references`,
-  viewsList: `${domain}/admin/pages/viewslist`
+  viewsList: `${domain}/admin/pages/viewslist`,
+  updateTaxonomy: `${domain}/admin/taxonomies`,
+  allTaxonomies: `${domain}/admin/taxonomy/all`
 }
