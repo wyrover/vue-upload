@@ -50,26 +50,24 @@
 
 <script>
 import Routes from './routes'
-import Hello from './components/Hello'
-import Pages from './components/Pages.vue'
-import Content from './components/Content.vue'
+import Pages from './components/Pages'
+import Content from './components/Content'
 import CodeMirror from './components/CodeMirror'
 import Messenger from './components/Messenger'
-import Progress from './components/Progress.vue'
-import Taxonomies from './components/Taxonomies/Taxonomies.vue'
+import Progress from './components/Progress'
+import Taxonomies from './components/Taxonomies/Taxonomies'
 import Common from './vue/Common'
 import Messages from './vue/Messages'
 import Mixins from './vue/Mixins'
 
 export default {
   components: {
-    Hello,
-    'codemirror': CodeMirror,
-    'messenger': Messenger,
-    'progress': Progress,
-    'taxonomies': Taxonomies,
-    'pages': Pages,
-    'content': Content
+    CodeMirror,
+    Messenger,
+    Progress,
+    Taxonomies,
+    Pages,
+    Content
   },
   data () {
     return {
