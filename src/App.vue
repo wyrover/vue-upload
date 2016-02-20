@@ -1,6 +1,11 @@
 <template>
   <div>
 
+    <p>
+      <a v-link="{ path: '/pages' }">Go to Pages</a>
+      <a v-link="{ path: '/content' }">Go to Content</a>
+    </p>
+
     <!--vue-progress-->
     <progress
       :percent="ajaxProgress.percent"
@@ -30,8 +35,8 @@
       </taxonomies>
     </div>
 
-    <!--dynamic component-->
-    <component
+    <!-- use router-view element as (dynamic component) route outlet -->
+    <router-view
       @keyup.esc="this.$broadcast('close-modal')"
       :is="view"
       v-ref:dynamic-component
@@ -43,31 +48,26 @@
       :countries.sync="countries"
       :references.sync="references"
       keep-alive>
-    </component>
+    </router-view>
 
   </div>
 </template>
 
 <script>
 import Routes from './routes'
-import Pages from './components/Pages'
-import Content from './components/Content'
 import CodeMirror from './components/CodeMirror'
 import Messenger from './components/Messenger'
 import Progress from './components/Progress'
 import Taxonomies from './components/Taxonomies/Taxonomies'
 import Common from './vue/Common'
 import Messages from './vue/Messages'
-import Mixins from './vue/Mixins'
-
 export default {
+  replace: false,
   components: {
     CodeMirror,
     Messenger,
     Progress,
-    Taxonomies,
-    Pages,
-    Content
+    Taxonomies
   },
   data () {
     return {
@@ -151,11 +151,20 @@ export default {
   ready () {
     this.fetch()
   },
-  mixins: [ Mixins ],
-  props: [],
   events: {
     'fetch' () {
       this.fetch()
+    },
+    events: {
+      'messenger-notify' (message) {
+        this.$broadcast('messenger-notify', message)
+      },
+      'messenger-options' (options) {
+        this.$broadcast('messenger-options', options)
+      },
+      'close-modal' () {
+        this.$broadcast('close-modal')
+      }
     }
   },
   methods: {
@@ -288,5 +297,8 @@ export default {
   @import '../node_modules/animate.css/source/_base.css';
   body {
     font-family: Helvetica, sans-serif;
+  }
+  .v-link-active {
+    color: red;
   }
 </style>

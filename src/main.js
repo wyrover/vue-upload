@@ -1,22 +1,17 @@
 import Vue from 'vue'
-import './vue/Config.js'
-import './vue/Filters.js'
-import './vue/Transitions.js'
+import Pages from './components/Pages'
+import Content from './components/Content'
+import './vue/Config'
+import './vue/Filters'
+import './vue/Transitions'
 import App from './App'
+var VueRouter = require('vue-router')
+Vue.use(VueRouter)
+var router = new VueRouter()
 
-/* eslint-disable no-new */
-new Vue({
-  el: 'body',
-  components: { App },
-  events: {
-    'messenger-notify' (message) {
-      this.$broadcast('messenger-notify', message)
-    },
-    'messenger-options' (options) {
-      this.$broadcast('messenger-options', options)
-    },
-    'close-modal' () {
-      this.$broadcast('close-modal')
-    }
-  }
+router.map({
+  '/pages': { component: Pages },
+  '/content': { component: Content }
 })
+
+router.start(App, '#app')

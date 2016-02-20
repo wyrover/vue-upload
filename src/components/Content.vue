@@ -101,10 +101,16 @@
         <div class="col col-right">
 
           <!--Create/Edit buttons-->
-          <button v-show="!content.id" @click.prevent="createContent($index)"
-                  class="btn btn-outline green px0 small unbold">Create
+          <button
+            v-show="!content.id" @click.prevent="createContent($index)"
+            class="btn btn-outline green small unbold">
+            Create
           </button>
-          <button v-show="content.id" @click.prevent="openModal()" class="btn btn-outline green px0 small unbold">Edit
+          <button
+            v-show="content.id"
+            @click.prevent="openModal()"
+            class="btn btn-outline green small unbold">
+            Edit
           </button>
 
           <!--Preview-->
