@@ -29,9 +29,8 @@
 <script>
   export default {
     props: ['term', 'vocabulary', 'shared-state'],
-    ready () {},
     events: {
-      'add-term': function () {
+      'add-term' () {
         this.add()
       }
     },

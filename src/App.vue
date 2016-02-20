@@ -1,11 +1,22 @@
 <template>
   <div>
 
-    <p>
-      <a v-link="{ path: '/pages' }">Go to Pages</a>
-      <a v-link="{ path: '/content' }">Go to Content</a>
-    </p>
+    <!--vue-router-->
+    <div class="col col-12 bg-black p2 m0">
 
+      <a v-link="{ path: '/pages' }"   class="btn silver">Pages   <span class="muted">({{ pages.length }})  </span></a>
+      <a v-link="{ path: '/content' }" class="btn silver">Content <span class="muted">({{ content.length }})</span></a>
+
+      <!--search-->
+      <input
+        v-model="searchModel"
+        class="right center white bg-black py1 h4"
+        type="text"
+        name="search"
+        placeholder="&#128269;Search&hellip;"
+        style="border: none">
+
+    </div>
     <!--vue-progress-->
     <progress
       :percent="ajaxProgress.percent"
@@ -21,7 +32,7 @@
       :show-close-button="messenger.showCloseButton">
     </messenger>
 
-    <!--Taxonomies (categories)-->
+<!--    &lt;!&ndash;Taxonomies (categories)&ndash;&gt;
     <div class="py2">
       <button
         @click.prevent="toggleTaxonomiesDialog()"
@@ -33,13 +44,12 @@
         :taxonomies.sync="taxonomies"
         :shared-state.sync="sharedState">
       </taxonomies>
-    </div>
+    </div>-->
 
     <!-- use router-view element as (dynamic component) route outlet -->
     <router-view
       @keyup.esc="this.$broadcast('close-modal')"
-      :is="view"
-      v-ref:dynamic-component
+      :routes="routes"
       :shared-state.sync="sharedState"
       :views.sync="views"
       :layouts.sync="layouts"
@@ -61,6 +71,7 @@ import Progress from './components/Progress'
 import Taxonomies from './components/Taxonomies/Taxonomies'
 import Common from './vue/Common'
 import Messages from './vue/Messages'
+
 export default {
   replace: false,
   components: {
@@ -71,7 +82,6 @@ export default {
   },
   data () {
     return {
-      view: 'content',
       routes: Routes,
       sharedState: {
         state: {
@@ -299,6 +309,6 @@ export default {
     font-family: Helvetica, sans-serif;
   }
   .v-link-active {
-    color: red;
+    color: #ff599c;
   }
 </style>
