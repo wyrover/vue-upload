@@ -18,15 +18,10 @@
   import Vocabulary from './Vocabulary.vue'
 
   export default {
-    components: { 'vocabulary': Vocabulary },
-    props: ['shared-state'],
-    data () {
-      return {
-        taxonomies: {}
-      }
-    },
+    components: { Vocabulary },
+    props: ['shared-state', 'taxonomies'],
     events: {
-      'update': function () {
+      'update' () {
         this.update()
       }
     },
