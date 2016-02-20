@@ -181,6 +181,7 @@
   import Tab from './Tab.vue'
 
   export default {
+    name: 'Pages',
     components: {
       'modal': Modal,
       'tabs': Tabs,

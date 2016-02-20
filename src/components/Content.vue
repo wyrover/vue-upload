@@ -172,8 +172,11 @@
   import CodeMirror from './CodeMirror'
   import References from './References'
   import Tooltip from './Tooltip'
+  import store from '../store/content/index'
 
   export default {
+    store,
+    name: 'Content',
     components: {
       'modal': Modal,
       'codemirror': CodeMirror,
@@ -197,7 +200,6 @@
       'views',
       'layouts',
       'pages',
-      'content',
       'countries',
       'references',
       'resources'
@@ -232,7 +234,13 @@
         this.$broadcast('insert-reference', reference)
       }
     },
+    computed: {
+      content () {
+        // return this.$store.state.content
+      }
+    },
     methods: {
+      addContent: store.actions.addContent,
       setSelected (content) {
         this.sharedState.setSelectedContent(content)
       },
@@ -244,9 +252,6 @@
       },
       openModal () {
         this.showModal = true
-      },
-      addContent () {
-        this.content.push({name: ''})
       },
       removeContent (content) {
         this.content.$remove(content)

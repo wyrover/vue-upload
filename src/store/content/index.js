@@ -8,7 +8,7 @@ Vue.use(Vuex)
 
 export const STORAGE_KEY = 'content-vuejs'
 const state = {
-  todos: JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+  content: JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
 }
 
 export default new Vuex.Store({
