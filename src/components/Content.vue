@@ -208,7 +208,6 @@
       },
       'add-reference-to-content' (reference) {
         var self = this
-
         // Turn off editing
         reference.editing = false
 

@@ -10,6 +10,7 @@ import 'codemirror/mode/css/css.js'
 import 'codemirror/mode/php/php.js'
 import 'codemirror/mode/markdown/markdown.js'
 import 'codemirror/mode/gfm/gfm.js'
+import References from '../vue/References'
 
 var CodeMirror = require('codemirror')
 
@@ -27,8 +28,8 @@ export default {
     matchBrackets: {required: false, type: Boolean, default: true}
   },
   events: {
-    'insert-reference': function (reference) {
-      // this.insertReference(reference)
+    'insert-reference' (reference) {
+      this.insertReference(reference)
     }
   },
   ready () {
@@ -54,14 +55,13 @@ export default {
               return false
             },
             'Shift-Ctrl-F': function (instance) {
-              console.log('wut')
               // Batch-create references by selecting lines in the editor and then using keyboard shortcut Shift+Ctrl+F
               // This adds form elements used for adding these new references
               var selection = instance.getSelection()
               var lines = selection.match(/[^\r\n]+/g)
               // Iterate over each line of the selection
               lines.forEach(function (reference) {
-                // self.$dispatch('add-reference-to-content', References.parse(reference))
+                self.$dispatch('add-reference-to-content', References.parse(reference))
               })
               return false
             }
@@ -95,11 +95,11 @@ export default {
     )
   },
   methods: {
-    // insertReference(reference) {
-    //   // var referenceToInsert = `{${reference.no}}`
-    //   // var referenceToInsert = `{${reference.no}}`
-    //   // CodeMirror.replaceRange(referenceToInsert, this.cursorPosition, this.cursorPosition)
-    // },
+    insertReference (reference) {
+      // var referenceToInsert = `{${reference.no}}`
+      var referenceToInsert = `{${reference.no}}`
+      CodeMirror.replaceRange(referenceToInsert, this.cursorPosition, this.cursorPosition)
+    },
     setCursorPosition () {
       self.$set('cursorPosition', CodeMirror.getCursor())
     }

@@ -150,7 +150,7 @@ module.exports = {
     'no-unneeded-ternary': 2,
     'no-unreachable': 2,
     'no-unused-expressions': 0,
-    'no-unused-vars': [2, { 'vars': 'all', 'args': 'none' }],
+    'no-unused-vars': [0, { 'vars': 'all', 'args': 'none' }],
     'no-use-before-define': 0,
     'no-var': 0,
     'no-void': 0,
