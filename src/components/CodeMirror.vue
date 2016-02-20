@@ -1,17 +1,25 @@
 <script>
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/theme/monokai.css'
+import 'codemirror/addon/mode/overlay.js'
+import 'codemirror/addon/runmode/runmode.js'
+import 'codemirror/addon/runmode/colorize.js'
+import 'codemirror/mode/javascript/javascript.js'
+import 'codemirror/mode/xml/xml.js'
+import 'codemirror/mode/css/css.js'
+import 'codemirror/mode/php/php.js'
+import 'codemirror/mode/markdown/markdown.js'
+import 'codemirror/mode/gfm/gfm.js'
+
 var CodeMirror = require('codemirror')
-require('codemirror/mode/xml/xml')
-require('codemirror/mode/javascript/javascript')
-require('codemirror/mode/css/css')
-require('codemirror/mode/htmlmixed/htmlmixed')
-require('codemirror/addon/mode/overlay')
-require('codemirror/mode/markdown/markdown')
+
 export default {
   replace: false,
   props: {
     model: '',
     height: 0,
     width: -1,
+    theme: {required: false, type: String, default: 'monokai'},
     cursorPosition: {required: false, type: Number},
     mode: {required: false, type: String, default: 'gfm'}, // Default editor mode is Github Flavor Markdown
     lineNumbers: {required: false, type: Boolean, default: false},
@@ -23,12 +31,13 @@ export default {
       // this.insertReference(reference)
     }
   },
-  ready: function () {
+  ready () {
     var self = this
     this.$nextTick(
       function () {
         CodeMirror = CodeMirror(self.$el, {
           mode: self.mode,
+          theme: self.theme,
           lineNumbers: self.lineNumbers,
           lineWrapping: self.lineWrapping,
           matchBrackets: self.matchBrackets,
@@ -45,6 +54,7 @@ export default {
               return false
             },
             'Shift-Ctrl-F': function (instance) {
+              console.log('wut')
               // Batch-create references by selecting lines in the editor and then using keyboard shortcut Shift+Ctrl+F
               // This adds form elements used for adding these new references
               var selection = instance.getSelection()
@@ -98,5 +108,6 @@ export default {
 </script>
 
 <style scoped>
-  @import '../../node_modules/codemirror/lib/codemirror.css';
+
+
 </style>

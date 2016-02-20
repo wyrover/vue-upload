@@ -4,7 +4,7 @@
     <!--vue-router-->
     <div class="col col-12 bg-black p2 m0">
 
-      <a v-link="{ path: '/pages' }"   class="btn silver">Pages   <span class="muted">({{ pages.length }})  </span></a>
+      <a v-link="{ path: '/pages'   }" class="btn silver">Pages   <span class="muted">({{ pages.length   }})</span></a>
       <a v-link="{ path: '/content' }" class="btn silver">Content <span class="muted">({{ content.length }})</span></a>
 
       <!--search-->
