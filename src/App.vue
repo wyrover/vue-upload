@@ -25,7 +25,7 @@
       </button>
       <taxonomies
         v-show="revealTaxonomies"
-        :taxonomies="taxonomies"
+        :taxonomies.sync="taxonomies"
         :shared-state.sync="sharedState">
       </taxonomies>
     </div>
