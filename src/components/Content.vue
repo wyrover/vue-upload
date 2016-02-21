@@ -172,10 +172,8 @@
   import CodeMirror from './CodeMirror'
   import References from './References'
   import Tooltip from './Tooltip'
-  import store from '../store/content/index'
 
   export default {
-    store,
     name: 'Content',
     components: {
       'modal': Modal,
@@ -236,7 +234,7 @@
     },
     computed: {
       content () {
-        // return this.$store.state.content
+        return this.$store.state.content
       }
     },
     methods: {

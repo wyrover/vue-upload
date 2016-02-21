@@ -1,5 +1,5 @@
 var webpack = require('webpack')
-var path    = require('path')
+var path = require('path')
 var autoprefixer = require('autoprefixer');
 var precss = require('precss');
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
