@@ -1,12 +1,27 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
   <div>
+    <!--Page heading-->
+    <div class="col col-12">
+
+      <!--        <div class="col-right">
+                  <strong>Language:</strong>
+                  <select v-model="currentCountry">
+                      <option v-for="country in countries" v-bind:value="country">
+                          {{ country.name }}
+                      </option>
+                  </select>
+              </div>-->
+
+    </div>
 
     <!--Modal body-->
     <div v-if="sharedState.state.selectedContent.id">
 
-      <modal :show.sync="showModal"
-             :content.sync="sharedState.state.selectedContent.markdown"
-             :name.sync="sharedState.state.selectedContent.name">
+      <modal
+        :show.sync="showModal"
+        :content.sync="sharedState.state.selectedContent.markdown"
+        :name.sync="sharedState.state.selectedContent.name">
+
         <h3 slot="header">{{ sharedState.state.selectedContent.name }}</h3>
         <div slot="body" class="border-top border-bottom">
 
@@ -24,11 +39,12 @@
           </div>
 
           <!--References-->
-          <references v-show="showReferences"
-                      :references.sync="references"
-                      :shared-state.sync="sharedState"
-                      :routes.sync="routes"
-          ></references>
+          <references
+            v-show="showReferences"
+            :routes.sync="routes"
+            :shared-state.sync="sharedState"
+            :references.sync="references">
+          </references>
 
           <!--Codemirror-->
           <div class="col col-6 border-left">
@@ -43,8 +59,11 @@
 
           <!--Markdown preview-->
           <div class="col col-6 border-left border-right">
-            <div v-html="sharedState.state.selectedContent.markdown | marked | referenced" class="p1"
-                 style="height: 700px; overflow-y: scroll"></div>
+            <div
+              v-html="sharedState.state.selectedContent.markdown | marked | referenced"
+              class="p1"
+              style="height: 700px; overflow-y: scroll">
+            </div>
           </div>
           <div class="clearfix"></div>
 
@@ -63,8 +82,6 @@
 
     </div><!--/if-->
 
-    <h2 class="py2">{{ content.length ? 'Content' : 'No content' }}</h2>
-
     <!--Column headings-->
     <div class="col col-12 bold blue">
       <a href="#"
@@ -76,35 +93,41 @@
       </a>
     </div>
 
-    <input v-model="searchContent" class="col-right" type="text" name="search" placeholder="&#128269;  Search&hellip;"
-           style="border: none">
-
     <!--Data rows-->
-    <div v-for="content in content | filterBy searchContent"
-         @click="setSelected(content)"
-         class="col col-12 border-bottom py1 mb1"
-         :class="{ 'muted': content.deleted_at, 'border-blue': content === sharedState.state.selectedContent }"
-         v-on:keyup.esc="content.editing = false">
+    <div
+      v-for="content in content | filterBy searchContent"
+      @click="setSelected(content)"
+      class="col col-12 border-bottom py1 mb1"
+      :class="{ 'muted': content.deleted_at, 'border-blue': content === sharedState.state.selectedContent }"
+      v-on:keyup.esc="content.editing = false">
 
       <div class="col col-12">
         <div class="col col-2">
 
           <!--Name-->
-          <input type="text"
-                 v-model="content.name"
-                 v-on:keyup="content.slug = $root.slugify(content.name)"
-                 name="name"
-                 class="border-none p0"
-                 placeholder="Enter name">
+          <input
+            type="text"
+            v-model="content.name"
+            v-on:keyup="content.slug = $root.slugify(content.name)"
+            name="name"
+            class="border-none p0"
+            placeholder="Enter name">
 
         </div>
         <div class="col col-right">
 
           <!--Create/Edit buttons-->
-          <button v-show="!content.id" @click.prevent="createContent($index)"
-                  class="btn btn-outline green px0 small unbold">Create
+          <button
+            v-show="!content.id"
+            @click.prevent="createContent($index)"
+            class="btn btn-outline green small unbold">
+            Create
           </button>
-          <button v-show="content.id" @click.prevent="openModal()" class="btn btn-outline green px0 small unbold">Edit
+          <button
+            v-show="content.id"
+            @click.prevent="openModal()"
+            class="btn btn-outline green small unbold">
+            Edit
           </button>
 
           <!--Preview-->
@@ -121,8 +144,11 @@
         <div class="clearfix"></div>
 
         <div v-show="!content.id" class="col col-right">
-          <button @click.prevent="removeContent(content)"
-                  class="col col-right mt1 block btn border rounded">&minus;</button>
+          <button
+            @click.prevent="removeContent(content)"
+            class="col col-right mt1 block btn border rounded">
+            &minus;
+          </button>
         </div>
       </div>
     </div>
@@ -130,14 +156,17 @@
     <div class="clearfix"></div>
 
     <!--Add content-->
-    <button @click.prevent="addContent" class="col col-right mt1 block btn btn-primary">&plus;</button>
+    <button
+      @click.prevent="addContent"
+      class="col col-right mt1 block btn btn-primary">
+      &plus;
+    </button>
 
   </div>
 </template>
 
 <script>
   var _ = require('underscore')
-
   import Common from '../vue/Common'
   import Modal from './Modal'
   import CodeMirror from './CodeMirror'
@@ -145,6 +174,7 @@
   import Tooltip from './Tooltip'
 
   export default {
+    name: 'Content',
     components: {
       'modal': Modal,
       'codemirror': CodeMirror,
@@ -175,12 +205,10 @@
     ],
     events: {
       'save-content' () {
-        console.log('save event')
         this.updateContent()
       },
       'add-reference-to-content' (reference) {
         var self = this
-
         // Turn off editing
         reference.editing = false
 
@@ -205,7 +233,13 @@
         this.$broadcast('insert-reference', reference)
       }
     },
+    // computed: {
+    //   content () {
+    //     return this.$store.state.content
+    //   }
+    // },
     methods: {
+      // addContent: store.actions.addContent,
       setSelected (content) {
         this.sharedState.setSelectedContent(content)
       },
@@ -217,9 +251,6 @@
       },
       openModal () {
         this.showModal = true
-      },
-      addContent () {
-        this.content.push({name: ''})
       },
       removeContent (content) {
         this.content.$remove(content)

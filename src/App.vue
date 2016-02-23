@@ -1,6 +1,22 @@
 <template>
   <div>
 
+    <!--vue-router-->
+    <div class="col col-12 bg-black p2 m0">
+
+      <a v-link="{ path: '/pages'   }" class="btn silver">Pages   <span class="muted">({{ pages.length   }})</span></a>
+      <a v-link="{ path: '/content' }" class="btn silver">Content <span class="muted">({{ content.length }})</span></a>
+
+      <!--search-->
+      <input
+        v-model="searchModel"
+        class="right center white bg-black py1 h4"
+        type="text"
+        name="search"
+        placeholder="&#128269;Search&hellip;"
+        style="border: none">
+
+    </div>
     <!--vue-progress-->
     <progress
       :percent="ajaxProgress.percent"
@@ -16,7 +32,7 @@
       :show-close-button="messenger.showCloseButton">
     </messenger>
 
-    <!--Taxonomies (categories)-->
+<!--    &lt;!&ndash;Taxonomies (categories)&ndash;&gt;
     <div class="py2">
       <button
         @click.prevent="toggleTaxonomiesDialog()"
@@ -28,13 +44,12 @@
         :taxonomies.sync="taxonomies"
         :shared-state.sync="sharedState">
       </taxonomies>
-    </div>
+    </div>-->
 
-    <!--dynamic component-->
-    <component
+    <!-- use router-view element as (dynamic component) route outlet -->
+    <router-view
       @keyup.esc="this.$broadcast('close-modal')"
-      :is="view"
-      v-ref:dynamic-component
+      :routes="routes"
       :shared-state.sync="sharedState"
       :views.sync="views"
       :layouts.sync="layouts"
@@ -43,35 +58,31 @@
       :countries.sync="countries"
       :references.sync="references"
       keep-alive>
-    </component>
+    </router-view>
 
   </div>
 </template>
 
 <script>
 import Routes from './routes'
-import Pages from './components/Pages'
-import Content from './components/Content'
 import CodeMirror from './components/CodeMirror'
 import Messenger from './components/Messenger'
 import Progress from './components/Progress'
 import Taxonomies from './components/Taxonomies/Taxonomies'
 import Common from './vue/Common'
 import Messages from './vue/Messages'
-import Mixins from './vue/Mixins'
-
+import store from './store/content/index'
 export default {
+  store,
+  replace: false,
   components: {
     CodeMirror,
     Messenger,
     Progress,
-    Taxonomies,
-    Pages,
-    Content
+    Taxonomies
   },
   data () {
     return {
-      view: 'content',
       routes: Routes,
       sharedState: {
         state: {
@@ -151,11 +162,20 @@ export default {
   ready () {
     this.fetch()
   },
-  mixins: [ Mixins ],
-  props: [],
   events: {
     'fetch' () {
       this.fetch()
+    },
+    events: {
+      'messenger-notify' (message) {
+        this.$broadcast('messenger-notify', message)
+      },
+      'messenger-options' (options) {
+        this.$broadcast('messenger-options', options)
+      },
+      'close-modal' () {
+        this.$broadcast('close-modal')
+      }
     }
   },
   methods: {
@@ -288,5 +308,8 @@ export default {
   @import '../node_modules/animate.css/source/_base.css';
   body {
     font-family: Helvetica, sans-serif;
+  }
+  .v-link-active {
+    color: #ff599c;
   }
 </style>

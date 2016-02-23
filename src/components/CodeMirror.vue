@@ -1,17 +1,26 @@
 <script>
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/theme/monokai.css'
+import 'codemirror/addon/mode/overlay.js'
+import 'codemirror/addon/runmode/runmode.js'
+import 'codemirror/addon/runmode/colorize.js'
+import 'codemirror/mode/javascript/javascript.js'
+import 'codemirror/mode/xml/xml.js'
+import 'codemirror/mode/css/css.js'
+import 'codemirror/mode/php/php.js'
+import 'codemirror/mode/markdown/markdown.js'
+import 'codemirror/mode/gfm/gfm.js'
+import References from '../vue/References'
+
 var CodeMirror = require('codemirror')
-require('codemirror/mode/xml/xml')
-require('codemirror/mode/javascript/javascript')
-require('codemirror/mode/css/css')
-require('codemirror/mode/htmlmixed/htmlmixed')
-require('codemirror/addon/mode/overlay')
-require('codemirror/mode/markdown/markdown')
+
 export default {
   replace: false,
   props: {
     model: '',
     height: 0,
     width: -1,
+    theme: {required: false, type: String, default: 'monokai'},
     cursorPosition: {required: false, type: Number},
     mode: {required: false, type: String, default: 'gfm'}, // Default editor mode is Github Flavor Markdown
     lineNumbers: {required: false, type: Boolean, default: false},
@@ -19,16 +28,17 @@ export default {
     matchBrackets: {required: false, type: Boolean, default: true}
   },
   events: {
-    'insert-reference': function (reference) {
-      // this.insertReference(reference)
+    'insert-reference' (reference) {
+      this.insertReference(reference)
     }
   },
-  ready: function () {
+  ready () {
     var self = this
     this.$nextTick(
       function () {
         CodeMirror = CodeMirror(self.$el, {
           mode: self.mode,
+          theme: self.theme,
           lineNumbers: self.lineNumbers,
           lineWrapping: self.lineWrapping,
           matchBrackets: self.matchBrackets,
@@ -51,7 +61,7 @@ export default {
               var lines = selection.match(/[^\r\n]+/g)
               // Iterate over each line of the selection
               lines.forEach(function (reference) {
-                // self.$dispatch('add-reference-to-content', References.parse(reference))
+                self.$dispatch('add-reference-to-content', References.parse(reference))
               })
               return false
             }
@@ -85,11 +95,11 @@ export default {
     )
   },
   methods: {
-    // insertReference(reference) {
-    //   // var referenceToInsert = `{${reference.no}}`
-    //   // var referenceToInsert = `{${reference.no}}`
-    //   // CodeMirror.replaceRange(referenceToInsert, this.cursorPosition, this.cursorPosition)
-    // },
+    insertReference (reference) {
+      // var referenceToInsert = `{${reference.no}}`
+      var referenceToInsert = `{${reference.no}}`
+      CodeMirror.replaceRange(referenceToInsert, this.cursorPosition, this.cursorPosition)
+    },
     setCursorPosition () {
       self.$set('cursorPosition', CodeMirror.getCursor())
     }
@@ -98,5 +108,6 @@ export default {
 </script>
 
 <style scoped>
-  @import '../../node_modules/codemirror/lib/codemirror.css';
+
+
 </style>

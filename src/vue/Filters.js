@@ -36,8 +36,6 @@ Vue.filter('referenced', function (value) {
       matches = matches.replace(list[0], `<sup><a href="#">test</a></sup>`)
     }
 
-    console.log(lists)
-
     return matches
   }
 })

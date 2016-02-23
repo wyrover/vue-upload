@@ -54,10 +54,10 @@
 </template>
 
 <script>
-  import Term from './Term.vue'
+  import Term from './Term'
 
   export default {
-    components: { 'term': Term },
+    components: { Term },
     props: ['vocabulary', 'shared-state'],
     methods: {
       setSelected (vocabulary) {

@@ -1,12 +1,12 @@
 <template>
-  <div class="cov-progress"
-       :style="{
-         'width': percent+'%',
-         'height': options.height,
-         'background-color': options.canSuccess ? options.color : options.failedColor,
-         'opacity': options.show ? 1 : 0
-      }"
-  >
+  <div
+    class="cov-progress"
+    :style="{
+      'width': percent+'%',
+      'height': options.height,
+      'background-color': options.canSuccess ? options.color : options.failedColor,
+      'opacity': options.show ? 1 : 0
+      }">
   </div>
 </template>
 
@@ -44,6 +44,7 @@
         Progress.finish()
       },
       'progress-fail' () {
+        console.log('fail')
         Progress.failed()
       }
     }

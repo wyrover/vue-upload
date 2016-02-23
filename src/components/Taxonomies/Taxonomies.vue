@@ -15,7 +15,7 @@
 </template>
 
 <script>
-  import Vocabulary from './Vocabulary.vue'
+  import Vocabulary from './Vocabulary'
 
   export default {
     components: { Vocabulary },

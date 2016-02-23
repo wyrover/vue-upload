@@ -1,17 +1,17 @@
-<template xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-el="http://www.w3.org/1999/xhtml">
+<template xmlns:v-el="http://www.w3.org/1999/xhtml">
 <div>
     <div>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs list-reset" role="tablist">
             <li v-for="r in renderData" class="col"
-                v-bind:class="{
+                :class="{
                     'disabled': r.disabled
                 }"
                 @click.prevent="handleTabListClick($index, r)"
                 :disabled="r.disabled"
             >
                 <button class="p1 m1 btn"
-                        v-bind:class="{
+                        :class="{
                             'regular': !($index === activeIndex),
                             'disabled': r.disabled
                          }"
@@ -46,7 +46,8 @@
     },
     methods: {
       handleTabListClick (index, el) {
-        if (!el.disabled) this.activeIndex = index
+        console.log('clicked')
+        if (!el.disabled) this.$set('activeIndex', index)
       }
     }
   }

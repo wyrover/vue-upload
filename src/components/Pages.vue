@@ -1,29 +1,5 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
   <div>
-    <!--Page heading-->
-    <div class="col col-12">
-      <h2 class="col m0">{{ pages.length ? 'Pages' : 'No pages' }}</h2>
-
-      <!--        <div class="col-right">
-                  <strong>Language:</strong>
-                  <select v-model="currentCountry">
-                      <option v-for="country in countries" v-bind:value="country">
-                          {{ country.name }}
-                      </option>
-                  </select>
-              </div>-->
-
-    </div>
-
-    <div class="clearfix"></div>
-
-    <!--Search: pages-->
-    <input v-model="searchPagesQuery"
-           type="text"
-           name="search"
-           placeholder="&#128269; Search&hellip;"
-           class="col-right border-none">
-
     <!--Column headings-->
     <div class="col col-12 bold blue">
       <a href="#"
@@ -36,7 +12,6 @@
     </div>
 
     <div class="clearfix"></div>
-
 
     <!--Modal body-->
     <div v-if="sharedState.state.selectedPage.id">
@@ -132,13 +107,13 @@
         <div class="col col-12" @click="setSelected(page)">
           <div class="col col-2">
             <!--Layout select-->
-            <select name="layouts" v-model="page.layout" class="col col-12 border-none p0">
+            <select name="layouts" v-model="page.layout" class="col col-12 border-none p0 bg-white">
               <option v-for="layout in layouts" v-bind:value="layout">{{ layout }}</option>
             </select>
           </div>
           <div class="col col-2">
             <!--View select-->
-            <select name="views" v-show="page.id" v-model="page.view" class="col col-12 border-none p0">
+            <select name="views" v-show="page.id" v-model="page.view" class="col col-12 border-none p0 bg-white">
               <option v-for="view in views" v-bind:value="view">{{ view }}</option>
             </select>
             <!--View input (create)-->
@@ -158,12 +133,22 @@
             <!--Lock-->
             <div v-show="page.locked" class="col orange border circle mr1 p1 pointer muted" title="Locked by another user">&#128274;</div>
             <!--Create / Update-->
-            <button v-show="!page.id" @click.prevent="createPage($index)" class="btn btn btn-outline mr1 green px0 small unbold">create</button>
-            <button v-show="page.id" @click.prevent="updatePage(page)" class="btn btn-outline mr1 blue px0 small unbold">update</button>
+            <button
+              v-show="!page.id"
+              @click.prevent="createPage($index)"
+              class="btn btn btn-outline mr1 green px0 small unbold">
+              Create
+            </button>
+            <button
+              v-show="page.id"
+              @click.prevent="updatePage(page)"
+              class="btn btn-outline mr1 blue small unbold">
+              Update
+            </button>
             <!--Content-->
             <a v-show="page.id" @click.prevent="openModal()" class="btn border rounded small unbold mr1 orange">content</a>
             <!--Preview-->
-            <a v-show="page.id" v-bind:href="previewPageRoute + '/' + page.slug" class="btn border rounded small unbold mr1" target="_blank">preview</a>
+            <a v-show="page.id" :href="routes.previewPage + '/' + page.slug" class="btn border rounded small unbold mr1" target="_blank">preview</a>
             <!--Toggle active-->
             <a v-show="page.id" href="#" @click.prevent="toggleActive(page)" class="btn border rounded small unbold {{ page.active ? 'green' : 'red' }}">{{ page.active ? 'active' : 'inactive' }}</a>
             <!--Delete-->
@@ -190,14 +175,13 @@
 
 <script>
   var _ = require('underscore')
-
   import Common from '../vue/Common'
-
   import Modal from './Modal.vue'
   import Tabs from './Tabset.vue'
   import Tab from './Tab.vue'
 
   export default {
+    name: 'Pages',
     components: {
       'modal': Modal,
       'tabs': Tabs,
@@ -238,15 +222,10 @@
     },
     events: {
       'open-modal' () {
-        // `this` in event callbacks is automatically bound
-        // to the instance that registered it
         this.showModal = true
       },
       'filter-by-taxonomy' () {
-        // `this` in event callbacks is automatically bound
-        // to the instance that registered it
         // Filter by pages in selected taxonomy (vocabulary and term)
-
         _.each(this.currentVocabulary.related, function (related) {
           _.each(related, function (taxonomy) {
             return taxonomy
