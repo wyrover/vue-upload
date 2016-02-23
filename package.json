@@ -25,7 +25,8 @@
     "vue-focus": "^0.1.1",
     "vue-progressbar": "^0.2.4",
     "vue-resource": "^0.7.0",
-    "vue-router": "^0.7.11"
+    "vue-router": "^0.7.11",
+    "vuex": "^0.3.0"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",

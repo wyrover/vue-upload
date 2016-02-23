@@ -148,7 +148,7 @@
             <!--Content-->
             <a v-show="page.id" @click.prevent="openModal()" class="btn border rounded small unbold mr1 orange">content</a>
             <!--Preview-->
-            <a v-show="page.id" v-bind:href="previewPageRoute + '/' + page.slug" class="btn border rounded small unbold mr1" target="_blank">preview</a>
+            <a v-show="page.id" :href="routes.previewPage + '/' + page.slug" class="btn border rounded small unbold mr1" target="_blank">preview</a>
             <!--Toggle active-->
             <a v-show="page.id" href="#" @click.prevent="toggleActive(page)" class="btn border rounded small unbold {{ page.active ? 'green' : 'red' }}">{{ page.active ? 'active' : 'inactive' }}</a>
             <!--Delete-->
@@ -181,6 +181,7 @@
   import Tab from './Tab.vue'
 
   export default {
+    name: 'Pages',
     components: {
       'modal': Modal,
       'tabs': Tabs,

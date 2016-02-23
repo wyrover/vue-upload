@@ -1,6 +1,4 @@
-# vue-webpack
-
-> A Vue.js project
+# [WIP] vue-admin
 
 ## Build Setup
 

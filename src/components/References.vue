@@ -76,9 +76,10 @@
                 <div class="col col-right">
 
                   <!--Edit-->
-                  <button v-show="!reference.editing"
-                          @click="setEditing(reference)"
-                          class="btn blue pointer">
+                  <button
+                    v-show="!reference.editing"
+                    @click="setEditing(reference)"
+                    class="btn blue pointer">
                     Edit
                   </button>
 
@@ -306,7 +307,7 @@
         var self = this
         var selectedContentReferences = this.sharedState.getSelectedContent().references
 
-        Common.delete(`${this.routes.deleteReference}/${reference.id}`, JSON.stringify(reference)).then(function (response) {
+        Common.destroy(`${this.routes.deleteReference}/${reference.id}`, JSON.stringify(reference)).then(function (response) {
 
           var data = response.data
           // Loop through references in selectedContent and remove deleted

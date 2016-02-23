@@ -174,6 +174,7 @@
   import Tooltip from './Tooltip'
 
   export default {
+    name: 'Content',
     components: {
       'modal': Modal,
       'codemirror': CodeMirror,
@@ -232,7 +233,13 @@
         this.$broadcast('insert-reference', reference)
       }
     },
+    // computed: {
+    //   content () {
+    //     return this.$store.state.content
+    //   }
+    // },
     methods: {
+      // addContent: store.actions.addContent,
       setSelected (content) {
         this.sharedState.setSelectedContent(content)
       },
@@ -244,9 +251,6 @@
       },
       openModal () {
         this.showModal = true
-      },
-      addContent () {
-        this.content.push({name: ''})
       },
       removeContent (content) {
         this.content.$remove(content)

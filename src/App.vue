@@ -71,8 +71,9 @@ import Progress from './components/Progress'
 import Taxonomies from './components/Taxonomies/Taxonomies'
 import Common from './vue/Common'
 import Messages from './vue/Messages'
-
+import store from './store/content/index'
 export default {
+  store,
   replace: false,
   components: {
     CodeMirror,
