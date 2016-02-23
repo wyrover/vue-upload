@@ -307,7 +307,7 @@
         var self = this
         var selectedContentReferences = this.sharedState.getSelectedContent().references
 
-        Common.delete(`${this.routes.deleteReference}/${reference.id}`, JSON.stringify(reference)).then(function (response) {
+        Common.destroy(`${this.routes.deleteReference}/${reference.id}`, JSON.stringify(reference)).then(function (response) {
 
           var data = response.data
           // Loop through references in selectedContent and remove deleted
