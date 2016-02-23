@@ -1,10 +1,10 @@
-<template xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-el="http://www.w3.org/1999/xhtml">
+<template xmlns:v-el="http://www.w3.org/1999/xhtml">
 <div>
     <div>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs list-reset" role="tablist">
             <li v-for="r in renderData" class="col"
-                v-bind:class="{
+                :class="{
                     'disabled': r.disabled
                 }"
                 @click.prevent="handleTabListClick($index, r)"
