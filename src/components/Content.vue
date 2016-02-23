@@ -130,15 +130,14 @@
             Edit
           </button>
 
-          <!--Preview-->
-          <a href="/content/{{ content.slug }}" v-show="content.id" class="btn border rounded small unbold mr1"
-             target="_blank">preview</a>
           <!--Toggle active-->
           <a href="#" v-show="content.id" @click.prevent="toggleActive(content)"
              class="btn border rounded small unbold {{ content.active ? 'green' : 'red' }}">{{ content.active ? 'active'
             : 'inactive' }}</a>
+
           <!--Delete-->
           <a href="#" v-show="content.id" @click.prevent="deleteContent(content)" class="red">&times;</a>
+
         </div>
 
         <div class="clearfix"></div>
@@ -285,7 +284,7 @@
       },
       deleteContent (content) {
         var self = this
-        Common.delete(this.routes.deleteContent + '/' + content.id).then(function (response) {
+        Common.destroy(this.routes.deleteContent + '/' + content.id).then(function (response) {
           self.$dispatch('fetch')
           self.$dispatch('messenger-notify', {content: `Deleted content: ${content.name}`, type: 'success'})
         }, function (response) {

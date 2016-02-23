@@ -1,5 +1,6 @@
 var Vue = require('vue')
 Vue.use(require('vue-resource')) // https://github.com/vuejs/vue-resource
+import createLogger from '../middlewares/logger'
 
 // Config
 Vue.http.options.root = '/'
@@ -11,7 +12,7 @@ Vue.http.options.emulateHTTP = false
 Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
 // Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#csrf_token').getAttribute('value')
 
-// Interceptors (middleware)
+// Interceptors
 Vue.http.interceptors.push({
   request (request) {
     // self.$broadcast('progress-start')
@@ -19,9 +20,11 @@ Vue.http.interceptors.push({
   },
   response (response) {
     if (response.ok) {
-      // self.$broadcast('progress-stop')
+      console.log('yep')
+      // Vue.$broadcast('progress-stop')
     } else {
-      // self.$broadcast('progress-fail')
+      console.log('nope')
+      // Vue.$broadcast('progress-fail')
     }
     return response
   }

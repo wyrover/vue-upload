@@ -65,6 +65,8 @@
 
 <script>
 import Routes from './routes'
+import Vue from 'vue'
+
 import CodeMirror from './components/CodeMirror'
 import Messenger from './components/Messenger'
 import Progress from './components/Progress'
@@ -72,6 +74,7 @@ import Taxonomies from './components/Taxonomies/Taxonomies'
 import Common from './vue/Common'
 import Messages from './vue/Messages'
 import store from './store/content/index'
+
 export default {
   store,
   replace: false,
