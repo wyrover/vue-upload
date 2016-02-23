@@ -198,6 +198,7 @@
       'views',
       'layouts',
       'pages',
+      'content',
       'countries',
       'references',
       'resources'
@@ -232,13 +233,13 @@
         this.$broadcast('insert-reference', reference)
       }
     },
-    computed: {
-      content () {
-        return this.$store.state.content
-      }
-    },
+    // computed: {
+    //   content () {
+    //     return this.$store.state.content
+    //   }
+    // },
     methods: {
-      addContent: store.actions.addContent,
+      // addContent: store.actions.addContent,
       setSelected (content) {
         this.sharedState.setSelectedContent(content)
       },

@@ -1,7 +1,7 @@
-<template xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<template>
   <div role="tabpanel" class="tab-pane"
-       v-bind:class="{hide:!show}"
-       v-show="show"
+       :class="{}"
+       v-show="true"
        :transition="transition">
     <slot></slot>
   </div>
@@ -30,11 +30,13 @@
     data () {
       return {
         index: 0,
-        show: false
+        show: true
       }
     },
     computed: {
       show () {
+        console.log('activeIndex: ' + (this.$parent.activeIndex))
+        console.log('this index: ' + (this.index))
         return (this.$parent.activeIndex === this.index)
       },
       transition () {

@@ -11,7 +11,7 @@
                 :disabled="r.disabled"
             >
                 <button class="p1 m1 btn"
-                        v-bind:class="{
+                        :class="{
                             'regular': !($index === activeIndex),
                             'disabled': r.disabled
                          }"
@@ -46,7 +46,8 @@
     },
     methods: {
       handleTabListClick (index, el) {
-        if (!el.disabled) this.activeIndex = index
+        console.log('clicked')
+        if (!el.disabled) this.$set('activeIndex', index)
       }
     }
   }

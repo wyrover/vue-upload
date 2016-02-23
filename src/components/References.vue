@@ -76,9 +76,10 @@
                 <div class="col col-right">
 
                   <!--Edit-->
-                  <button v-show="!reference.editing"
-                          @click="setEditing(reference)"
-                          class="btn blue pointer">
+                  <button
+                    v-show="!reference.editing"
+                    @click="setEditing(reference)"
+                    class="btn blue pointer">
                     Edit
                   </button>
 
