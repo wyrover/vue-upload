@@ -46,15 +46,15 @@ export default {
             'Enter': 'newlineAndIndentContinueMarkdownList',
 
             // Save shortcut keys
-            'Ctrl-S': function () {
+            'Ctrl-S' () {
               self.$dispatch('save-content')
               return false
             },
-            'Cmd-S': function () {
+            'Cmd-S' () {
               self.$dispatch('save-content')
               return false
             },
-            'Shift-Ctrl-F': function (instance) {
+            'Shift-Ctrl-F' (instance) {
               // Batch-create references by selecting lines in the editor and then using keyboard shortcut Shift+Ctrl+F
               // This adds form elements used for adding these new references
               var selection = instance.getSelection()

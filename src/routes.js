@@ -8,6 +8,7 @@ export default {
   allReferences: `${domain}/admin/references/all`,
   allResources: `${domain}/admin/resources/all`,
   associateReferences: `${domain}/admin/content/references`,
+  associateCountries: `${domain}/admin/content/countries`,
   createContent: `${domain}/admin/content/create`,
   createPages: `${domain}/admin/pages/create`,
   createReference: `${domain}/admin/references`,
