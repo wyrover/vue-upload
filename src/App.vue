@@ -1,12 +1,9 @@
 <template>
   <div>
-
-    <!--vue-router-->
     <div class="col col-12 bg-black p2 m0">
-
+      <!--vue-router-->
       <a v-link="{ path: '/pages'   }" class="btn silver">Pages   <span class="muted">({{ pages.length   }})</span></a>
       <a v-link="{ path: '/content' }" class="btn silver">Content <span class="muted">({{ content.length }})</span></a>
-
       <!--search-->
       <input
         v-model="searchModel"
@@ -15,13 +12,16 @@
         name="search"
         placeholder="&#128269;Search&hellip;"
         style="border: none">
-
     </div>
+
     <!--vue-progress-->
     <progress
       :percent="ajaxProgress.percent"
       :options="ajaxProgress.options">
     </progress>
+
+    <!--sweetalert-->
+    <sweet-alert></sweet-alert>
 
     <!--Messenger-->
     <messenger
@@ -71,6 +71,7 @@ import CodeMirror from './components/CodeMirror'
 import Messenger from './components/Messenger'
 import Progress from './components/Progress'
 import Taxonomies from './components/Taxonomies/Taxonomies'
+import SweetAlert from './components/SweetAlert'
 import Common from './vue/Common'
 import Messages from './vue/Messages'
 import store from './store/content/index'
@@ -82,7 +83,8 @@ export default {
     CodeMirror,
     Messenger,
     Progress,
-    Taxonomies
+    Taxonomies,
+    SweetAlert
   },
   data () {
     return {
