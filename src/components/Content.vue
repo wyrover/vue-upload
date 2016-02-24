@@ -1,19 +1,5 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
   <div>
-    <!--Page heading-->
-    <div class="col col-12">
-
-      <!--        <div class="col-right">
-                  <strong>Language:</strong>
-                  <select v-model="currentCountry">
-                      <option v-for="country in countries" v-bind:value="country">
-                          {{ country.name }}
-                      </option>
-                  </select>
-              </div>-->
-
-    </div>
-
     <!--Modal body-->
     <div v-if="sharedState.state.selectedContent.id">
 
@@ -37,6 +23,13 @@
               <tooltip hint="Embed documents in this content" text="Documents"></tooltip>
             </button>
           </div>
+
+          <language-picker
+                  :countries="countries"
+                  :only-show="['gb','us','ca']"
+                  :show="showLanguagePicker"
+                  :shared-state.sync="sharedState"
+          ></language-picker>
 
           <!--References-->
           <references
@@ -74,6 +67,9 @@
           <button class="btn btn-outline bg-green white" @click.prevent="showInsertMenu()">
             <tooltip placement="right" hint="Insert media into this content" text="Insert&hellip;"></tooltip>
           </button>
+          <button class="btn btn-outline bg-navy white" @click.prevent="showLanguagePicker()">
+            <tooltip placement="right" hint="Choose this content's language" text="Choose language&hellip;"></tooltip>
+          </button>
           <button class="right btn btn-outline bg-blue white" @click.prevent="updateContent()">
             <tooltip placement="left" hint="Save all changes that you have made in the editor" text="Save"></tooltip>
           </button>
@@ -91,6 +87,15 @@
          v-bind:class="{ 'active': sortKey == column }">
         {{ column | capitalize }}
       </a>
+    </div>
+
+    <div class="col-right">
+      <strong>Language:</strong>
+      <select v-model="currentCountry">
+        <option v-for="country in countries" v-bind:value="country">
+          {{ country.name }}
+        </option>
+      </select>
     </div>
 
     <!--Data rows-->
@@ -116,6 +121,7 @@
         </div>
         <div class="col col-right">
 
+
           <!--Create/Edit buttons-->
           <button
             v-show="!content.id"
@@ -130,15 +136,17 @@
             Edit
           </button>
 
-          <!--Preview-->
-          <a href="/content/{{ content.slug }}" v-show="content.id" class="btn border rounded small unbold mr1"
-             target="_blank">preview</a>
           <!--Toggle active-->
-          <a href="#" v-show="content.id" @click.prevent="toggleActive(content)"
-             class="btn border rounded small unbold {{ content.active ? 'green' : 'red' }}">{{ content.active ? 'active'
-            : 'inactive' }}</a>
+          <a href="#"
+             v-show="content.id"
+             @click.prevent="toggleActive(content)"
+             class="btn border rounded small unbold {{ content.active ? 'green' : 'red' }}">
+            {{ content.active ? 'active' : 'inactive' }}
+          </a>
+
           <!--Delete-->
           <a href="#" v-show="content.id" @click.prevent="deleteContent(content)" class="red">&times;</a>
+
         </div>
 
         <div class="clearfix"></div>
@@ -172,6 +180,7 @@
   import CodeMirror from './CodeMirror'
   import References from './References'
   import Tooltip from './Tooltip'
+  import LanguagePicker from './LanguagePicker'
 
   export default {
     name: 'Content',
@@ -179,7 +188,8 @@
       'modal': Modal,
       'codemirror': CodeMirror,
       'references': References,
-      'tooltip': Tooltip
+      'tooltip': Tooltip,
+      'language-picker': LanguagePicker
     },
     data () {
       return {
@@ -188,6 +198,7 @@
         searchContent: '',
         reverse: false,
         showModal: false,
+        showLanguagePicker: false,
         showReferences: false,
         showInsertDialog: false
       }
@@ -239,6 +250,9 @@
     //   }
     // },
     methods: {
+      showLanguagePicker () {
+        this.showLanguagePicker = !this.showLanguagePicker
+      },
       // addContent: store.actions.addContent,
       setSelected (content) {
         this.sharedState.setSelectedContent(content)
@@ -285,7 +299,7 @@
       },
       deleteContent (content) {
         var self = this
-        Common.delete(this.routes.deleteContent + '/' + content.id).then(function (response) {
+        Common.destroy(this.routes.deleteContent + '/' + content.id).then(function (response) {
           self.$dispatch('fetch')
           self.$dispatch('messenger-notify', {content: `Deleted content: ${content.name}`, type: 'success'})
         }, function (response) {

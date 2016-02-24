@@ -146,11 +146,11 @@
               Update
             </button>
             <!--Content-->
-            <a v-show="page.id" @click.prevent="openModal()" class="btn border rounded small unbold mr1 orange">content</a>
+            <a v-show="page.id" @click.prevent="openModal()" :class="{ 'muted': !page.content.length }" class="btn border rounded small unbold mr1 orange">content</a>
             <!--Preview-->
-            <a v-show="page.id" :href="routes.previewPage + '/' + page.slug" class="btn border rounded small unbold mr1" target="_blank">preview</a>
+            <a v-show="page.id" :href="routes.previewPage + '/' + page.slug" :class="{ 'muted': !page.content.length }" class="btn border rounded small unbold mr1" target="_blank">preview</a>
             <!--Toggle active-->
-            <a v-show="page.id" href="#" @click.prevent="toggleActive(page)" class="btn border rounded small unbold {{ page.active ? 'green' : 'red' }}">{{ page.active ? 'active' : 'inactive' }}</a>
+            <a v-show="page.id" href="#" @click.prevent="toggleActive(page)" :class="{ 'muted': !page.content.length && page.active }" class="btn border rounded small unbold {{ page.active ? 'green' : 'red' }}">{{ page.active ? 'active' : 'inactive' }}</a>
             <!--Delete-->
             <a v-show="!page.deleted_at" href="#" @click.prevent="deletePage(page)" class="btn-outline red" title="Delete">&times;</a>
             <a v-show="page.deleted_at" href="#" @click.prevent="restorePage(page)" class="btn-outline blue" title="Restore">&#10559;</a>
