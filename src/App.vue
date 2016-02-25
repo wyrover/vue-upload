@@ -56,6 +56,7 @@
       :pages.sync="pages"
       :content.sync="content"
       :countries.sync="countries"
+      :languages.sync="languages"
       :references.sync="references"
       keep-alive>
     </router-view>
@@ -66,6 +67,7 @@
 <script>
 import Routes from './routes'
 import Vue from 'vue'
+import store from './store/content/index'
 
 import CodeMirror from './components/CodeMirror'
 import Messenger from './components/Messenger'
@@ -74,7 +76,6 @@ import Taxonomies from './components/Taxonomies/Taxonomies'
 import SweetAlert from './components/SweetAlert'
 import Common from './vue/Common'
 import Messages from './vue/Messages'
-import store from './store/content/index'
 
 export default {
   store,
@@ -137,6 +138,7 @@ export default {
         }
       },
       countries: [],
+      languages: [],
       pages: [],
       content: [],
       layouts: [],
@@ -194,6 +196,7 @@ export default {
       this.fetchPages()
       this.fetchContent()
       this.fetchCountries()
+      this.fetchLanguages()
       this.fetchReferences()
       this.fetchResources()
       this.fetchTaxonomies()
@@ -262,6 +265,19 @@ export default {
         },
         function () {
           self.$emit('messenger-notify', { countries: Messages.fetch.failure('countries'), type: 'error' })
+        }
+      )
+    },
+    fetchLanguages () {
+      var self = this
+      // Fetch languages
+      Common.fetch(this.routes.allLanguages).then(
+        function (response) {
+          self.$set('languages', response.data)
+          self.$emit('messenger-notify', { languages: Messages.fetch.success('languages'), type: 'success' })
+        },
+        function () {
+          self.$emit('messenger-notify', { languages: Messages.fetch.failure('languages'), type: 'error' })
         }
       )
     },

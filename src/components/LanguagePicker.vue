@@ -1,18 +1,20 @@
 <template>
     <div class="col col-12">
         <button
-            v-show="inShowList(country)"
-            v-for="country in countries"
-            @click.prevent="setSelected(country)"
-            class="col col-1 btn flag-wrapper m1 flag-icon-background flag-icon-{{ country.iso_3166_2.toLowerCase() }}"
-            :class="{ 'muted' : selected !== country } "
-            :title="country.name"
-        >&nbsp;</button>
+          v-show="inShowList(country)"
+          v-for="country in countries"
+          @click.prevent="setSelected(country)"
+          class="col col-1 btn flag-wrapper m1 flag-icon-background flag-icon-{{ country.iso_3166_2.toLowerCase() }}"
+          :class="{ 'muted' : selected !== country } "
+          :title="country.name">
+          &nbsp;
+        </button>
   </div>
 </template>
 
 <script>
   var _ = require('underscore')
+  import Common from '../vue/Common'
   export default {
     events: {
       'close-modal' () {
@@ -20,7 +22,7 @@
       }
     },
     props: {
-      onlyShow: {
+      whitelist: {
         // Only show these countries...
         type: Array,
         required: false
@@ -35,10 +37,22 @@
     },
     methods: {
       inShowList (country) {
-        return _.contains(this.onlyShow, country.iso_3166_2.toLowerCase())
+        return _.contains(this.whitelist, country.iso_3166_2.toLowerCase())
       },
       setSelected (country) {
         this.$set('selected', country)
+      },
+      associate (content) {
+        var self = this
+        Common.patch(`${this.routes.associateLanguages}/${content.id}`, JSON.stringify(content)).then(function (response) {
+          var data = response.data
+          console.log(data)
+          self.sharedState.setSelectedContent(data)
+          self.$dispatch('fetch')
+          self.$dispatch('messenger-notify', { content: `Added references to content`, type: 'success' })
+        }, function (response) {
+          self.$dispatch('messenger-notify', { content: 'Failed adding references to content, please try again', type: 'error' })
+        })
       }
     }
 }

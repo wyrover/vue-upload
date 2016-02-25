@@ -25,11 +25,11 @@
           </div>
 
           <language-picker
-                  :countries="countries"
-                  :only-show="['gb','us','ca']"
-                  :show="showLanguagePicker"
-                  :shared-state.sync="sharedState"
-          ></language-picker>
+            :countries="countries"
+            :whitelist="['gb','us','ca']"
+            :show="showLanguagePicker"
+            :shared-state.sync="sharedState">
+          </language-picker>
 
           <!--References-->
           <references
@@ -89,11 +89,24 @@
       </a>
     </div>
 
+    <!--Countries-->
     <div class="col-right">
-      <strong>Language:</strong>
+      <strong>Country:</strong>
       <select v-model="currentCountry">
         <option v-for="country in countries" v-bind:value="country">
           {{ country.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <!--Languages-->
+    <div class="col-right">
+      <strong>Language:</strong>
+      <select v-model="currentLanguage">
+        <option v-for="language in languages" v-bind:value="language">
+          {{ language.name }}
         </option>
       </select>
     </div>
@@ -211,6 +224,7 @@
       'pages',
       'content',
       'countries',
+      'languages',
       'references',
       'resources'
     ],

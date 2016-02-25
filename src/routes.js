@@ -4,6 +4,7 @@ export default {
   addContent: `${domain}/admin/pages/content/add`,
   allContent: `${domain}/admin/content/all`,
   allCountries: `${domain}/countries`,
+  allLanguages: `${domain}/languages`,
   allPages: `${domain}/admin/pages/all?Pages`,
   allReferences: `${domain}/admin/references/all`,
   allResources: `${domain}/admin/resources/all`,
