@@ -74,6 +74,7 @@
             <tooltip placement="left" hint="Save all changes that you have made in the editor" text="Save"></tooltip>
           </button>
         </div>
+
       </modal>
 
     </div><!--/if-->
