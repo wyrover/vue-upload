@@ -1,10 +1,12 @@
 import Vue from 'vue'
-import App from './App'
-import Pages from './components/Pages'
-import Content from './components/Content'
+
 import './vue/Config'
 import './vue/Filters'
 import './vue/Transitions'
+
+import App from './App'
+import Pages from './components/Pages'
+import Content from './components/Content'
 
 var VueRouter = require('vue-router')
 

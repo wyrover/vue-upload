@@ -1,19 +1,5 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
   <div>
-    <!--Page heading-->
-    <div class="col col-12">
-
-      <!--        <div class="col-right">
-                  <strong>Language:</strong>
-                  <select v-model="currentCountry">
-                      <option v-for="country in countries" v-bind:value="country">
-                          {{ country.name }}
-                      </option>
-                  </select>
-              </div>-->
-
-    </div>
-
     <!--Modal body-->
     <div v-if="sharedState.state.selectedContent.id">
 
@@ -22,7 +8,7 @@
         :content.sync="sharedState.state.selectedContent.markdown"
         :name.sync="sharedState.state.selectedContent.name">
 
-        <h3 slot="header">{{ sharedState.state.selectedContent.name }}</h3>
+        <h3 slot="header">{{ sharedState.getSelectedContent().name }}</h3>
         <div slot="body" class="border-top border-bottom">
 
           <!--Insert dialog-->
@@ -36,6 +22,26 @@
             <button class="btn btn-outline orange" @click.prevent="">
               <tooltip hint="Embed documents in this content" text="Documents"></tooltip>
             </button>
+          </div>
+
+          <div class="col col-12">
+
+            <country-picker
+              :countries="countries"
+              :selected.sync="selectedCountries"
+              :whitelist="['gb','us','ca']"
+              :show.sync="showCountryPicker"
+              :shared-state.sync="sharedState">
+            </country-picker>
+
+            <language-picker
+              :languages="languages"
+              :whitelist="['en_US','en_GB']"
+              :default="en_GB"
+              :show="showLanguagePicker"
+              :shared-state.sync="sharedState">
+            </language-picker>
+
           </div>
 
           <!--References-->
@@ -74,10 +80,14 @@
           <button class="btn btn-outline bg-green white" @click.prevent="showInsertMenu()">
             <tooltip placement="right" hint="Insert media into this content" text="Insert&hellip;"></tooltip>
           </button>
+          <button class="btn btn-outline bg-navy white" @click.prevent="showLanguagePicker()">
+            <tooltip placement="right" hint="Choose this content's language" text="Choose language&hellip;"></tooltip>
+          </button>
           <button class="right btn btn-outline bg-blue white" @click.prevent="updateContent()">
             <tooltip placement="left" hint="Save all changes that you have made in the editor" text="Save"></tooltip>
           </button>
         </div>
+
       </modal>
 
     </div><!--/if-->
@@ -88,9 +98,31 @@
          class="col col-2"
          v-for="column in columns"
          @click.prevent="sortBy(column)"
-         v-bind:class="{ 'active': sortKey == column }">
+         :class="{ 'active': sortKey == column }">
         {{ column | capitalize }}
       </a>
+    </div>
+
+    <!--Countries-->
+    <div class="col-right">
+      <strong>Country:</strong>
+      <select v-model="currentCountry">
+        <option v-for="country in countries" :value="country">
+          {{ country.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <!--Languages-->
+    <div class="col-right">
+      <strong>Language:</strong>
+      <select v-model="currentLanguage">
+        <option v-for="language in languages" :value="language">
+          {{ language.name }}
+        </option>
+      </select>
     </div>
 
     <!--Data rows-->
@@ -99,7 +131,7 @@
       @click="setSelected(content)"
       class="col col-12 border-bottom py1 mb1"
       :class="{ 'muted': content.deleted_at, 'border-blue': content === sharedState.state.selectedContent }"
-      v-on:keyup.esc="content.editing = false">
+      @keyup.esc="content.editing = false">
 
       <div class="col col-12">
         <div class="col col-2">
@@ -108,7 +140,7 @@
           <input
             type="text"
             v-model="content.name"
-            v-on:keyup="content.slug = $root.slugify(content.name)"
+            @keyup="content.slug = $root.slugify(content.name)"
             name="name"
             class="border-none p0"
             placeholder="Enter name">
@@ -131,9 +163,12 @@
           </button>
 
           <!--Toggle active-->
-          <a href="#" v-show="content.id" @click.prevent="toggleActive(content)"
-             class="btn border rounded small unbold {{ content.active ? 'green' : 'red' }}">{{ content.active ? 'active'
-            : 'inactive' }}</a>
+          <a href="#"
+             v-show="content.id"
+             @click.prevent="toggleActive(content)"
+             class="btn border rounded small unbold {{ content.active ? 'green' : 'red' }}">
+            {{ content.active ? 'active' : 'inactive' }}
+          </a>
 
           <!--Delete-->
           <a href="#" v-show="content.id" @click.prevent="deleteContent(content)" class="red">&times;</a>
@@ -171,6 +206,8 @@
   import CodeMirror from './CodeMirror'
   import References from './References'
   import Tooltip from './Tooltip'
+  import CountryPicker from './CountryPicker'
+  import LanguagePicker from './LanguagePicker'
 
   export default {
     name: 'Content',
@@ -178,7 +215,9 @@
       'modal': Modal,
       'codemirror': CodeMirror,
       'references': References,
-      'tooltip': Tooltip
+      'tooltip': Tooltip,
+      'country-picker': CountryPicker,
+      'language-picker': LanguagePicker
     },
     data () {
       return {
@@ -187,8 +226,10 @@
         searchContent: '',
         reverse: false,
         showModal: false,
+        showLanguagePicker: false,
         showReferences: false,
-        showInsertDialog: false
+        showInsertDialog: false,
+        selectedCountries: []
       }
     },
     props: [
@@ -199,6 +240,7 @@
       'pages',
       'content',
       'countries',
+      'languages',
       'references',
       'resources'
     ],
@@ -232,12 +274,10 @@
         this.$broadcast('insert-reference', reference)
       }
     },
-    // computed: {
-    //   content () {
-    //     return this.$store.state.content
-    //   }
-    // },
     methods: {
+      showLanguagePicker () {
+        this.showLanguagePicker = !this.showLanguagePicker
+      },
       // addContent: store.actions.addContent,
       setSelected (content) {
         this.sharedState.setSelectedContent(content)
@@ -304,6 +344,18 @@
       sortBy (sortKey) {
         this.reverse = (this.sortKey === sortKey) ? !this.reverse : false
         this.sortKey = sortKey
+      },
+      associateCountries (content) {
+        var self = this
+        Common.patch(`${this.routes.associateLanguages}/${content.id}`, JSON.stringify(content)).then(function (response) {
+          var data = response.data
+          console.log(data)
+          self.sharedState.setSelectedContent(data)
+          self.$dispatch('fetch')
+          self.$dispatch('messenger-notify', { content: `Added references to content`, type: 'success' })
+        }, function (response) {
+          self.$dispatch('messenger-notify', { content: 'Failed adding references to content, please try again', type: 'error' })
+        })
       }
     }
   }
