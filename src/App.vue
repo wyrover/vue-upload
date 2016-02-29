@@ -17,11 +17,15 @@
         style="border: none">
 
     </div>
+
     <!--vue-progress-->
     <progress
       :percent="ajaxProgress.percent"
       :options="ajaxProgress.options">
     </progress>
+
+    <!--sweetalert-->
+    <sweet-alert></sweet-alert>
 
     <!--Messenger-->
     <messenger
@@ -56,6 +60,7 @@
       :pages.sync="pages"
       :content.sync="content"
       :countries.sync="countries"
+      :languages.sync="languages"
       :references.sync="references"
       keep-alive>
     </router-view>
@@ -66,23 +71,31 @@
 <script>
 import Routes from './routes'
 import Vue from 'vue'
+import store from './store/content/index'
+
+import 'prismjs'
 
 import CodeMirror from './components/CodeMirror'
 import Messenger from './components/Messenger'
 import Progress from './components/Progress'
 import Taxonomies from './components/Taxonomies/Taxonomies'
+import SweetAlert from './components/SweetAlert'
+import Typeahead from './components/Typeahead'
 import Common from './vue/Common'
 import Messages from './vue/Messages'
 import store from './store/content/index'
 
 export default {
   store,
+  name: 'App',
   replace: false,
   components: {
     CodeMirror,
     Messenger,
     Progress,
-    Taxonomies
+    Taxonomies,
+    SweetAlert,
+    Typeahead
   },
   data () {
     return {
@@ -135,6 +148,7 @@ export default {
         }
       },
       countries: [],
+      languages: [],
       pages: [],
       content: [],
       layouts: [],
@@ -192,6 +206,7 @@ export default {
       this.fetchPages()
       this.fetchContent()
       this.fetchCountries()
+      this.fetchLanguages()
       this.fetchReferences()
       this.fetchResources()
       this.fetchTaxonomies()
@@ -263,6 +278,19 @@ export default {
         }
       )
     },
+    fetchLanguages () {
+      var self = this
+      // Fetch languages
+      Common.fetch(this.routes.allLanguages).then(
+        function (response) {
+          self.$set('languages', response.data)
+          self.$emit('messenger-notify', { languages: Messages.fetch.success('languages'), type: 'success' })
+        },
+        function () {
+          self.$emit('messenger-notify', { languages: Messages.fetch.failure('languages'), type: 'error' })
+        }
+      )
+    },
     fetchReferences () {
       var self = this
       // Fetch references
@@ -309,6 +337,8 @@ export default {
 <style>
   @import '../node_modules/ace-css/css/ace.min.css';
   @import '../node_modules/animate.css/source/_base.css';
+  @import "../node_modules/prismjs/themes/prism.css";
+
   body {
     font-family: Helvetica, sans-serif;
   }
