@@ -79,6 +79,7 @@ import Messages from './vue/Messages'
 
 export default {
   store,
+  name: 'App',
   replace: false,
   components: {
     CodeMirror,

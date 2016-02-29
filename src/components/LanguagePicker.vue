@@ -1,29 +1,23 @@
 <template>
-    <div class="col col-12">
-        <button
-          v-show="inShowList(country)"
-          v-for="country in countries"
-          @click.prevent="setSelected(country)"
-          class="col col-1 btn flag-wrapper m1 flag-icon-background flag-icon-{{ country.iso_3166_2.toLowerCase() }}"
-          :class="{ 'muted' : selected !== country } "
-          :title="country.name">
-          &nbsp;
-        </button>
-  </div>
+    <span>
+        <select v-model="currentLanguage" class="m1">
+            <option
+              v-for="language in languages"
+              v-show="inShowList(language)"
+              v-bind:value="language">
+              {{ language.name }}
+            </option>
+        </select>
+    </span>
 </template>
 
 <script>
   var _ = require('underscore')
   import Common from '../vue/Common'
   export default {
-    events: {
-      'close-modal' () {
-        this.$set('show', false)
-      }
-    },
     props: {
       whitelist: {
-        // Only show these countries...
+        // Only show these languages...
         type: Array,
         required: false
       },
@@ -32,15 +26,16 @@
         required: true,
         twoWay: true
       },
+      default: 'en_GB',
       selected: {},
-      countries: []
+      languages: []
     },
     methods: {
-      inShowList (country) {
-        return _.contains(this.whitelist, country.iso_3166_2.toLowerCase())
+      inShowList (language) {
+        return _.contains(this.whitelist, language.key)
       },
-      setSelected (country) {
-        this.$set('selected', country)
+      setSelected (language) {
+        this.$set('selected', language)
       },
       associate (content) {
         var self = this
@@ -57,25 +52,3 @@
     }
 }
 </script>
-
-<style scoped>
-    @import "../../node_modules/flag-icon-css/css/flag-icon.css";
-
-    .flag-wrapper {
-        width: 25px;
-        height: 25px;
-    }
-
-    .modal-container {
-        position: absolute;
-        top: 0px;
-        bottom: 0px;
-        min-height: 500px;
-        margin: 0px auto;
-        padding: 20px 30px;
-        background-color: #fff;
-        border-radius: 2px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-        transition: all .3s ease;
-    }
-</style>
