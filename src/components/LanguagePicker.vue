@@ -3,7 +3,7 @@
         <select v-model="currentLanguage" class="m1">
             <option
               v-for="language in languages"
-              v-show="inShowList(language)"
+              v-show="inWhitelist(language)"
               v-bind:value="language">
               {{ language.name }}
             </option>
@@ -16,23 +16,16 @@
   import Common from '../vue/Common'
   export default {
     props: {
-      whitelist: {
-        // Only show these languages...
-        type: Array,
-        required: false
-      },
-      show: {
-        type: Boolean,
-        required: true,
-        twoWay: true
-      },
+      whitelist: { type: Array, required: false },
+      show: { type: Boolean, required: true, twoWay: true },
       default: 'en_GB',
       selected: {},
       languages: []
     },
     methods: {
-      inShowList (language) {
-        return _.contains(this.whitelist, language.key)
+      inWhitelist (language) {
+        console.log(language.name)
+        return _.contains(this.whitelist, language.name)
       },
       setSelected (language) {
         this.$set('selected', language)

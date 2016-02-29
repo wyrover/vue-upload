@@ -80,10 +80,9 @@ import Messenger from './components/Messenger'
 import Progress from './components/Progress'
 import Taxonomies from './components/Taxonomies/Taxonomies'
 import SweetAlert from './components/SweetAlert'
-import Typeahead from './components/Typeahead'
+// import Typeahead from './components/Typeahead'
 import Common from './vue/Common'
 import Messages from './vue/Messages'
-import store from './store/content/index'
 
 export default {
   store,
@@ -94,8 +93,7 @@ export default {
     Messenger,
     Progress,
     Taxonomies,
-    SweetAlert,
-    Typeahead
+    SweetAlert
   },
   data () {
     return {
@@ -107,7 +105,8 @@ export default {
           selectedVocabulary: { editing: false },
           selectedTerm: { editing: false },
           selectedReference: { editing: false },
-          selectedAsset: { editing: false }
+          selectedAsset: { editing: false },
+          selectedCountry: { selected: false }
         },
         setSelectedContent (content) {
           this.state.selectedContent = content
@@ -132,6 +131,12 @@ export default {
         },
         setSelectedAsset (asset) {
           this.state.selectedAsset = asset
+        },
+        setSelectedCountry (countries) {
+          this.state.selectedCountry = countries
+        },
+        getSelectedCountry () {
+          return this.state.selectedCountry
         },
         toggleEditingVocabulary (vocabulary) {
           vocabulary.editing = !vocabulary.editing
@@ -271,6 +276,7 @@ export default {
       Common.fetch(this.routes.allCountries).then(
         function (response) {
           self.$set('countries', response.data)
+          self.countries.map(function (country) { country.selected = false })
           self.$emit('messenger-notify', { countries: Messages.fetch.success('countries'), type: 'success' })
         },
         function () {

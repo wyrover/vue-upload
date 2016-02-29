@@ -27,7 +27,7 @@
           <div class="col col-12">
 
             <country-picker
-              :countries="countries"
+              :countries.sync="countries"
               :selected.sync="selectedCountries"
               :whitelist="['gb','us','ca']"
               :show.sync="showCountryPicker"
@@ -35,8 +35,8 @@
             </country-picker>
 
             <language-picker
-              :languages="languages"
-              :whitelist="['en_US','en_GB']"
+              :languages.sync="languages"
+              :whitelist="['British English','American English']"
               :default="en_GB"
               :show="showLanguagePicker"
               :shared-state.sync="sharedState">
