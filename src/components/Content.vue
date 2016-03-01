@@ -28,9 +28,7 @@
 
             <country-picker
               :countries.sync="countries"
-              :selected.sync="selectedCountries"
               :whitelist="['gb','us','ca']"
-              :show.sync="showCountryPicker"
               :shared-state.sync="sharedState">
             </country-picker>
 
@@ -206,7 +204,7 @@
   import CodeMirror from './CodeMirror'
   import References from './References'
   import Tooltip from './Tooltip'
-  import CountryPicker from './CountryPicker'
+  import CountryPicker from './Countries/CountryPicker'
   import LanguagePicker from './LanguagePicker'
 
   export default {
@@ -347,9 +345,8 @@
       },
       associateCountries (content) {
         var self = this
-        Common.patch(`${this.routes.associateLanguages}/${content.id}`, JSON.stringify(content)).then(function (response) {
+        Common.patch(`${this.routes.associateCountries}/${content.id}`, JSON.stringify(content)).then(function (response) {
           var data = response.data
-          console.log(data)
           self.sharedState.setSelectedContent(data)
           self.$dispatch('fetch')
           self.$dispatch('messenger-notify', { content: `Added references to content`, type: 'success' })
