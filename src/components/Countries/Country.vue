@@ -1,7 +1,7 @@
 <template>
   <span>
     <button
-      @click.prevent="select"
+      @click.prevent="select(country)"
       class="col col-1 btn flag-wrapper m1 flag-icon-background flag-icon-{{ country.iso_3166_2.toLowerCase() }} {{ !selected ? 'muted' : '' }}"
       :title="country.name">
         &nbsp;
@@ -12,11 +12,14 @@
 <script>
   export default {
     props: {
-      country: { type: Object, required: true },
-      selected: { type: Boolean, required: false, default: false }
+      country: {type: Object, required: true},
+      selected: {type: Boolean, required: false, default: false}
     },
     methods: {
       select () {
+        this.selected
+          ? this.$dispatch('remove-country', this.country) : this.$dispatch('add-country', this.country)
+
         this.selected = !this.selected
       }
     }

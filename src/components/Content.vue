@@ -246,6 +246,32 @@
       'save-content' () {
         this.updateContent()
       },
+      'add-country' (country) {
+        var content = this.sharedState.getSelectedContent()
+
+        // Check if the country is already in the list of this content's countries
+        if (!_.findWhere(content.countries, { name: country.name })) {
+          // Add it to the list of countries for this content
+          content.countries.push(country)
+        }
+        // Now associate the countries with the content
+        this.associateCountries(content)
+      },
+      'remove-country' (country) {
+        var content = this.sharedState.getSelectedContent()
+
+        // Check if the country is already in the list of this content's countries
+        if (_.findWhere(content.countries, { name: country.name })) {
+          // Find the index of the country in the countries array
+          var index = _.findIndex(content.countries, { name: country.name })
+          if (index > -1) {
+            // Remove it
+            content.countries.splice(index, 1)
+          }
+        }
+        // Now associate the countries with the content
+        this.associateCountries(content)
+      },
       'add-reference-to-content' (reference) {
         var self = this
         // Turn off editing
@@ -346,12 +372,12 @@
       associateCountries (content) {
         var self = this
         Common.patch(`${this.routes.associateCountries}/${content.id}`, JSON.stringify(content)).then(function (response) {
-          var data = response.data
-          self.sharedState.setSelectedContent(data)
-          self.$dispatch('fetch')
-          self.$dispatch('messenger-notify', { content: `Added references to content`, type: 'success' })
+          // var data = response.data
+          // self.sharedState.setSelectedContent(data)
+          // self.$dispatch('fetch')
+          // self.$dispatch('messenger-notify', { content: `Added countries to content`, type: 'success' })
         }, function (response) {
-          self.$dispatch('messenger-notify', { content: 'Failed adding references to content, please try again', type: 'error' })
+          self.$dispatch('messenger-notify', { content: 'Failed adding countries to content, please try again', type: 'error' })
         })
       }
     }
