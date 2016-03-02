@@ -1,10 +1,10 @@
 <template>
     <span>
-        <select v-model="selected" options="languages" class="m1">
+        <select v-model="selected" class="m1">
             <option
               v-for="language in languages"
               v-show="inWhitelist(language)"
-              :value="language.name" selected>
+              :value="language.id">
               {{ language.name }}
             </option>
         </select>
@@ -17,7 +17,7 @@
   export default {
     data () {
       return {
-        selected: { name: 'Select...' }
+        selected: 40
       }
     },
     props: {
