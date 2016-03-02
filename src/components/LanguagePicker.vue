@@ -1,6 +1,6 @@
 <template>
   <span>
-    <select v-model="selected.id" @change="select" class="m1">
+    <select v-model="selected.id" @change="select" class="m1 bg-white border-none">
       <option
         v-for="language in languages"
         v-show="inWhitelist(language)"

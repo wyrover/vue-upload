@@ -120,6 +120,9 @@ export default {
         getSelectedContent () {
           return this.state.selectedContent
         },
+        getSelectedPage () {
+          return this.state.selectedPage
+        },
         setSelectedPage (page) {
           this.state.selectedPage = page
         },
@@ -343,7 +346,7 @@ export default {
 <style>
   @import '../node_modules/ace-css/css/ace.min.css';
   @import '../node_modules/animate.css/source/_base.css';
-  @import "../node_modules/prismjs/themes/prism.css";
+  @import '../node_modules/prismjs/themes/prism.css';
 
   body {
     font-family: Helvetica, sans-serif;
