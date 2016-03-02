@@ -28,7 +28,7 @@
 
             <country-picker
               :countries.sync="countries"
-              :whitelist="['ly','gb','us','ca']"
+              :whitelist="['gb','us']"
               :preselect="sharedState.getSelectedContent().countries">
             </country-picker>
 
