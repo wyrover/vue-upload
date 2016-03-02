@@ -128,8 +128,11 @@
             <input type="text" v-model="page.slug | slugify 'page.name'" name="slug" class="border-none p0">
           </div>
           <div class="col col-right">
-            <!--Language-->
-            <div class="col flag-icon flag-icon-gb flag-icon-squared mr2 p1" title="England"></div>
+            <!--Countries-->
+            <country
+              v-for="country in countries"
+              :country="country">
+            </country>
             <!--Lock-->
             <div v-show="page.locked" class="col orange border circle mr1 p1 pointer muted" title="Locked by another user">&#128274;</div>
             <!--Create / Update-->
@@ -179,13 +182,15 @@
   import Modal from './Modal.vue'
   import Tabs from './Tabset.vue'
   import Tab from './Tab.vue'
+  import Country from './Countries/Country'
 
   export default {
     name: 'Pages',
     components: {
       'modal': Modal,
       'tabs': Tabs,
-      'tab': Tab
+      'tab': Tab,
+      'country': Country
     },
     data () {
       return {
@@ -205,11 +210,10 @@
       'views',
       'layouts',
       'pages',
-      'content',
-      'countries'
+      'content'
     ],
     computed: {
-      filteredPages: function () {
+      filteredPages () {
         if (this.pages) {
           return this.pages.filter(function (page) {
             // If search query is empty:
@@ -218,6 +222,18 @@
             return page.name.toLowerCase().indexOf(this.searchPagesQuery.toLowerCase()) > -1
           }.bind(this))
         }
+      },
+      countries () {
+        console.log('ran')
+        var countries = []
+        var pageContent = this.sharedState.getSelectedPage().content
+        _.each(pageContent, function (content) {
+          _.each(content.countries, function (country) {
+            console.log(country)
+            countries.push(country)
+          })
+        })
+        return countries
       }
     },
     events: {

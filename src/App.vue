@@ -1,9 +1,12 @@
 <template>
   <div>
+
+    <!--vue-router-->
     <div class="col col-12 bg-black p2 m0">
-      <!--vue-router-->
+
       <a v-link="{ path: '/pages'   }" class="btn silver">Pages   <span class="muted">({{ pages.length   }})</span></a>
       <a v-link="{ path: '/content' }" class="btn silver">Content <span class="muted">({{ content.length }})</span></a>
+
       <!--search-->
       <input
         v-model="searchModel"
@@ -12,6 +15,7 @@
         name="search"
         placeholder="&#128269;Search&hellip;"
         style="border: none">
+
     </div>
 
     <!--vue-progress-->
@@ -56,6 +60,7 @@
       :pages.sync="pages"
       :content.sync="content"
       :countries.sync="countries"
+      :languages.sync="languages"
       :references.sync="references"
       keep-alive>
     </router-view>
@@ -66,18 +71,22 @@
 <script>
 import Routes from './routes'
 import Vue from 'vue'
+import store from './store/content/index'
+
+import 'prismjs'
 
 import CodeMirror from './components/CodeMirror'
 import Messenger from './components/Messenger'
 import Progress from './components/Progress'
 import Taxonomies from './components/Taxonomies/Taxonomies'
 import SweetAlert from './components/SweetAlert'
+// import Typeahead from './components/Typeahead'
 import Common from './vue/Common'
 import Messages from './vue/Messages'
-import store from './store/content/index'
 
 export default {
   store,
+  name: 'App',
   replace: false,
   components: {
     CodeMirror,
@@ -96,7 +105,8 @@ export default {
           selectedVocabulary: { editing: false },
           selectedTerm: { editing: false },
           selectedReference: { editing: false },
-          selectedAsset: { editing: false }
+          selectedAsset: { editing: false },
+          selectedCountry: { selected: false }
         },
         setSelectedContent (content) {
           this.state.selectedContent = content
@@ -110,6 +120,9 @@ export default {
         getSelectedContent () {
           return this.state.selectedContent
         },
+        getSelectedPage () {
+          return this.state.selectedPage
+        },
         setSelectedPage (page) {
           this.state.selectedPage = page
         },
@@ -121,6 +134,12 @@ export default {
         },
         setSelectedAsset (asset) {
           this.state.selectedAsset = asset
+        },
+        setSelectedCountry (countries) {
+          this.state.selectedCountry = countries
+        },
+        getSelectedCountry () {
+          return this.state.selectedCountry
         },
         toggleEditingVocabulary (vocabulary) {
           vocabulary.editing = !vocabulary.editing
@@ -137,6 +156,7 @@ export default {
         }
       },
       countries: [],
+      languages: [],
       pages: [],
       content: [],
       layouts: [],
@@ -194,6 +214,7 @@ export default {
       this.fetchPages()
       this.fetchContent()
       this.fetchCountries()
+      this.fetchLanguages()
       this.fetchReferences()
       this.fetchResources()
       this.fetchTaxonomies()
@@ -258,10 +279,24 @@ export default {
       Common.fetch(this.routes.allCountries).then(
         function (response) {
           self.$set('countries', response.data)
+          self.countries.map(function (country) { country.selected = false })
           self.$emit('messenger-notify', { countries: Messages.fetch.success('countries'), type: 'success' })
         },
         function () {
           self.$emit('messenger-notify', { countries: Messages.fetch.failure('countries'), type: 'error' })
+        }
+      )
+    },
+    fetchLanguages () {
+      var self = this
+      // Fetch languages
+      Common.fetch(this.routes.allLanguages).then(
+        function (response) {
+          self.$set('languages', response.data)
+          self.$emit('messenger-notify', { languages: Messages.fetch.success('languages'), type: 'success' })
+        },
+        function () {
+          self.$emit('messenger-notify', { languages: Messages.fetch.failure('languages'), type: 'error' })
         }
       )
     },
@@ -311,6 +346,8 @@ export default {
 <style>
   @import '../node_modules/ace-css/css/ace.min.css';
   @import '../node_modules/animate.css/source/_base.css';
+  @import '../node_modules/prismjs/themes/prism.css';
+
   body {
     font-family: Helvetica, sans-serif;
   }
