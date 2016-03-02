@@ -4,7 +4,7 @@
       v-for="country in countries"
       v-show="inWhitelist(country)"
       :country="country"
-      :selected.sync="country.selected">
+      :selected="shouldPreselect(country)">
     </country>
   </span>
 </template>
@@ -12,17 +12,22 @@
 <script>
   var _ = require('underscore')
   import Country from './Country.vue'
-  import Common from '../../vue/Common'
   export default {
     components: { Country },
     props: {
       whitelist: { type: Array, required: false },
-      countries: [],
-      sharedState: {}
+      preselect: [],
+      countries: []
     },
     methods: {
       inWhitelist (country) {
         return _.contains(this.whitelist, country.iso_3166_2.toLowerCase())
+      },
+      shouldPreselect (country) {
+        if (_.where(this.preselect, { id: country.id }).length) {
+          return true
+        }
+        return false
       }
     }
 }

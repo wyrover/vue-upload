@@ -28,8 +28,8 @@
 
             <country-picker
               :countries.sync="countries"
-              :whitelist="['gb','us','ca']"
-              :shared-state.sync="sharedState">
+              :whitelist="['ly','gb','us','ca']"
+              :preselect="sharedState.getSelectedContent().countries">
             </country-picker>
 
             <language-picker
