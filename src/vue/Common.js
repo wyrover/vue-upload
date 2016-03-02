@@ -1,5 +1,6 @@
 var Vue = require('vue')
 Vue.use(require('vue-resource')) // https://github.com/vuejs/vue-resource
+
 import createLogger from '../middlewares/logger'
 
 // Config
@@ -20,10 +21,10 @@ Vue.http.interceptors.push({
   },
   response (response) {
     if (response.ok) {
-      console.log('yep')
+      console.log(`%c - XHR success - ${response.request.url} `, 'background: #222; color: #bada55')
       // Vue.$broadcast('progress-stop')
     } else {
-      console.log('nope')
+      console.log(`%c - XHR failure - ${response.request.url} `, 'background: #222; color: #ff4136')
       // Vue.$broadcast('progress-fail')
     }
     return response

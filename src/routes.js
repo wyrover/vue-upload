@@ -10,6 +10,7 @@ export default {
   allResources: `${domain}/admin/resources/all`,
   associateReferences: `${domain}/admin/content/references`,
   associateCountries: `${domain}/admin/content/countries`,
+  associateLanguages: `${domain}/admin/content/languages`,
   createContent: `${domain}/admin/content/create`,
   createPages: `${domain}/admin/pages/create`,
   createReference: `${domain}/admin/references`,

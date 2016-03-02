@@ -11,7 +11,7 @@
 
 <script>
   var _ = require('underscore')
-  import Country from './Country.vue'
+  import Country from './Country'
   export default {
     components: { Country },
     props: {
@@ -27,5 +27,5 @@
         return !!_.where(this.preselect, {id: country.id}).length
       }
     }
-}
+  }
 </script>

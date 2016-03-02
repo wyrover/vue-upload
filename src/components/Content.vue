@@ -35,9 +35,7 @@
             <language-picker
               :languages.sync="languages"
               :whitelist="['British English','American English']"
-              :default="en_GB"
-              :show="showLanguagePicker"
-              :shared-state.sync="sharedState">
+              :preselect="'British English'">
             </language-picker>
 
           </div>
@@ -243,6 +241,14 @@
       'resources'
     ],
     events: {
+      'select-language' (language) {
+        console.log(language)
+        var content = this.sharedState.getSelectedContent()
+        // todo: Only one language although backend should support multiple
+        content.languages = [language]
+        // Now associate the languages with the content
+        this.associateLanguages(content)
+      },
       'save-content' () {
         this.updateContent()
       },
@@ -378,6 +384,17 @@
           // self.$dispatch('messenger-notify', { content: `Added countries to content`, type: 'success' })
         }, function (response) {
           self.$dispatch('messenger-notify', { content: 'Failed adding countries to content, please try again', type: 'error' })
+        })
+      },
+      associateLanguages (content) {
+        var self = this
+        Common.patch(`${this.routes.associateLanguages}/${content.id}`, JSON.stringify(content)).then(function (response) {
+          // var data = response.data
+          // self.sharedState.setSelectedContent(data)
+          // self.$dispatch('fetch')
+          // self.$dispatch('messenger-notify', { content: `Added countries to content`, type: 'success' })
+        }, function (response) {
+          self.$dispatch('messenger-notify', { content: 'Failed adding languages to content, please try again', type: 'error' })
         })
       }
     }
