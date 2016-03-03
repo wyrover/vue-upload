@@ -1,14 +1,37 @@
-<template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<template xmlns:v-bind="http://www.w3.org/1999/xhtml">
   <div>
+
+    <!--Countries-->
+    <div class="col-right">
+      <strong>Country:</strong>
+      <select v-model="currentCountry">
+        <option v-for="country in countries" :value="country">
+          {{ country.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <!--Languages-->
+    <div class="col-right">
+      <strong>Language:</strong>
+      <select v-model="currentLanguage">
+        <option v-for="language in languages" :value="language">
+          {{ language.name }}
+        </option>
+      </select>
+    </div>
+
     <!--Column headings-->
     <div class="col col-12 bold blue">
-      <a href="#"
+      <span
          class="col col-2"
          v-for="column in columns"
          @click="sortBy(column)"
-         v-bind:class="{ 'active': sortKey == column }">
+         :class="{ 'active': sortKey == column }">
         {{ column | capitalize }}
-      </a>
+      </span>
     </div>
 
     <div class="clearfix"></div>
@@ -101,7 +124,7 @@
       <div v-for="page in filteredPages"
            class="col col-12 border-bottom py2"
            :class="{ 'muted': page.deleted_at, 'border-blue': page === sharedState.state.selectedPage }"
-           v-on:keyup.esc="page.locked = false">
+           @keyup.esc="page.locked = false">
 
         <!--Set click handler for setting selectedProduct-->
         <div class="col col-12" @click="setSelected(page)">
@@ -121,18 +144,28 @@
           </div>
           <div class="col col-2">
             <!--Name-->
-            <input type="text" v-model="page.name" v-on:keyup="page.slug = page.name" name="name" class="border-none bold p0" placeholder="Enter name">
+            <input type="text" v-model="page.name" @keyup="page.slug = page.name" name="name" class="border-none bold p0" placeholder="Enter name">
           </div>
           <div class="col col-2">
             <!--Slug-->
             <input type="text" v-model="page.slug | slugify 'page.name'" name="slug" class="border-none p0">
           </div>
           <div class="col col-right">
+
             <!--Countries-->
-            <country
-              v-for="country in countries"
-              :country="country">
-            </country>
+            <country-picker
+              :countries.sync="countries"
+              :whitelist="['gb','us']"
+              :preselect="page.countries">
+            </country-picker>
+
+            <!--Languages-->
+            <language-picker
+              :languages.sync="languages"
+              :whitelist="['British English','American English']"
+              :selected="page.language">
+            </language-picker>
+
             <!--Lock-->
             <div v-show="page.locked" class="col orange border circle mr1 p1 pointer muted" title="Locked by another user">&#128274;</div>
             <!--Create / Update-->
@@ -182,7 +215,8 @@
   import Modal from './Modal.vue'
   import Tabs from './Tabset.vue'
   import Tab from './Tab.vue'
-  import Country from './Countries/Country'
+  import CountryPicker from './Countries/CountryPicker'
+  import LanguagePicker from './LanguagePicker'
 
   export default {
     name: 'Pages',
@@ -190,7 +224,8 @@
       'modal': Modal,
       'tabs': Tabs,
       'tab': Tab,
-      'country': Country
+      'country-picker': CountryPicker,
+      'language-picker': LanguagePicker
     },
     data () {
       return {
@@ -208,6 +243,8 @@
       'routes',
       'shared-state',
       'views',
+      'countries',
+      'languages',
       'layouts',
       'pages',
       'content'
@@ -222,18 +259,6 @@
             return page.name.toLowerCase().indexOf(this.searchPagesQuery.toLowerCase()) > -1
           }.bind(this))
         }
-      },
-      countries () {
-        console.log('ran')
-        var countries = []
-        var pageContent = this.sharedState.getSelectedPage().content
-        _.each(pageContent, function (content) {
-          _.each(content.countries, function (country) {
-            console.log(country)
-            countries.push(country)
-          })
-        })
-        return countries
       }
     },
     events: {
@@ -247,9 +272,62 @@
             return taxonomy
           })
         })
+      },
+      'add-country' (country) {
+        var page = this.sharedState.getSelectedPage()
+        // Check if the country is already in the list of this page's countries
+        if (!_.findWhere(page.countries, { name: country.name })) {
+          // Add it to the list of countries for this page
+          page.countries.push(country)
+        }
+        // Now associate the countries with the page
+        this.associateCountries(page)
+      },
+      'remove-country' (country) {
+        var page = this.sharedState.getSelectedPage()
+        // Check if the country is already in the list of this page's countries
+        if (_.findWhere(page.countries, { name: country.name })) {
+          // Find the index of the country in the countries array
+          var index = _.findIndex(page.countries, { name: country.name })
+          if (index > -1) {
+            // Remove it
+            page.countries.splice(index, 1)
+          }
+        }
+        // Now associate the countries with the page
+        this.associateCountries(page)
+      },
+      'select-language' (language) {
+        var page = this.sharedState.getSelectedPage()
+        console.log(language.name)
+        page.language = language
+        // Now associate the languages with the content
+        this.associateLanguages(page)
       }
     },
     methods: {
+      associateCountries (page) {
+        var self = this
+        Common.patch(`${this.routes.associateCountries}/${page.slug}`, JSON.stringify(page)).then(function (response) {
+          // var data = response.data
+          // self.sharedState.setSelectedContent(data)
+          // self.$dispatch('fetch')
+          // self.$dispatch('messenger-notify', { content: `Added countries to page`, type: 'success' })
+        }, function (response) {
+          self.$dispatch('messenger-notify', { content: 'Failed adding countries to page, please try again', type: 'error' })
+        })
+      },
+      associateLanguages (page) {
+        var self = this
+        Common.patch(`${this.routes.associateLanguages}/${page.slug}`, JSON.stringify(page)).then(function (response) {
+          // var data = response.data
+          // self.sharedState.setSelectedContent(data)
+          // self.$dispatch('fetch')
+          // self.$dispatch('messenger-notify', { content: `Added language to page`, type: 'success' })
+        }, function (response) {
+          self.$dispatch('messenger-notify', { content: 'Failed adding language to page, please try again', type: 'error' })
+        })
+      },
       addTaxonomy (taxonomy) {
         this.taxonomies.push({ name: 'TEST' })
       },

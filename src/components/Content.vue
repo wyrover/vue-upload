@@ -24,22 +24,6 @@
             </button>
           </div>
 
-          <div class="col col-12">
-
-            <country-picker
-              :countries.sync="countries"
-              :whitelist="['gb','us']"
-              :preselect="sharedState.getSelectedContent().countries">
-            </country-picker>
-
-            <language-picker
-              :languages.sync="languages"
-              :whitelist="['British English','American English']"
-              :preselect="'British English'">
-            </language-picker>
-
-          </div>
-
           <!--References-->
           <references
             v-show="showReferences"
@@ -76,9 +60,6 @@
           <button class="btn btn-outline bg-green white" @click.prevent="showInsertMenu()">
             <tooltip placement="right" hint="Insert media into this content" text="Insert&hellip;"></tooltip>
           </button>
-          <button class="btn btn-outline bg-navy white" @click.prevent="showLanguagePicker()">
-            <tooltip placement="right" hint="Choose this content's language" text="Choose language&hellip;"></tooltip>
-          </button>
           <button class="right btn btn-outline bg-blue white" @click.prevent="updateContent()">
             <tooltip placement="left" hint="Save all changes that you have made in the editor" text="Save"></tooltip>
           </button>
@@ -97,28 +78,6 @@
          :class="{ 'active': sortKey == column }">
         {{ column | capitalize }}
       </a>
-    </div>
-
-    <!--Countries-->
-    <div class="col-right">
-      <strong>Country:</strong>
-      <select v-model="currentCountry">
-        <option v-for="country in countries" :value="country">
-          {{ country.name }}
-        </option>
-      </select>
-    </div>
-
-    <div class="clearfix"></div>
-
-    <!--Languages-->
-    <div class="col-right">
-      <strong>Language:</strong>
-      <select v-model="currentLanguage">
-        <option v-for="language in languages" :value="language">
-          {{ language.name }}
-        </option>
-      </select>
     </div>
 
     <!--Data rows-->
@@ -202,8 +161,6 @@
   import CodeMirror from './CodeMirror'
   import References from './References'
   import Tooltip from './Tooltip'
-  import CountryPicker from './Countries/CountryPicker'
-  import LanguagePicker from './LanguagePicker'
 
   export default {
     name: 'Content',
@@ -211,9 +168,7 @@
       'modal': Modal,
       'codemirror': CodeMirror,
       'references': References,
-      'tooltip': Tooltip,
-      'country-picker': CountryPicker,
-      'language-picker': LanguagePicker
+      'tooltip': Tooltip
     },
     data () {
       return {
@@ -222,7 +177,6 @@
         searchContent: '',
         reverse: false,
         showModal: false,
-        showLanguagePicker: false,
         showReferences: false,
         showInsertDialog: false,
         selectedCountries: []
@@ -235,48 +189,12 @@
       'layouts',
       'pages',
       'content',
-      'countries',
-      'languages',
       'references',
       'resources'
     ],
     events: {
-      'select-language' (language) {
-        console.log(language)
-        var content = this.sharedState.getSelectedContent()
-        // todo: Only one language although backend should support multiple
-        content.languages = [language]
-        // Now associate the languages with the content
-        this.associateLanguages(content)
-      },
       'save-content' () {
         this.updateContent()
-      },
-      'add-country' (country) {
-        var content = this.sharedState.getSelectedContent()
-
-        // Check if the country is already in the list of this content's countries
-        if (!_.findWhere(content.countries, { name: country.name })) {
-          // Add it to the list of countries for this content
-          content.countries.push(country)
-        }
-        // Now associate the countries with the content
-        this.associateCountries(content)
-      },
-      'remove-country' (country) {
-        var content = this.sharedState.getSelectedContent()
-
-        // Check if the country is already in the list of this content's countries
-        if (_.findWhere(content.countries, { name: country.name })) {
-          // Find the index of the country in the countries array
-          var index = _.findIndex(content.countries, { name: country.name })
-          if (index > -1) {
-            // Remove it
-            content.countries.splice(index, 1)
-          }
-        }
-        // Now associate the countries with the content
-        this.associateCountries(content)
       },
       'add-reference-to-content' (reference) {
         var self = this
@@ -305,9 +223,6 @@
       }
     },
     methods: {
-      showLanguagePicker () {
-        this.showLanguagePicker = !this.showLanguagePicker
-      },
       // addContent: store.actions.addContent,
       setSelected (content) {
         this.sharedState.setSelectedContent(content)
@@ -374,28 +289,6 @@
       sortBy (sortKey) {
         this.reverse = (this.sortKey === sortKey) ? !this.reverse : false
         this.sortKey = sortKey
-      },
-      associateCountries (content) {
-        var self = this
-        Common.patch(`${this.routes.associateCountries}/${content.id}`, JSON.stringify(content)).then(function (response) {
-          // var data = response.data
-          // self.sharedState.setSelectedContent(data)
-          // self.$dispatch('fetch')
-          // self.$dispatch('messenger-notify', { content: `Added countries to content`, type: 'success' })
-        }, function (response) {
-          self.$dispatch('messenger-notify', { content: 'Failed adding countries to content, please try again', type: 'error' })
-        })
-      },
-      associateLanguages (content) {
-        var self = this
-        Common.patch(`${this.routes.associateLanguages}/${content.id}`, JSON.stringify(content)).then(function (response) {
-          // var data = response.data
-          // self.sharedState.setSelectedContent(data)
-          // self.$dispatch('fetch')
-          // self.$dispatch('messenger-notify', { content: `Added countries to content`, type: 'success' })
-        }, function (response) {
-          self.$dispatch('messenger-notify', { content: 'Failed adding languages to content, please try again', type: 'error' })
-        })
       }
     }
   }

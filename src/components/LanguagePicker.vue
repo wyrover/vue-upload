@@ -1,10 +1,10 @@
 <template>
   <span>
-    <select v-model="selected.id" @change="select" class="m1 bg-white border-none">
+    <select v-model="selected" @change="select" class="m1 bg-white border-none">
       <option
         v-for="language in languages"
         v-show="inWhitelist(language)"
-        :value="language.id">
+        :value="language">
         {{ language.name }}
       </option>
     </select>
@@ -15,17 +15,9 @@
   var _ = require('underscore')
   import Common from '../vue/Common'
   export default {
-    ready () {
-      // Get the selected language from languages[] by name
-      var selectedLanguage = _.findWhere(this.languages, { name: this.preselect })
-      if (selectedLanguage) {
-        this.selected = selectedLanguage
-      }
-    },
     props: {
       whitelist: { type: Array, required: false },
-      selected: { default: { id: 40 } },
-      preselect: { default: 'British English' },
+      selected: {},
       languages: []
     },
     methods: {
@@ -33,6 +25,7 @@
         return _.contains(this.whitelist, language.name)
       },
       select () {
+        // this.selected = _.findWhere(this.languages, { id: this.preselect })
         this.$dispatch('select-language', this.selected)
       }
     }
