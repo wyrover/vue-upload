@@ -188,9 +188,8 @@ export default {
     this.fetch()
   },
   events: {
-    'fetch' () {
-      this.fetch()
-    },
+    'fetch' () { this.fetch() },
+    'fetch-pages' () { this.fetchPages() },
     events: {
       'messenger-notify' (message) {
         this.$broadcast('messenger-notify', message)

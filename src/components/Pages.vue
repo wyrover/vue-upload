@@ -41,33 +41,43 @@
       <modal :show.sync="showModal">
         <div slot="header">
           <div class="col-right">
+
             <!--Lock-->
             <div v-show="sharedState.state.selectedPage.locked"
                  class="col orange border circle pointer p1 muted"
                  title="Locked by another user">&#128274;</div>
-          </div>
-          <!--Name-->
-          <h3>{{ sharedState.state.selectedPage.name }}</h3>
+            </div>
+
+            <!--Name-->
+            <h3>{{ sharedState.state.selectedPage.name }}</h3>
+
         </div>
         <div slot="body">
+
           <!--Search (content)-->
           <input v-model="searchContentQuery" type="text" name="search" placeholder="&#128269; Search&hellip;" style="border: none">
+
           <!--Tabs-->
           <tabs>
             <tab header="All content"
                  :show-item-count="true"
                  :item-count="sharedState.state.selectedContent.length">
               <div class="col col-12 p2">
+
                 <!--v-for-->
                 <div v-for="someContent in content | filterBy searchContentQuery"
                      class="col col-12 border-bottom py1 mb1">
+
                   <div class="col ml1 mr2">
-                    <!--Add / Remove content from page buttons-->
+
+                    <!--Add content to page button-->
                     <button v-show="pageContainsContent(someContent)"
                             @click.prevent="removeContentFromPage(someContent)"
                             class="btn red btn-outline">
                       &minus;
                     </button>
+
+                    <!--Remove content from page button-->
                     <button v-show="!pageContainsContent(someContent)"
                             @click.prevent="addContentToPage(someContent)"
                             class="btn green btn-outline">
@@ -124,32 +134,39 @@
       <div v-for="page in filteredPages"
            class="col col-12 border-bottom py2"
            :class="{ 'muted': page.deleted_at, 'border-blue': page === sharedState.state.selectedPage }"
+           @mouseover="setSelected(page)"
            @keyup.esc="page.locked = false">
 
         <!--Set click handler for setting selectedProduct-->
-        <div class="col col-12" @click="setSelected(page)">
+        <div class="col col-12">
           <div class="col col-2">
+
             <!--Layout select-->
             <select name="layouts" v-model="page.layout" class="col col-12 border-none p0 bg-white">
               <option v-for="layout in layouts" v-bind:value="layout">{{ layout }}</option>
             </select>
           </div>
+
           <div class="col col-2">
             <!--View select-->
             <select name="views" v-show="page.id" v-model="page.view" class="col col-12 border-none p0 bg-white">
               <option v-for="view in views" v-bind:value="view">{{ view }}</option>
             </select>
+
             <!--View input (create)-->
             <input type="text" v-show="!page.id" v-model="page.view" name="view" class="border-none p0" placeholder="site.pages.example">
           </div>
+
           <div class="col col-2">
             <!--Name-->
             <input type="text" v-model="page.name" @keyup="page.slug = page.name" name="name" class="border-none bold p0" placeholder="Enter name">
           </div>
+
           <div class="col col-2">
             <!--Slug-->
             <input type="text" v-model="page.slug | slugify 'page.name'" name="slug" class="border-none p0">
           </div>
+
           <div class="col col-right">
 
             <!--Countries-->
@@ -190,11 +207,14 @@
             <!--Delete-->
             <a v-show="!page.deleted_at" href="#" @click.prevent="deletePage(page)" class="btn-outline red" title="Delete">&times;</a>
             <a v-show="page.deleted_at" href="#" @click.prevent="restorePage(page)" class="btn-outline blue" title="Restore">&#10559;</a>
+
           </div>
+
           <div class="clearfix"></div>
           <div v-show="!page.id" class="col col-right">
             <button @click.prevent="removePage(page)" class="col col-right mt1 block btn border rounded">&minus;</button>
           </div>
+
         </div>
       </div>
     </div>
@@ -328,6 +348,21 @@
           self.$dispatch('messenger-notify', { content: 'Failed adding language to page, please try again', type: 'error' })
         })
       },
+      toggleActive (page) {
+        console.log('something')
+        var self = this
+        Common.fetch(this.routes.toggleActive + '/' + page.slug, {}).then(function (response) {
+          var data = response.data
+          if (data.active) {
+            self.$dispatch('messenger-notify', { content: 'Activated page', type: 'success' })
+          } else {
+            self.$dispatch('messenger-notify', { content: 'Deactivated page', type: 'success' })
+          }
+          self.$dispatch('fetch-pages')
+        }, function (response) {
+          self.$dispatch('messenger-notify', { content: 'Failed, please try again', type: 'error' })
+        })
+      },
       addTaxonomy (taxonomy) {
         this.taxonomies.push({ name: 'TEST' })
       },
@@ -341,7 +376,9 @@
         this.$dispatch('open-modal')
       },
       setSelected (page) {
-        this.sharedState.setSelectedPage(page)
+        if (!this.editing) {
+          this.sharedState.setSelectedPage(page)
+        }
       },
       editPage (page) {
         // stub
@@ -410,20 +447,6 @@
 
         }, function (response) {
           self.$dispatch('messenger-notify', { content: 'Failed updating page, please try again', type: 'error' })
-        })
-      },
-      toggleActive (page) {
-        var self = this
-        Common.get(this.routes.toggleActive + '/' + page.slug, {}).then(function (response) {
-          var data = response.data
-          if (data.active) {
-            self.$dispatch('fetch')
-            self.$dispatch('messenger-notify', { content: 'Activated page', type: 'success' })
-          } else {
-            self.$dispatch('messenger-notify', { content: 'Deactivated page', type: 'success' })
-          }
-        }, function (response) {
-          self.$dispatch('messenger-notify', { content: 'Failed, please try again', type: 'error' })
         })
       },
       deletePage (page) {

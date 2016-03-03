@@ -83,7 +83,7 @@
     <!--Data rows-->
     <div
       v-for="content in content | filterBy searchContent"
-      @click="setSelected(content)"
+      @mouseover="setSelected(content)"
       class="col col-12 border-bottom py1 mb1"
       :class="{ 'muted': content.deleted_at, 'border-blue': content === sharedState.state.selectedContent }"
       @keyup.esc="content.editing = false">
@@ -278,7 +278,7 @@
       },
       toggleActive (content) {
         var self = this
-        Common.get(this.routes.toggleContentActive + '/' + content.id).then(function (response) {
+        Common.fetch(this.routes.toggleContentActive + '/' + content.id).then(function (response) {
           var data = response.data
           self.$dispatch('fetch')
           self.$dispatch('messenger-notify', { content: `Content ${data.active} ? 'activated' : 'deactivated')`, type: 'success' })
