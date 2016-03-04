@@ -13,7 +13,6 @@
 
 <script>
   var _ = require('underscore')
-  import Common from '../vue/Common'
   export default {
     props: {
       whitelist: { type: Array, required: false },
@@ -25,7 +24,6 @@
         return _.contains(this.whitelist, language.name)
       },
       select () {
-        // this.selected = _.findWhere(this.languages, { id: this.preselect })
         this.$dispatch('select-language', this.selected)
       }
     }
