@@ -133,7 +133,7 @@
 
       <div v-for="page in filteredPages"
            class="col col-12 border-bottom py2"
-           :class="{ 'muted': page.deleted_at, 'border-blue': page === sharedState.state.selectedPage }"
+           :class="{ 'muted': page.deleted_at, 'border-green': page === sharedState.state.selectedPage }"
            @mouseover="setSelected(page)"
            @keyup.esc="page.locked = false">
 
