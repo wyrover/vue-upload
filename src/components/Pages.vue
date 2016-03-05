@@ -1,4 +1,4 @@
-<template xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<template>
   <div>
 
     <!--Countries-->
@@ -133,7 +133,7 @@
 
       <div v-for="page in filteredPages"
            class="col col-12 border-bottom py2"
-           :class="{ 'muted': page.deleted_at, 'border-green': page === sharedState.state.selectedPage }"
+           :class="{ 'muted': page.deleted_at, 'bg-silver': page === sharedState.state.selectedPage }"
            @mouseover="setSelected(page)"
            @keyup.esc="page.locked = false">
 
@@ -142,29 +142,29 @@
           <div class="col col-2">
 
             <!--Layout select-->
-            <select name="layouts" v-model="page.layout" class="col col-12 border-none p0 bg-white">
-              <option v-for="layout in layouts" v-bind:value="layout">{{ layout }}</option>
+            <select name="layouts" v-model="page.layout" class="col col-12 border-none p0" :class="{ 'bg-silver': page === sharedState.state.selectedPage, 'bg-white': page !== sharedState.state.selectedPage }">
+              <option v-for="layout in layouts" :value="layout">{{ layout }}</option>
             </select>
           </div>
 
           <div class="col col-2">
             <!--View select-->
-            <select name="views" v-show="page.id" v-model="page.view" class="col col-12 border-none p0 bg-white">
-              <option v-for="view in views" v-bind:value="view">{{ view }}</option>
+            <select name="views" v-show="page.id" v-model="page.view" class="col col-12 border-none p0" :class="{ 'bg-silver': page === sharedState.state.selectedPage, 'bg-white': page !== sharedState.state.selectedPage }">
+              <option v-for="view in views" :value="view">{{ view }}</option>
             </select>
 
             <!--View input (create)-->
-            <input type="text" v-show="!page.id" v-model="page.view" name="view" class="border-none p0" placeholder="site.pages.example">
+            <input type="text" v-show="!page.id" v-model="page.view" name="view" class="border-none p0" placeholder="site.pages.example" :class="{ 'bg-silver': page === sharedState.state.selectedPage, 'bg-white': page !== sharedState.state.selectedPage }">
           </div>
 
           <div class="col col-2">
             <!--Name-->
-            <input type="text" v-model="page.name" @keyup="page.slug = page.name" name="name" class="border-none bold p0" placeholder="Enter name">
+            <input type="text" v-model="page.name" @keyup="page.slug = page.name" name="name" class="border-none bold p0" placeholder="Enter name" :class="{ 'bg-silver': page === sharedState.state.selectedPage, 'bg-white': page !== sharedState.state.selectedPage }">
           </div>
 
           <div class="col col-2">
             <!--Slug-->
-            <input type="text" v-model="page.slug | slugify 'page.name'" name="slug" class="border-none p0">
+            <input type="text" v-model="page.slug | slugify 'page.name'" name="slug" class="border-none p0" :class="{ 'bg-silver': page === sharedState.state.selectedPage, 'bg-white': page !== sharedState.state.selectedPage }">
           </div>
 
           <div class="col col-right">
@@ -451,7 +451,7 @@
       },
       deletePage (page) {
         var self = this
-        Common.delete(this.routes.deletePages + '/' + page.slug, {}).then(function (response) {
+        Common.destroy(this.routes.deletePages + '/' + page.slug, {}).then(function (response) {
           var data = response.data
           if (data.deleted_at) {
             self.$dispatch('messenger-notify', { content: `Successfully deleted page: ${data.name}`, type: 'success' })
