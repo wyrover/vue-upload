@@ -74,6 +74,7 @@
     <!-- use router-view element as (dynamic component) route outlet -->
     <router-view
       @keyup.esc="this.$broadcast('close-modal')"
+      @fetch-glossary-terms="fetchGlossaryTerms"
       :routes="routes"
       :shared-state.sync="sharedState"
       :views.sync="views"

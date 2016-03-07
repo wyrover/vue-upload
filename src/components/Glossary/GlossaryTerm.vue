@@ -12,17 +12,17 @@
         <blockquote v-show="id" class="h5 mt0 mb0">
           &ldquo;{{{ definition | capitalize }}}&rdquo;
         </blockquote>
-        <input v-show="!id" type="text" :value="definition" placeholder="Enter a definition for this term" class="border-none p2">
+        <input v-show="!id" type="text" v-model="definition" placeholder="Enter a definition for this term" class="border-none p2">
       </div>
       <div class="col col-2">
         <blockquote v-show="id" class="h5 mt0 mb0">
           {{{ pronunciation }}}
         </blockquote>
-        <input v-show="!id" type="text" :value="pronunciation" placeholder="Pronunciation" class="border-none p2">
+        <input v-show="!id" type="text" v-model="pronunciation" placeholder="Pronunciation" class="border-none p2">
       </div>
       <div class="col col-2 h5">
         <div v-show="id">{{{ grammar | capitalize }}}</div>
-        <input v-show="!id" type="text" :value="grammar"  placeholder="Grammar"  class="border-none p2">
+        <input v-show="!id" type="text" v-model="grammar" placeholder="Grammar"  class="border-none p2">
       </div>
       <div class="col col-2">
         <a
@@ -47,7 +47,7 @@
     props: [ 'id', 'word', 'definition', 'grammar', 'soundbite-lookup-url', 'soundbite-lookup-type', 'pronunciation' ],
     computed: {
       soundbite () {
-        return this.soundbiteLookupUrl + this.word + this.soundbiteLookupType
+        return this.soundbiteLookupUrl + this.word.toLowerCase() + this.soundbiteLookupType
       }
     }
   }

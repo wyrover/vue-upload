@@ -24,7 +24,7 @@
       :pronunciation.sync="term.pronunciation"
       soundbite-lookup-url="https://ssl.gstatic.com/dictionary/static/sounds/de/0/"
       soundbite-lookup-type=".mp3"
-      @create="create"
+      @create="create(term)"
       class="py1 border-bottom border-blue">
     </glossary-term>
 
@@ -62,13 +62,16 @@
         this.glossaryTerms.push({ word: '', definition: '', grammar: '', soundbite: '', pronunciation: '' })
       },
       create (term) {
-        Common.put(this.routes.createGlossaryTerm, term).then(function (response) {
+        var self = this
+        Common.put(this.routes.createGlossaryTerm, JSON.stringify(term)).then(function (response) {
           var data = response.data
-          if (data.active) {
+          if (data) {
+            console.log(data)
+            term = data
           } else {
-
+            console.log('a bad happened')
           }
-          self.$dispatch('fetch-pages')
+          self.$dispatch('fetch-glossary-terms')
         }, function (response) {})
       }
     }
