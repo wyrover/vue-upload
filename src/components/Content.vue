@@ -60,7 +60,7 @@
           <button class="btn btn-outline bg-green white" @click.prevent="showInsertMenu()">
             <tooltip placement="right" hint="Insert media into this content" text="Insert&hellip;"></tooltip>
           </button>
-          <button class="right btn btn-outline bg-blue white" @click.prevent="updateContent()">
+          <button class="right btn btn-outline bg-blue white" @click.prevent="updateContent">
             <tooltip placement="left" hint="Save all changes that you have made in the editor" text="Save"></tooltip>
           </button>
         </div>
@@ -84,8 +84,8 @@
     <div
       v-for="content in content | filterBy searchContent"
       @mouseover="setSelected(content)"
-      class="col col-12 border-bottom py1 mb1"
-      :class="{ 'muted': content.deleted_at, 'border-blue': content === sharedState.state.selectedContent }"
+      class="col col-12 border-bottom py1"
+      :class="{ 'muted': content.deleted_at, 'bg-silver': content === sharedState.state.selectedContent }"
       @keyup.esc="content.editing = false">
 
       <div class="col col-12">
@@ -98,35 +98,36 @@
             @keyup="content.slug = $root.slugify(content.name)"
             name="name"
             class="border-none p0"
+            :class="{ 'bg-silver': content === sharedState.state.selectedContent }"
             placeholder="Enter name">
 
         </div>
         <div class="col col-right">
 
-          <!--Create/Edit buttons-->
+          <!--Create/Edit/Update buttons-->
           <button
             v-show="!content.id"
             @click.prevent="createContent($index)"
-            class="btn btn-outline green small unbold">
+            class="btn btn-primary small unbold">
             Create
           </button>
+
+          <button
+            v-show="content.id"
+            @click.prevent="updateContent"
+            class="btn btn-primary small unbold">
+            Update
+          </button>
+
           <button
             v-show="content.id"
             @click.prevent="openModal()"
-            class="btn btn-outline green small unbold">
+            class="btn green small unbold">
             Edit
           </button>
 
-          <!--Toggle active-->
-          <a href="#"
-             v-show="content.id"
-             @click.prevent="toggleActive(content)"
-             class="btn border rounded small unbold {{ content.active ? 'green' : 'red' }}">
-            {{ content.active ? 'active' : 'inactive' }}
-          </a>
-
           <!--Delete-->
-          <a href="#" v-show="content.id" @click.prevent="deleteContent(content)" class="red">&times;</a>
+          <a href="#" v-show="content.id" @click.prevent="deleteContent(content)" class="btn red">&times;</a>
 
         </div>
 
@@ -223,7 +224,9 @@
       }
     },
     methods: {
-      // addContent: store.actions.addContent,
+      addContent () {
+        this.content.push({ name: '', content: [], slug: '', old_slug: '', locked: false })
+      },
       setSelected (content) {
         this.sharedState.setSelectedContent(content)
       },
@@ -254,7 +257,7 @@
           self.$dispatch('messenger-notify', {content: 'Failed creating content, please try again', type: 'error'})
         })
       },
-      updateContent () {
+      updateContent (content) {
         var self = this
         Common.patch(`${this.routes.updateContent}/${this.sharedState.state.selectedContent.id}`, JSON.stringify(this.sharedState.state.selectedContent)).then(function (response) {
           var data = response.data

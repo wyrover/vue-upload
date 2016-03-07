@@ -5,7 +5,7 @@ import './vue/Filters'
 import './vue/Transitions'
 
 import App from './App'
-import Pages from './components/Pages'
+import Pages from './components/Pages/Pages'
 import Content from './components/Content'
 
 var VueRouter = require('vue-router')

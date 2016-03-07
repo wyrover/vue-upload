@@ -10,14 +10,34 @@
       <!--search-->
       <input
         v-model="searchModel"
-        class="right center white bg-black py1 h4"
+        class="right center white bg-black border-none py1 h4"
         type="text"
         name="search"
-        placeholder="&#128269;Search&hellip;"
-        style="border: none">
+        placeholder="&#128269;Search&hellip;">
+
+      <!--Countries-->
+      <div class="right white">
+        <strong>Country</strong>
+        <select v-model="currentCountry" class="border-none white bg-black px1">
+          <option v-for="country in countries" :value="country">
+            {{ country.name }}
+          </option>
+        </select>
+      </div>
+
+      <!--Languages-->
+      <div class="right white">
+        <strong>Language</strong>
+        <select v-model="currentLanguage" class="border-none white bg-black px1">
+          <option v-for="language in languages" :value="language">
+            {{ language.name }}
+          </option>
+        </select>
+      </div>
 
     </div>
 
+  <div class="p1">
     <!--vue-progress-->
     <progress
       :percent="ajaxProgress.percent"
@@ -36,19 +56,19 @@
       :show-close-button="messenger.showCloseButton">
     </messenger>
 
-<!--    &lt;!&ndash;Taxonomies (categories)&ndash;&gt;
-    <div class="py2">
-      <button
-        @click.prevent="toggleTaxonomiesDialog()"
-        class="btn">
-        Categories
-      </button>
-      <taxonomies
-        v-show="revealTaxonomies"
-        :taxonomies.sync="taxonomies"
-        :shared-state.sync="sharedState">
-      </taxonomies>
-    </div>-->
+    <!--    &lt;!&ndash;Taxonomies (categories)&ndash;&gt;
+        <div class="py2">
+          <button
+            @click.prevent="toggleTaxonomiesDialog()"
+            class="btn">
+            Categories
+          </button>
+          <taxonomies
+            v-show="revealTaxonomies"
+            :taxonomies.sync="taxonomies"
+            :shared-state.sync="sharedState">
+          </taxonomies>
+        </div>-->
 
     <!-- use router-view element as (dynamic component) route outlet -->
     <router-view
@@ -65,6 +85,7 @@
       keep-alive>
     </router-view>
 
+    </div>
   </div>
 </template>
 

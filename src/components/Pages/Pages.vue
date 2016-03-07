@@ -1,28 +1,6 @@
 <template>
   <div>
 
-    <!--Countries-->
-    <div class="col-right">
-      <strong>Country:</strong>
-      <select v-model="currentCountry">
-        <option v-for="country in countries" :value="country">
-          {{ country.name }}
-        </option>
-      </select>
-    </div>
-
-    <div class="clearfix"></div>
-
-    <!--Languages-->
-    <div class="col-right">
-      <strong>Language:</strong>
-      <select v-model="currentLanguage">
-        <option v-for="language in languages" :value="language">
-          {{ language.name }}
-        </option>
-      </select>
-    </div>
-
     <!--Column headings-->
     <div class="col col-12 bold blue">
       <span
@@ -37,19 +15,23 @@
     <div class="clearfix"></div>
 
     <!--Modal body-->
-    <div v-if="sharedState.state.selectedPage.id">
+    <div v-if="sharedState.getSelectedPage().id">
       <modal :show.sync="showModal">
         <div slot="header">
           <div class="col-right">
 
             <!--Lock-->
-            <div v-show="sharedState.state.selectedPage.locked"
-                 class="col orange border circle pointer p1 muted"
-                 title="Locked by another user">&#128274;</div>
+            <div
+              v-show="sharedState.getSelectedPage().locked"
+              class="col orange border circle pointer p1 muted"
+              title="Locked by another user">
+              &#128274;
             </div>
 
+          </div>
+
             <!--Name-->
-            <h3>{{ sharedState.state.selectedPage.name }}</h3>
+            <h3>{{ sharedState.getSelectedPage().name }}</h3>
 
         </div>
         <div slot="body">
@@ -59,9 +41,11 @@
 
           <!--Tabs-->
           <tabs>
-            <tab header="All content"
-                 :show-item-count="true"
-                 :item-count="sharedState.state.selectedContent.length">
+            <tab
+              header="All content"
+              :show-item-count="true"
+              :item-count="sharedState.getSelectedContent().length">
+
               <div class="col col-12 p2">
 
                 <!--v-for-->
@@ -90,6 +74,7 @@
                   <div class="clearfix"></div>
                 </div>
               </div>
+
             </tab>
             <tab header="Page content">
               <div class="col col-12 p2">
@@ -128,98 +113,27 @@
       </modal>
     </div> <!--/if-->
 
-    <!--Data rows-->  <!--| orderBy sortKey | filterBy search-->
-    <div v-if="filteredPages.length">
-
-      <div v-for="page in filteredPages"
-           class="col col-12 border-bottom py2"
-           :class="{ 'muted': page.deleted_at, 'bg-silver': page === sharedState.state.selectedPage }"
-           @mouseover="setSelected(page)"
-           @keyup.esc="page.locked = false">
-
-        <!--Set click handler for setting selectedProduct-->
-        <div class="col col-12">
-          <div class="col col-2">
-
-            <!--Layout select-->
-            <select name="layouts" v-model="page.layout" class="col col-12 border-none p0" :class="{ 'bg-silver': page === sharedState.state.selectedPage, 'bg-white': page !== sharedState.state.selectedPage }">
-              <option v-for="layout in layouts" :value="layout">{{ layout }}</option>
-            </select>
-          </div>
-
-          <div class="col col-2">
-            <!--View select-->
-            <select name="views" v-show="page.id" v-model="page.view" class="col col-12 border-none p0" :class="{ 'bg-silver': page === sharedState.state.selectedPage, 'bg-white': page !== sharedState.state.selectedPage }">
-              <option v-for="view in views" :value="view">{{ view }}</option>
-            </select>
-
-            <!--View input (create)-->
-            <input type="text" v-show="!page.id" v-model="page.view" name="view" class="border-none p0" placeholder="site.pages.example" :class="{ 'bg-silver': page === sharedState.state.selectedPage, 'bg-white': page !== sharedState.state.selectedPage }">
-          </div>
-
-          <div class="col col-2">
-            <!--Name-->
-            <input type="text" v-model="page.name" @keyup="page.slug = page.name" name="name" class="border-none bold p0" placeholder="Enter name" :class="{ 'bg-silver': page === sharedState.state.selectedPage, 'bg-white': page !== sharedState.state.selectedPage }">
-          </div>
-
-          <div class="col col-2">
-            <!--Slug-->
-            <input type="text" v-model="page.slug | slugify 'page.name'" name="slug" class="border-none p0" :class="{ 'bg-silver': page === sharedState.state.selectedPage, 'bg-white': page !== sharedState.state.selectedPage }">
-          </div>
-
-          <div class="col col-right">
-
-            <!--Countries-->
-            <country-picker
-              :countries.sync="countries"
-              :whitelist="['gb','us']"
-              :preselect="page.countries">
-            </country-picker>
-
-            <!--Languages-->
-            <language-picker
-              :languages.sync="languages"
-              :whitelist="['British English','American English']"
-              :selected="page.language">
-            </language-picker>
-
-            <!--Lock-->
-            <div v-show="page.locked" class="col orange border circle mr1 p1 pointer muted" title="Locked by another user">&#128274;</div>
-            <!--Create / Update-->
-            <button
-              v-show="!page.id"
-              @click.prevent="createPage($index)"
-              class="btn btn btn-outline mr1 green px0 small unbold">
-              Create
-            </button>
-            <button
-              v-show="page.id"
-              @click.prevent="updatePage(page)"
-              class="btn btn-outline mr1 blue small unbold">
-              Update
-            </button>
-            <!--Content-->
-            <a v-show="page.id" @click.prevent="openModal()" :class="{ 'muted': !page.content.length }" class="btn border rounded small unbold mr1 orange">content</a>
-            <!--Preview-->
-            <a v-show="page.id" :href="routes.previewPage + '/' + page.slug" :class="{ 'muted': !page.content.length }" class="btn border rounded small unbold mr1" target="_blank">preview</a>
-            <!--Toggle active-->
-            <a v-show="page.id" href="#" @click.prevent="toggleActive(page)" :class="{ 'muted': !page.content.length && page.active }" class="btn border rounded small unbold {{ page.active ? 'green' : 'red' }}">{{ page.active ? 'active' : 'inactive' }}</a>
-            <!--Delete-->
-            <a v-show="!page.deleted_at" href="#" @click.prevent="deletePage(page)" class="btn-outline red" title="Delete">&times;</a>
-            <a v-show="page.deleted_at" href="#" @click.prevent="restorePage(page)" class="btn-outline blue" title="Restore">&#10559;</a>
-
-          </div>
-
-          <div class="clearfix"></div>
-          <div v-show="!page.id" class="col col-right">
-            <button @click.prevent="removePage(page)" class="col col-right mt1 block btn border rounded">&minus;</button>
-          </div>
-
-        </div>
-      </div>
-    </div>
-    <div v-else>
-      No pages found!
+    <div v-for="page in filteredPages"
+         class="col col-12 border-bottom py2"
+         :class="{ 'muted': page.deleted_at, 'bg-silver': page === sharedState.getSelectedPage() }"
+         @mouseover="setSelected(page)"
+         @keyup.esc="page.locked = false">
+      <page
+        :selected="sharedState.getSelectedPage()"
+        :countries="countries"
+        :language.sync="page.language"
+        :languages="languages"
+        :layouts="layouts"
+        :views="views"
+        @show-modal="this.showModal = true"
+        @create-page="createPage($index)"
+        @update-page="updatePage(page)"
+        @delete-page="deletePage(page)"
+        @restore-page="restorePage(page)"
+        @toggle-active="toggleActive(page)"
+        :routes="routes"
+        :page.sync="page">
+      </page>
     </div>
 
     <div class="clearfix"></div>
@@ -231,12 +145,11 @@
 
 <script>
   var _ = require('underscore')
-  import Common from '../vue/Common'
-  import Modal from './Modal.vue'
-  import Tabs from './Tabset.vue'
-  import Tab from './Tab.vue'
-  import CountryPicker from './Countries/CountryPicker'
-  import LanguagePicker from './LanguagePicker'
+  import Common from '../../vue/Common'
+  import Modal from './../Modal'
+  import Tabs from './../Tabset'
+  import Tab from './../Tab'
+  import Page from './Page'
 
   export default {
     name: 'Pages',
@@ -244,12 +157,11 @@
       'modal': Modal,
       'tabs': Tabs,
       'tab': Tab,
-      'country-picker': CountryPicker,
-      'language-picker': LanguagePicker
+      'page': Page
     },
     data () {
       return {
-        columns: ['layout', 'view', 'name', 'slug'],
+        columns: ['layout', 'name', 'slug'],
         sortKey: '',
         search: '',
         searchPagesQuery: '',
@@ -282,9 +194,6 @@
       }
     },
     events: {
-      'open-modal' () {
-        this.showModal = true
-      },
       'filter-by-taxonomy' () {
         // Filter by pages in selected taxonomy (vocabulary and term)
         _.each(this.currentVocabulary.related, function (related) {
@@ -370,10 +279,7 @@
         this.currentVocabulary = vocabulary
       },
       pageContainsContent (content) {
-        return _.where(this.sharedState.state.selectedContent, { id: content.id }).length
-      },
-      openModal () {
-        this.$dispatch('open-modal')
+        return _.where(this.sharedState.getSelectedContent(), { id: content.id }).length
       },
       setSelected (page) {
         if (!this.editing) {
@@ -385,14 +291,14 @@
         // page.locked = true
       },
       addPage () {
-        this.pages.push({ slug: '', old_slug: '', locked: false })
+        this.pages.push({ name: '', content: [], slug: '', old_slug: '', locked: false })
       },
       removePage (page) {
         this.pages.$remove(page)
       },
       addContentToPage (content) {
         var self = this
-        Common.patch(this.routes.addContent + '/' + this.sharedState.state.selectedPage.slug, JSON.stringify(content)).then(function (response) {
+        Common.patch(this.routes.addContent + '/' + this.sharedState.getSelectedPage().slug, JSON.stringify(content)).then(function (response) {
           var data = response.data
           self.$dispatch('fetch')
           self.$dispatch('messenger-notify', {
@@ -423,6 +329,7 @@
       },
       createPage (index) {
         var self = this
+        console.log('createpage')
         Common.put(this.routes.createPages, { page: self.pages[index] }).then(function (response) {
           var data = response.data
           self.pages.splice(index, 1)
@@ -435,6 +342,7 @@
       },
       updatePage (page) {
         var self = this
+        console.log('sluggage: ' + page.slug)
         page.old_slug = page.slug
         Common.patch(this.routes.updatePages + '/' + page.old_slug, { page: page }).then(function (response) {
           var data = response.data

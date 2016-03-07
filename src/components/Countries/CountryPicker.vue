@@ -24,7 +24,7 @@
         return _.contains(this.whitelist, country.iso_3166_2.toLowerCase())
       },
       shouldPreselect (country) {
-        return !!_.where(this.preselect, {id: country.id}).length
+        return !!_.where(this.preselect, { id: country.id }).length
       }
     }
   }
