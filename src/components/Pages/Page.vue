@@ -66,7 +66,7 @@
 
     <div class="clearfix"></div>
     <div v-show="!page.id" class="col col-right">
-      <button @click.prevent="removePage(page)" class="col col-right mt1 block btn border rounded">&minus;</button>
+      <button @click.prevent="this.$emit('remove-page')" class="col col-right mt1 block btn border rounded">&minus;</button>
     </div>
 
   </div>

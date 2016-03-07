@@ -6,6 +6,7 @@
 
       <a v-link="{ path: '/pages'   }" class="btn silver">Pages   <span class="muted">({{ pages.length   }})</span></a>
       <a v-link="{ path: '/content' }" class="btn silver">Content <span class="muted">({{ content.length }})</span></a>
+      <a v-link="{ path: '/glossary' }" class="btn silver">Glossary <span class="muted">({{ glossaryTerms.length }})</span></a>
 
       <!--search-->
       <input
@@ -82,6 +83,7 @@
       :countries.sync="countries"
       :languages.sync="languages"
       :references.sync="references"
+      :glossary-terms.sync="glossaryTerms"
       keep-alive>
     </router-view>
 
@@ -185,6 +187,7 @@ export default {
       references: [],
       resources: [],
       taxonomies: [],
+      glossaryTerms: [],
       revealTaxonomies: false,
       messenger: {
         content: {},
@@ -238,6 +241,7 @@ export default {
       this.fetchReferences()
       this.fetchResources()
       this.fetchTaxonomies()
+      this.fetchGlossaryTerms()
     },
     fetchViews () {
       var self = this
@@ -356,6 +360,18 @@ export default {
         },
         function () {
           self.$emit('messenger-notify', { taxonomies: Messages.fetch.failure('taxonomies'), type: 'error' })
+        }
+      )
+    },
+    fetchGlossaryTerms () {
+      var self = this
+      // Fetch glossary terms
+      Common.fetch(this.routes.allGlossaryTerms).then(
+        function (response) {
+          self.$set('glossaryTerms', response.data)
+        },
+        function () {
+
         }
       )
     }

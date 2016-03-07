@@ -130,6 +130,7 @@
         @update-page="updatePage(page)"
         @delete-page="deletePage(page)"
         @restore-page="restorePage(page)"
+        @remove-page="removePage(page)"
         @toggle-active="toggleActive(page)"
         :routes="routes"
         :page.sync="page">

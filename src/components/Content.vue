@@ -60,7 +60,7 @@
           <button class="btn btn-outline bg-green white" @click.prevent="showInsertMenu()">
             <tooltip placement="right" hint="Insert media into this content" text="Insert&hellip;"></tooltip>
           </button>
-          <button class="right btn btn-outline bg-blue white" @click.prevent="updateContent">
+          <button class="right btn btn-outline bg-blue white" @click.prevent="update">
             <tooltip placement="left" hint="Save all changes that you have made in the editor" text="Save"></tooltip>
           </button>
         </div>
@@ -84,9 +84,9 @@
     <div
       v-for="content in content | filterBy searchContent"
       @mouseover="setSelected(content)"
+      @keyup.esc="content.editing = false"
       class="col col-12 border-bottom py1"
-      :class="{ 'muted': content.deleted_at, 'bg-silver': content === sharedState.state.selectedContent }"
-      @keyup.esc="content.editing = false">
+      :class="{ 'muted': content.deleted_at, 'bg-silver': content === sharedState.state.selectedContent }">
 
       <div class="col col-12">
         <div class="col col-2">
@@ -104,19 +104,28 @@
         </div>
         <div class="col col-right">
 
-          <!--Create/Edit/Update buttons-->
+          <!--Create button-->
           <button
             v-show="!content.id"
-            @click.prevent="createContent($index)"
+            @click.prevent="create($index)"
             class="btn btn-primary small unbold">
             Create
           </button>
 
+          <!--Update button-->
           <button
             v-show="content.id"
-            @click.prevent="updateContent"
+            @click.prevent="update"
             class="btn btn-primary small unbold">
             Update
+          </button>
+
+          <!--Clone button-->
+          <button
+            v-show="content.id"
+            @click.prevent="clone"
+            class="btn orange small unbold">
+            Clone
           </button>
 
           <button
@@ -127,7 +136,7 @@
           </button>
 
           <!--Delete-->
-          <a href="#" v-show="content.id" @click.prevent="deleteContent(content)" class="btn red">&times;</a>
+          <a href="#" v-show="content.id" @click.prevent="delete(content)" class="btn red">&times;</a>
 
         </div>
 
@@ -135,7 +144,7 @@
 
         <div v-show="!content.id" class="col col-right">
           <button
-            @click.prevent="removeContent(content)"
+            @click.prevent="remove(content)"
             class="col col-right mt1 block btn border rounded">
             &minus;
           </button>
@@ -147,7 +156,7 @@
 
     <!--Add content-->
     <button
-      @click.prevent="addContent"
+      @click.prevent="add"
       class="col col-right mt1 block btn btn-primary">
       &plus;
     </button>
@@ -195,7 +204,7 @@
     ],
     events: {
       'save-content' () {
-        this.updateContent()
+        this.update()
       },
       'add-reference-to-content' (reference) {
         var self = this
@@ -224,7 +233,7 @@
       }
     },
     methods: {
-      addContent () {
+      add () {
         this.content.push({ name: '', content: [], slug: '', old_slug: '', locked: false })
       },
       setSelected (content) {
@@ -239,10 +248,10 @@
       openModal () {
         this.showModal = true
       },
-      removeContent (content) {
+      remove (content) {
         this.content.$remove(content)
       },
-      createContent (index) {
+      create (index) {
         var self = this
         Common.put(this.routes.createContent, JSON.stringify(self.content[index])).then(function (response) {
           var data = response.data
@@ -257,7 +266,7 @@
           self.$dispatch('messenger-notify', {content: 'Failed creating content, please try again', type: 'error'})
         })
       },
-      updateContent (content) {
+      update (content) {
         var self = this
         Common.patch(`${this.routes.updateContent}/${this.sharedState.state.selectedContent.id}`, JSON.stringify(this.sharedState.state.selectedContent)).then(function (response) {
           var data = response.data
@@ -270,7 +279,7 @@
           self.$dispatch('messenger-notify', {content: 'Failed updating content, please try again', type: 'error'})
         })
       },
-      deleteContent (content) {
+      delete (content) {
         var self = this
         Common.destroy(this.routes.deleteContent + '/' + content.id).then(function (response) {
           self.$dispatch('fetch')
