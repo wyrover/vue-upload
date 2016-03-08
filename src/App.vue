@@ -7,6 +7,7 @@
       <a v-link="{ path: '/pages'   }" class="btn silver">Pages   <span class="muted">({{ pages.length   }})</span></a>
       <a v-link="{ path: '/content' }" class="btn silver">Content <span class="muted">({{ content.length }})</span></a>
       <a v-link="{ path: '/glossary' }" class="btn silver">Glossary <span class="muted">({{ glossaryTerms.length }})</span></a>
+      <a v-link="{ path: '/menu' }" class="btn silver">Menus <span class="muted">({{ menus.length }})</span></a>
 
       <!--search-->
       <input
@@ -185,6 +186,7 @@ export default {
       content: [],
       layouts: [],
       views: [],
+      menus: [],
       references: [],
       resources: [],
       taxonomies: [],
@@ -243,10 +245,10 @@ export default {
       this.fetchResources()
       this.fetchTaxonomies()
       this.fetchGlossaryTerms()
+      this.fetchMenus()
     },
     fetchViews () {
       var self = this
-      // Fetch views
       Common.fetch(this.routes.viewsList).then(
         function (response) {
           self.$set('views', response.data)
@@ -259,7 +261,6 @@ export default {
     },
     fetchLayouts () {
       var self = this
-      // Fetch layouts
       Common.fetch(this.routes.layoutsList).then(
         function (response) {
           self.$set('layouts', response.data)
@@ -272,7 +273,6 @@ export default {
     },
     fetchPages () {
       var self = this
-      // Fetch pages
       Common.fetch(this.routes.allPages).then(
         function (response) {
           self.$set('pages', response.data)
@@ -285,7 +285,6 @@ export default {
     },
     fetchContent () {
       var self = this
-      // Fetch content
       Common.fetch(this.routes.allContent).then(
         function (response) {
           self.$set('content', response.data)
@@ -300,7 +299,6 @@ export default {
     },
     fetchCountries () {
       var self = this
-      // Fetch countries
       Common.fetch(this.routes.allCountries).then(
         function (response) {
           self.$set('countries', response.data)
@@ -314,7 +312,6 @@ export default {
     },
     fetchLanguages () {
       var self = this
-      // Fetch languages
       Common.fetch(this.routes.allLanguages).then(
         function (response) {
           self.$set('languages', response.data)
@@ -327,7 +324,6 @@ export default {
     },
     fetchReferences () {
       var self = this
-      // Fetch references
       Common.fetch(this.routes.allReferences).then(
         function (response) {
           self.$set('references', response.data)
@@ -340,7 +336,6 @@ export default {
     },
     fetchResources () {
       var self = this
-      // Fetch resources
       Common.fetch(this.routes.allResources).then(
         function (response) {
           self.$set('resources', response.data)
@@ -353,7 +348,6 @@ export default {
     },
     fetchTaxonomies () {
       var self = this
-      // Fetch taxonomies
       Common.fetch(this.routes.allTaxonomies).then(
         function (response) {
           self.$set('taxonomies', response.data)
@@ -366,13 +360,23 @@ export default {
     },
     fetchGlossaryTerms () {
       var self = this
-      // Fetch glossary terms
       Common.fetch(this.routes.allGlossaryTerms).then(
         function (response) {
           self.$set('glossaryTerms', response.data)
         },
         function () {
-
+          console.log('failed fetching glossary terms')
+        }
+      )
+    },
+    fetchMenus () {
+      var self = this
+      Common.fetch(this.routes.allMenus).then(
+        function (response) {
+          self.$set('menus', response.data)
+        },
+        function () {
+          console.log('failed fetching menus')
         }
       )
     }

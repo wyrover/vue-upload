@@ -8,6 +8,7 @@ export default {
   allPages: `${domain}/admin/pages/all?Pages`,
   allReferences: `${domain}/admin/references/all`,
   allResources: `${domain}/admin/resources/all`,
+  allMenus: `${domain}/admin/menus`,
   associateReferences: `${domain}/admin/content/references`,
   associateCountries: `${domain}/admin/pages/countries`,
   associateLanguages: `${domain}/admin/pages/languages`,
