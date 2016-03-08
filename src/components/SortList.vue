@@ -1,33 +1,26 @@
 <template>
-  <ul id="sort" class="sort row">
-    <li class="sort-item cf row-item" v-for="item in list">
-      <img :src="item.cover">
-      <span class="row-title">{{ item.title }}</span>
-      <span class="sort-drag">&equals;</span>
-    </li>
-  </ul>
+  <div>
+    <ul id="sort" class="sort row list-reset">
+      <li class="sort-item cf row-item" v-for="item in list">
+        <span class="sort-drag gray">&equals;</span>
+        <span class="row-title ml2">{{ item.name }}</span>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
   var Sortable = require('sortable')
   export default {
-    data () {
-      return {
-        list: [
-          { title: 'Watergate Podcast #1 - Ruede Hagelstein', cover: 'https://i1.sndcdn.com/artworks-000122028568-i7ew3d-large.jpg', order: 0 },
-          { title: 'Watergate Podcast #2 - Marco Resmann', cover: 'https://i1.sndcdn.com/artworks-000134001395-mrizt8-large.jpg', order: 1 },
-          { title: 'Watergate Podcast #3 - La Fleur', cover: 'https://i1.sndcdn.com/artworks-000128161805-jks8np-large.jpg', order: 2 }
-        ]
-      }
-    },
+    props: ['list'],
     ready () {
       var vm = this
-      Sortable.create(document.getElementById('sort'), {
+      Sortable = new Sortable().create(document.getElementById('sort'), {
         draggable: 'li.sort-item',
         ghostClass: 'sort-ghost',
         animation: 80,
-        onUpdate (evt) {
-          vm.reorder(evt.oldIndex, evt.newIndex)
+        onUpdate (e) {
+          vm.reorder(e.oldIndex, e.newIndex)
         }
       })
     },
@@ -41,3 +34,28 @@
     }
   }
 </script>
+
+<style>
+  .sort-item:hover {
+    cursor: move;
+    opacity: 1;
+    color: #bada55;
+  }
+  .sort-item:hover .sort-drag {
+    opacity: 1;
+  }
+  .sortable-chosen {
+    opacity: 0.5;
+  }
+  .sort-drag {
+    height: 40px;
+    line-height: 40px;
+    font-size: 26px;
+    width: 20px;
+    opacity: 0.3;
+  }
+  .sort-ghost {
+    opacity: 0.1;
+  }
+
+</style>

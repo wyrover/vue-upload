@@ -1,13 +1,15 @@
 <template>
-    <div>
-
-    </div>
+  <div>
+    <sort-list
+      :list="menu.Main">
+    </sort-list>
+  </div>
 </template>
 
 <script>
-    export default {
-        components: {
-
-        }
-    }
+  import SortList from '../SortList'
+  export default {
+    components: { 'sort-list': SortList },
+    props: ['menu']
+  }
 </script>

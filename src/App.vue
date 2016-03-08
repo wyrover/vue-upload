@@ -7,7 +7,7 @@
       <a v-link="{ path: '/pages'   }" class="btn silver">Pages   <span class="muted">({{ pages.length   }})</span></a>
       <a v-link="{ path: '/content' }" class="btn silver">Content <span class="muted">({{ content.length }})</span></a>
       <a v-link="{ path: '/glossary' }" class="btn silver">Glossary <span class="muted">({{ glossaryTerms.length }})</span></a>
-      <a v-link="{ path: '/menu' }" class="btn silver">Menus <span class="muted">({{ menus.length }})</span></a>
+      <a v-link="{ path: '/menus' }" class="btn silver">Menus <span class="muted">({{ menus.length }})</span></a>
 
       <!--search-->
       <input
@@ -86,6 +86,7 @@
       :languages.sync="languages"
       :references.sync="references"
       :glossary-terms.sync="glossaryTerms"
+      :menus.sync="menus"
       keep-alive>
     </router-view>
 
@@ -373,7 +374,7 @@ export default {
       var self = this
       Common.fetch(this.routes.allMenus).then(
         function (response) {
-          self.$set('menus', response.data)
+          self.menus.push(response.data)
         },
         function () {
           console.log('failed fetching menus')

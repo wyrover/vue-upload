@@ -7,7 +7,8 @@ import './vue/Transitions'
 import App from './App'
 import Pages from './components/Pages/Pages'
 import Content from './components/Content'
-import Glossary from './components/Glossary/Glossary.vue'
+import Glossary from './components/Glossary/Glossary'
+import Menus from './components/Menus/Menus'
 
 var VueRouter = require('vue-router')
 
@@ -18,7 +19,8 @@ var router = new VueRouter()
 router.map({
   '/pages': { component: Pages },
   '/content': { component: Content },
-  '/glossary': { component: Glossary }
+  '/glossary': { component: Glossary },
+  '/menus': { component: Menus }
 })
 
 router.start(App, '#app')
