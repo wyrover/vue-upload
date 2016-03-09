@@ -2,7 +2,7 @@
   <div>
     <ul id="sort" class="sort row list-reset">
       <li class="sort-item cf row-item" v-for="item in list">
-        <span class="sort-drag gray">&equals;</span>
+        <span class="sort-drag gray px2">&equals;</span>
         <span class="row-title ml2">{{ item.name }}</span>
       </li>
     </ul>
