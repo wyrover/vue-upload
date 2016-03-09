@@ -1,9 +1,9 @@
 <template>
     <div>
-        <h1 style="color: #3d3d3d">Main menu</h1>
         <menu-component
           v-for="menu in menus"
-          :menu.sync="menu">
+          :menu.sync="menu.childrens"
+          :name.sync="menu.name">
         </menu-component>
     </div>
 </template>

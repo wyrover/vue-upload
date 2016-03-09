@@ -374,7 +374,7 @@ export default {
       var self = this
       Common.fetch(this.routes.allMenus).then(
         function (response) {
-          self.menus.push(response.data)
+          self.$set('menus', response.data)
         },
         function () {
           console.log('failed fetching menus')

@@ -1,7 +1,9 @@
 <template>
   <div>
+    <h1 style="color: #3d3d3d">{{ name }}</h1>
     <sort-list
-      :list="menu.Main">
+      :list="menu"
+      :name="name">
     </sort-list>
   </div>
 </template>
@@ -10,6 +12,6 @@
   import SortList from '../SortList'
   export default {
     components: { 'sort-list': SortList },
-    props: ['menu']
+    props: ['menu', 'name']
   }
 </script>

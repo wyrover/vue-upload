@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul id="sort" class="sort row list-reset">
+    <ul id="sort-{{ name }}" class="sort row list-reset">
       <li class="sort-item cf row-item" v-for="item in list">
         <span class="sort-drag gray px2">&equals;</span>
         <span class="row-title ml2">{{ item.name }}</span>
@@ -12,10 +12,10 @@
 <script>
   var Sortable = require('sortablejs')
   export default {
-    props: ['list'],
+    props: ['list', 'name'],
     ready () {
       var vm = this
-      Sortable.create(document.getElementById('sort'), {
+      Sortable.create(document.getElementById(`sort-${this.name}`), {
         draggable: 'li.sort-item',
         ghostClass: 'sort-ghost',
         animation: 80,
@@ -28,7 +28,7 @@
       reorder (oldIndex, newIndex) {
         this.list.splice(newIndex, 0, this.list.splice(oldIndex, 1)[0])
         this.list.forEach(function (item, index) {
-          item.order = index
+          item.weight = index
         })
       }
     }
