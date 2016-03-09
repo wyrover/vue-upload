@@ -10,12 +10,12 @@
 </template>
 
 <script>
-  var Sortable = require('sortable')
+  var Sortable = require('sortablejs')
   export default {
     props: ['list'],
     ready () {
       var vm = this
-      Sortable = new Sortable().create(document.getElementById('sort'), {
+      Sortable.create(document.getElementById('sort'), {
         draggable: 'li.sort-item',
         ghostClass: 'sort-ghost',
         animation: 80,
