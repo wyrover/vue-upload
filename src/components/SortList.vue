@@ -50,10 +50,6 @@
     opacity: 0.5;
   }
   .sort-drag {
-    height: 40px;
-    line-height: 40px;
-    font-size: 26px;
-    width: 20px;
     opacity: 0.3;
   }
   .sort-ghost {

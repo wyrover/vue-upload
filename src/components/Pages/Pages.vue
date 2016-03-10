@@ -394,3 +394,19 @@
     }
   }
 </script>
+
+<style>
+
+  select, input {
+    color: #8a8a8a;
+    border-radius: 5px;
+    margin: 5px !important;
+  }
+
+  select:hover, select:focus,
+  input:hover, input:focus{
+    color: #000;
+    box-shadow: 0 0 20px;
+  }
+
+</style>

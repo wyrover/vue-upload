@@ -53,9 +53,9 @@
       </button>
 
       <!--Content-->
-      <a v-show="page.id" @click.prevent="this.$emit('show-modal')" :class="{ 'muted': !page.content.length }" class="btn border rounded small unbold mr1 orange">Content</a>
+      <a v-show="page.id" href="#" @click.prevent="this.$emit('show-modal')" :class="{ 'muted': !page.content.length }" class="btn border rounded small unbold mr1 orange">Content</a>
       <!--Preview-->
-      <a v-show="page.id" :href="routes.previewPage + '/' + page.slug" :class="{ 'muted': !page.content.length }" class="btn border rounded small unbold mr1" target="_blank">Preview</a>
+      <a v-show="page.id" :href="routes.previewPage + '/' + page.slug" :class="{ 'muted': !page.content.length }" class="btn border rounded small unbold mr1 gray" target="_blank">Preview</a>
       <!--Toggle active-->
       <a v-show="page.id" href="#" @click.prevent="this.$emit('toggle-active')" :class="{ 'muted': !page.content.length && page.active }" class="btn border rounded small unbold {{ page.active ? 'green' : 'red' }}">{{ page.active ? 'Active' : 'Inactive' }}</a>
       <!--Delete-->

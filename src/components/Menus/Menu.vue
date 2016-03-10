@@ -4,7 +4,7 @@
     <sort-list
       :list="menu"
       :name="name"
-      @sorted="this.$emit('update', $data)">
+      @sorted="this.$emit('update', $data)" cloak>
     </sort-list>
   </div>
 </template>
