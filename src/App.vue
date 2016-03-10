@@ -7,7 +7,9 @@
       <a v-link="{ path: '/pages'   }" class="btn silver">Pages   <span class="muted">({{ pages.length   }})</span></a>
       <a v-link="{ path: '/content' }" class="btn silver">Content <span class="muted">({{ content.length }})</span></a>
       <a v-link="{ path: '/glossary' }" class="btn silver">Glossary <span class="muted">({{ glossaryTerms.length }})</span></a>
+      <a v-link="{ path: '/references' }" class="btn silver">References</a>
       <a v-link="{ path: '/menus' }" class="btn silver">Menus <span class="muted">({{ menus.length }})</span></a>
+      <a v-link="{ path: '/seo' }" class="btn silver">SEO</a>
 
       <!--search-->
       <input
@@ -397,4 +399,5 @@ export default {
   .v-link-active {
     color: #ff599c;
   }
+
 </style>
