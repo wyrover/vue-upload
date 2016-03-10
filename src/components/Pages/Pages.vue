@@ -130,7 +130,6 @@
         @update-page="updatePage(page)"
         @delete-page="deletePage(page)"
         @restore-page="restorePage(page)"
-        @remove-page="removePage(page)"
         @toggle-active="toggleActive(page)"
         :routes="routes"
         :page.sync="page">
@@ -333,12 +332,11 @@
         console.log('createpage')
         Common.put(this.routes.createPages, { page: self.pages[index] }).then(function (response) {
           var data = response.data
+          console.log(self.pages)
           self.pages.splice(index, 1)
           self.pages.push(data)
-          self.$dispatch('fetch')
-          self.$dispatch('messenger-notify', { content: `Page created`, type: 'success' })
         }, function (response) {
-          self.$dispatch('messenger-notify', { content: 'Failed creating page, please try again', type: 'error' })
+
         })
       },
       updatePage (page) {
