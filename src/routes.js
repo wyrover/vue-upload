@@ -29,6 +29,7 @@ export default {
   updateReference: `${domain}/admin/references`,
   viewsList: `${domain}/admin/pages/viewslist`,
   updateTaxonomy: `${domain}/admin/taxonomies`,
+  updateMenu: `${domain}/admin/menus`,
   allTaxonomies: `${domain}/admin/taxonomy/all`,
   allGlossaryTerms: `${domain}/admin/glossary/all`,
   createGlossaryTerm: `${domain}/admin/glossary`

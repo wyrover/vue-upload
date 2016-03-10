@@ -3,7 +3,8 @@
         <menu-component
           v-for="menu in menus"
           :menu.sync="menu.childrens"
-          :name.sync="menu.name">
+          :name.sync="menu.name"
+          :routes="routes">
         </menu-component>
     </div>
 </template>
@@ -12,7 +13,7 @@
   import Menu from './Menu'
   export default {
     name: 'Menus',
-    props: ['menus'],
+    props: ['menus', 'routes'],
     components: {
       'menu-component': Menu
     }

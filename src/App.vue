@@ -76,6 +76,7 @@
     <router-view
       @keyup.esc="this.$broadcast('close-modal')"
       @fetch-glossary-terms="fetchGlossaryTerms"
+      @fetch-menus="fetchMenus"
       :routes="routes"
       :shared-state.sync="sharedState"
       :views.sync="views"

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <ul id="sort-{{ name }}" class="sort row list-reset">
-      <li class="sort-item cf row-item" v-for="item in list">
+    <ul id="sort-{{ name | slugify }}" class="sort row list-reset">
+      <li class="sort-item cf row-item" v-for="item in list | orderBy 'weight' ">
         <span class="sort-drag gray px2">&equals;</span>
         <span class="row-title ml2">{{ item.name }}</span>
       </li>
@@ -15,7 +15,7 @@
     props: ['list', 'name'],
     ready () {
       var vm = this
-      Sortable.create(document.getElementById(`sort-${this.name}`), {
+      Sortable.create(document.getElementById(`sort-${this.name.trim().toLowerCase()}`), {
         draggable: 'li.sort-item',
         ghostClass: 'sort-ghost',
         animation: 80,
@@ -26,10 +26,12 @@
     },
     methods: {
       reorder (oldIndex, newIndex) {
+        var self = this
         this.list.splice(newIndex, 0, this.list.splice(oldIndex, 1)[0])
         this.list.forEach(function (item, index) {
           item.weight = index
         })
+        self.$emit('sorted', self.list)
       }
     }
   }

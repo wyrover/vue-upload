@@ -21,6 +21,13 @@ Vue.filter('marked', function (value) {
   }
 })
 
+// Trim a string
+Vue.filter('trim', function (value) {
+  if (value) {
+    return value.trim()
+  }
+})
+
 // Referenced ({n})
 Vue.filter('referenced', function (value) {
   if (value) {
@@ -45,7 +52,7 @@ Vue.filter('reverse', function (value) {
   return value.split('').reverse().join('')
 })
 
-// Reverse a string
+// Make a string url-friendly
 Vue.filter('slugify', function (value) {
   return value.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-')
 })
