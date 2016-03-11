@@ -4,9 +4,12 @@ import './vue/Config'
 import './vue/Filters'
 import './vue/Transitions'
 
+// Example json loading
+var contentAreas = require('./data/contentAreas.json')
+
 import App from './App'
 import Pages from './components/Pages/Pages'
-import Content from './components/Content'
+import Content from './components/Content/Content.vue'
 import Glossary from './components/Glossary/Glossary'
 import Menus from './components/Menus/Menus'
 

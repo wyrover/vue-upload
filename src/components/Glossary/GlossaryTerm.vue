@@ -5,24 +5,24 @@
           {{ word | capitalize }}
         </strong>
         <strong v-show="!id">
-          <input type="text" v-model="word" placeholder="Enter a term"  class="border-none p2">
+          <input type="text" v-model="word" placeholder="Enter a term"  class="border-none">
         </strong>
       </div>
       <div class="col col-2">
         <blockquote v-show="id" class="h5 mt0 mb0">
           &ldquo;{{{ definition | capitalize }}}&rdquo;
         </blockquote>
-        <input v-show="!id" type="text" v-model="definition" placeholder="Enter a definition for this term" class="border-none p2">
+        <input v-show="!id" type="text" v-model="definition" placeholder="Enter a definition for this term" class="border-none">
       </div>
       <div class="col col-2">
         <blockquote v-show="id" class="h5 mt0 mb0">
           {{{ pronunciation }}}
         </blockquote>
-        <input v-show="!id" type="text" v-model="pronunciation" placeholder="Pronunciation" class="border-none p2">
+        <input v-show="!id" type="text" v-model="pronunciation" placeholder="Pronunciation" class="border-none">
       </div>
       <div class="col col-2 h5">
         <div v-show="id">{{{ grammar | capitalize }}}</div>
-        <input v-show="!id" type="text" v-model="grammar" placeholder="Grammar"  class="border-none p2">
+        <input v-show="!id" type="text" v-model="grammar" placeholder="Grammar"  class="border-none">
       </div>
       <div class="col col-2">
         <a

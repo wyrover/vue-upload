@@ -41,10 +41,7 @@
 
           <!--Tabs-->
           <tabs>
-            <tab
-              header="All content"
-              :show-item-count="true"
-              :item-count="sharedState.getSelectedContent().length">
+            <tab header="All content">
 
               <div class="col col-12 p2">
 
@@ -62,11 +59,11 @@
                     </button>
 
                     <!--Remove content from page button-->
-                    <button v-show="!pageContainsContent(someContent)"
+                    <input type="checkbox" v-show="!pageContainsContent(someContent)"
                             @click.prevent="addContentToPage(someContent)"
-                            class="btn green btn-outline">
-                      &plus;
-                    </button>
+                            class="btn rounded green btn-outline" style="">
+                    </input>
+
                   </div>
                   <div class="col col-9">
                     {{ someContent.name }}
@@ -79,10 +76,7 @@
             <tab header="Page content">
               <div class="col col-12 p2">
                 <div v-for="content in sharedState.state.selectedPage.content | filterBy searchContentQuery"
-                     transition="staggered"
-                     stagger="100"
-                     class="col col-12 border-bottom py1 mb1"
-                >
+                     class="col col-12 border-bottom py1 mb1">
                   <div class="col mr2">
                     <!--Add / Remove content from page buttons-->
                     <button v-show="pageContainsContent(content)"
@@ -394,19 +388,3 @@
     }
   }
 </script>
-
-<style>
-
-  select, input {
-    color: #8a8a8a;
-    border-radius: 5px;
-    margin: 5px !important;
-  }
-
-  select:hover, select:focus,
-  input:hover, input:focus{
-    color: #000;
-    box-shadow: 0 0 20px;
-  }
-
-</style>

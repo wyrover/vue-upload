@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "locked": false,
+    "layout": "app",
+    "name": "Home",
+    "active": 1,
+    "slug": "home",
+    "access_count": null,
+    "created_at": "2016-03-11 09:26:52",
+    "updated_at": "2016-03-11 09:26:52",
+    "deleted_at": null
+  },
+  {
+    "id": 2,
+    "locked": false,
+    "layout": "app",
+    "name": "About",
+    "active": 1,
+    "slug": "about",
+    "access_count": null,
+    "created_at": "2016-03-11 09:26:52",
+    "updated_at": "2016-03-11 11:24:54",
+    "deleted_at": null
+  }
+]

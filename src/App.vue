@@ -9,7 +9,6 @@
       <a v-link="{ path: '/glossary' }" class="btn silver">Glossary <span class="muted">({{ glossaryTerms.length }})</span></a>
       <a v-link="{ path: '/references' }" class="btn silver">References</a>
       <a v-link="{ path: '/menus' }" class="btn silver">Menus <span class="muted">({{ menus.length }})</span></a>
-      <a v-link="{ path: '/seo' }" class="btn silver">SEO</a>
 
       <!--search-->
       <input
@@ -398,6 +397,19 @@ export default {
   }
   .v-link-active {
     color: #ff599c;
+  }
+
+   select, input {
+     color: #8a8a8a;
+     border-radius: 5px;
+     margin: 5px;
+     padding: 0.5rem;
+   }
+
+  select:hover, select:focus,
+  input:hover, input:focus{
+    color: #000;
+    box-shadow: 0 0 20px;
   }
 
 </style>

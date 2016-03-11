@@ -12,8 +12,8 @@
         <button
           class="p1 m1 btn"
           :class="{
-            'regular': !($index === activeIndex),
-            'disabled': r.disabled
+            'btn-outline': $index === activeIndex,
+            'disabled': r.disabled,
           }">
           {{{ r.header }}} <span v-show="r.itemCount > 0" class="muted">({{{ r.itemCount }}})</span>
         </button>
@@ -44,7 +44,6 @@
     },
     methods: {
       handleTabListClick (index, el) {
-        console.log('clicked')
         if (!el.disabled) this.$set('activeIndex', index)
       }
     }
@@ -52,7 +51,5 @@
 </script>
 
 <style scoped>
-    .nav-tabs {
-        margin-bottom: 15px
-    }
+    .nav-tabs { margin-bottom: 15px }
 </style>

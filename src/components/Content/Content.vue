@@ -1,4 +1,4 @@
-<template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<template>
   <div>
     <!--Modal body-->
     <div v-if="sharedState.state.selectedContent.id">
@@ -22,6 +22,12 @@
             <button class="btn btn-outline orange" @click.prevent="">
               <tooltip hint="Embed documents in this content" text="Documents"></tooltip>
             </button>
+            <button class="btn btn-outline fuchsia" @click.prevent="">
+              <tooltip hint="Embed files into this content" text="Files"></tooltip>
+            </button>
+            <button class="btn btn-outline navy" @click.prevent="toggleShowContentAreas()">
+              <tooltip hint="Add content areas" text="Content areas"></tooltip>
+            </button>
           </div>
 
           <!--References-->
@@ -31,6 +37,14 @@
             :shared-state.sync="sharedState"
             :references.sync="references">
           </references>
+
+          <!--References-->
+          <content-area
+            v-show="showContentAreas"
+            :routes.sync="routes"
+            :shared-state.sync="sharedState"
+            :references.sync="">
+          </content-area>
 
           <!--Codemirror-->
           <div class="col col-6 border-left">
@@ -97,7 +111,7 @@
             v-model="content.name"
             @keyup="content.slug = $root.slugify(content.name)"
             name="name"
-            class="border-none p0"
+            class="border-none"
             :class="{ 'bg-silver': content === sharedState.state.selectedContent }"
             placeholder="Enter name">
 
@@ -166,11 +180,12 @@
 
 <script>
   var _ = require('underscore')
-  import Common from '../vue/Common'
-  import Modal from './Modal'
-  import CodeMirror from './CodeMirror'
-  import References from './References'
-  import Tooltip from './Tooltip'
+  import Common from '../../vue/Common'
+  import Modal from './../Modal'
+  import CodeMirror from './../CodeMirror'
+  import References from './../References'
+  import Tooltip from './../Tooltip'
+  import ContentArea from './ContentArea'
 
   export default {
     name: 'Content',
@@ -178,7 +193,8 @@
       'modal': Modal,
       'codemirror': CodeMirror,
       'references': References,
-      'tooltip': Tooltip
+      'tooltip': Tooltip,
+      'content-area': ContentArea
     },
     data () {
       return {
@@ -188,6 +204,7 @@
         reverse: false,
         showModal: false,
         showReferences: false,
+        showContentAreas: false,
         showInsertDialog: false,
         selectedCountries: []
       }
@@ -244,6 +261,9 @@
       },
       toggleShowReferences () {
         this.$set('showReferences', !this.showReferences)
+      },
+      toggleShowContentAreas () {
+        this.$set('showContentAreas', !this.showContentAreas)
       },
       openModal () {
         this.showModal = true

@@ -3,19 +3,20 @@
     <div class="col col-2">
 
       <!--Layout select-->
-      <select name="layouts" v-model="page.layout" class="col col-12 border-none p0" :class="{ 'bg-silver': page === selected, 'bg-white': page !== selected }">
+      <select name="layouts" v-model="page.layout" class="col col-10 border-none" :class="{ 'bg-silver': page === selected, 'bg-white': page !== selected }">
         <option v-for="layout in layouts" :value="layout">{{ layout }}</option>
       </select>
+
     </div>
 
     <div class="col col-2">
       <!--Name-->
-      <input type="text" v-model="page.name" @keyup="page.slug = page.name" name="name" class="border-none bold p0" placeholder="Enter name" :class="{ 'bg-silver': page === selected, 'bg-white': page !== selected }">
+      <input type="text" v-model="page.name" @keyup="page.slug = page.name" name="name" class="border-none bold" placeholder="Enter name" :class="{ 'bg-silver': page === selected, 'bg-white': page !== selected }">
     </div>
 
     <div class="col col-2">
       <!--Slug-->
-      <input type="text" v-model="page.slug | slugify 'page.name'" name="slug" class="border-none p0" :class="{ 'bg-silver': page === selected, 'bg-white': page !== selected }">
+      <input type="text" v-model="page.slug | slugify 'page.name'" name="slug" class="border-none" :class="{ 'bg-silver': page === selected, 'bg-white': page !== selected }">
     </div>
 
     <div class="col col-right">
@@ -65,6 +66,7 @@
     </div>
 
     <div class="clearfix"></div>
+
     <div v-show="!page.id" class="col col-right">
       <button @click.prevent="this.$emit('remove-page')" class="col col-right mt1 block btn border rounded">&minus;</button>
     </div>
