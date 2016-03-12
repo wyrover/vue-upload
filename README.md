@@ -1,4 +1,4 @@
-# [WIP] vue-admin
+# [WIP] vue-upload
 
 ## Build Setup
 
