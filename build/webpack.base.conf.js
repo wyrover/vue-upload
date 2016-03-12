@@ -1,7 +1,7 @@
 var webpack = require('webpack')
 var path = require('path')
-var autoprefixer = require('autoprefixer');
-var precss = require('precss');
+var autoprefixer = require('autoprefixer')
+var precss = require('precss')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 require('es6-promise').polyfill();
@@ -71,7 +71,6 @@ module.exports = {
   },
   vue: {
     loaders: {
-
       css:  ExtractTextPlugin.extract("css"),
       less: ExtractTextPlugin.extract("css!less")
     }
@@ -82,8 +81,8 @@ module.exports = {
       $: "jquery",
       jQuery: "jquery",
       "window.jQuery": "jquery",
-      "window._": "underscore",
-      "_": "underscore"
+      "window._": "lodash",
+      "_": "lodash"
     })
   ],
   postcss: function () {

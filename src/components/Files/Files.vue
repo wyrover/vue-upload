@@ -22,7 +22,7 @@
   import Common from '../../vue/Common'
   import Modal from './../Modal'
   export default {
-    name: 'Pages',
+    name: 'Files',
     components: {
       'modal': Modal
     },

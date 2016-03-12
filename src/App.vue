@@ -2,7 +2,8 @@
   <div>
     <!--vue-router-->
     <div class="col col-12 bg-black p2 m0">
-      <a v-link="{ path: '/files' }" class="btn silver">Files</a>
+      <button v-link="{ path: '/files' }" class="btn silver">Files</button>
+      <button v-link="{ path: '/upload' }" class="btn silver">Upload</button>
     </div>
 
     <!-- use router-view element as (dynamic component) route outlet -->
@@ -64,10 +65,10 @@ export default {
       var self = this
       Common.fetch(this.routes.allFiles).then(
         function (response) {
-          self.$set('resources', response.data)
+          self.$set('files', response.data)
         },
         function () {
-          console.log('failed fetching resources')
+          console.log('failed fetching files')
         }
       )
     }
@@ -83,7 +84,7 @@ export default {
     font-family: Helvetica, sans-serif;
   }
   .v-link-active {
-    color: #ff599c;
+    color: #bada55;
   }
 
    select, input {
