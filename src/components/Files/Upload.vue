@@ -3,7 +3,7 @@
 
     <div class="col col-12">
       <input id="fileupload" type="file" name="files[]" data-url="http://laravel-storage.app/files" multiple>
-      <div class="upload"></div>
+      <div class="upload inline"></div>
     </div>
 
   </div>
@@ -56,10 +56,10 @@
           dataType: 'json',
           maxChunkSize: 10000000, // 10 MB
           add: function (e, data) {
-            data.context = $('<button/>').text('Upload')
+            data.context = $('<button class="inline btn btn-primary"/>').text('Upload')
               .appendTo($('.upload'))
               .click(function () {
-                data.context = $('<p/>').html('Uploading&hellip;').replaceAll($(this))
+                data.context = $('<p class="inline"/>').html('Uploading&hellip;').replaceAll($(this))
 
                 Common.post(self.routes.postFile, {}).then(
                 function (response) {
