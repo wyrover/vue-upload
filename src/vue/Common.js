@@ -10,7 +10,7 @@ Vue.http.options.emulateJSON = false
 Vue.http.options.emulateHTTP = false
 // Common, global HTTP headers
 // Vue.http.headers.common['Authorization'] = 'Basic YXBpOnBhc3N3b3Jk'
-Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
+// Vue.http.headers.common['Access-Control-Allow-Origin'] = 'http://localhost/'
 // Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#csrf_token').getAttribute('value')
 
 // Interceptors

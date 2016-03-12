@@ -1,36 +1,19 @@
-var domain = 'http://laravel-start-point.app'
+var domain = 'http://laravel-storage.app'
 
 export default {
-  addContent: `${domain}/admin/pages/content/add`,
-  allContent: `${domain}/admin/content/all`,
-  allCountries: `${domain}/admin/countries`,
-  allLanguages: `${domain}/admin/languages`,
-  allPages: `${domain}/admin/pages/all?Pages`,
-  allReferences: `${domain}/admin/references/all`,
-  allResources: `${domain}/admin/resources/all`,
-  allMenus: `${domain}/admin/menus`,
-  associateReferences: `${domain}/admin/content/references`,
-  associateCountries: `${domain}/admin/pages/countries`,
-  associateLanguages: `${domain}/admin/pages/languages`,
-  createContent: `${domain}/admin/content/create`,
-  createPages: `${domain}/admin/pages/create`,
-  createReference: `${domain}/admin/references`,
-  deleteContent: `${domain}/admin/content/delete`,
-  deletePages: `${domain}/admin/pages/delete`,
-  deleteReference: `${domain}/admin/references`,
-  layoutsList: `${domain}/admin/pages/layoutsList`,
-  previewPage: `${domain}/admin/pages/preview`,
-  removeContent: `${domain}/admin/pages/content/remove`,
-  restorePages: `${domain}/admin/pages/restore`,
-  toggleActive: `${domain}/admin/pages/toggleactive`,
-  toggleContentActive: `${domain}/admin/content/toggleactive`,
-  updateContent: `${domain}/admin/content/update`,
-  updatePages: `${domain}/admin/pages/update`,
-  updateReference: `${domain}/admin/references`,
-  viewsList: `${domain}/admin/pages/viewslist`,
-  updateTaxonomy: `${domain}/admin/taxonomies`,
-  updateMenu: `${domain}/admin/menus`,
-  allTaxonomies: `${domain}/admin/taxonomy/all`,
-  allGlossaryTerms: `${domain}/admin/glossary/all`,
-  createGlossaryTerm: `${domain}/admin/glossary`
+  allFiles: `${domain}/files/all`
+
+/*
++--------+----------+--------------+------+-------------------------------------------------+------------+
+| Domain | Method   | URI          | Name | Action                                          | Middleware |
++--------+----------+--------------+------+-------------------------------------------------+------------+
+|        | GET|HEAD | /            |      | Closure                                         |            |
+|        | POST     | files        |      | Closure                                         |            |
+|        | GET|HEAD | files/all    |      | \App\Http\Controllers\FilesController@getAll    |            |
+|        | POST     | files/azure  |      | Closure                                         |            |
+|        | GET|HEAD | files/{file} |      | \App\Http\Controllers\FilesController@getFile   |            |
+|        | POST     | test         |      | App\Http\Controllers\FilesUploadController@test | cors       |
++--------+----------+--------------+------+-------------------------------------------------+------------+
+*/
+
 }

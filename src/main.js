@@ -8,10 +8,7 @@ import './vue/Transitions'
 var contentAreas = require('./data/contentAreas.json')
 
 import App from './App'
-import Pages from './components/Pages/Pages'
-import Content from './components/Content/Content.vue'
-import Glossary from './components/Glossary/Glossary'
-import Menus from './components/Menus/Menus'
+import Files from './components/Files/Files'
 
 var VueRouter = require('vue-router')
 
@@ -20,10 +17,7 @@ Vue.use(VueRouter)
 var router = new VueRouter()
 
 router.map({
-  '/pages': { component: Pages },
-  '/content': { component: Content },
-  '/glossary': { component: Glossary },
-  '/menus': { component: Menus }
+  '/': { component: Files }
 })
 
 router.start(App, '#app')
