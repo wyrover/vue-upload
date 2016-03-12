@@ -3,7 +3,7 @@
     <ul id="sort-{{ name | slugify }}" class="sort row list-reset">
       <li class="sort-item cf row-item" v-for="item in list | orderBy 'weight' ">
         <span class="sort-drag gray px2">&equals;</span>
-        <span class="row-title ml2">{{ item.name }}</span>
+        <span class="row-title muted ml2">{{ item.name }}</span>
       </li>
     </ul>
   </div>

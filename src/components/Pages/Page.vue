@@ -3,7 +3,7 @@
     <div class="col col-2">
 
       <!--Layout select-->
-      <select name="layouts" v-model="page.layout" class="col col-10 border-none" :class="{ 'bg-silver': page === selected, 'bg-white': page !== selected }">
+      <select name="layouts" v-model="page.layout" class="col col-2 border-none" :class="{ 'bg-silver': page === selected, 'bg-white': page !== selected }">
         <option v-for="layout in layouts" :value="layout">{{ layout }}</option>
       </select>
 
