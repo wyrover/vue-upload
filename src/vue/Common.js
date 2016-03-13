@@ -4,7 +4,7 @@ Vue.use(require('vue-resource')) // https://github.com/vuejs/vue-resource
 import createLogger from '../middlewares/logger'
 
 // Config
-Vue.http.options.root = '/root'
+Vue.http.options.root = '/'
 // Legacy servers config
 Vue.http.options.emulateJSON = false
 Vue.http.options.emulateHTTP = false
@@ -16,18 +16,12 @@ Vue.http.options.emulateHTTP = false
 // Interceptors
 Vue.http.interceptors.push({
   request (request) {
-    // self.$broadcast('progress-start')
     return request
   },
   response (response) {
-    if (response.ok) {
-      console.log(`%c - XHR success - ${response.request.url} `, 'background: #222; color: #bada55')
-      // Vue.$broadcast('progress-stop')
-    } else {
-      console.log(`%c - XHR failure - ${response.request.url} `, 'background: #222; color: #ff4136')
-      // Vue.$broadcast('progress-fail')
-    }
-    return response
+    return response.ok
+      ? console.log(`%c - XHR success - ${response.request.url}`, 'background: #222; color: #bada55')
+      : console.log(`%c - XHR failure - ${response.request.url}`, 'background: #222; color: #ff4136')
   }
 })
 
