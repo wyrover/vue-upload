@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="col col-12">
-      <input id="fileupload" v-el="fileInput" type="file" name="files[]" data-url="http://laravel-storage.app/files" @change="onFileChange" multiple>
+      <input id="fileupload" v-el="fileInput" type="file" name="files[]" data-url="http://laravel-storage.app/files/upload" @change="onFileChange" multiple>
       <div class="upload inline"></div>
     </div>
     <div class="clearfix"></div>
@@ -41,15 +41,15 @@
       var self = this
       this.$nextTick(function () {
         $('#fileupload').fileupload({
-          dataType: 'json',
+          dataType: 'multipart/form-data',
           maxChunkSize: 10000000, // 10 MB
           add (e, data) {
             data.context = $('<button class="inline btn btn-primary"/>')
             .text('Upload')
             .appendTo($('.upload'))
             .click(function () {
-              // data.context = $('<p class="inline"/>').html('Uploading&hellip;').replaceAll($(this))
-              // self.send(data.files)
+              data.context = $('<p/>').html('Uploading&hellip;').replaceAll($(this))
+              data.submit()
             })
           },
           done (e, data) {
@@ -60,9 +60,7 @@
     },
     methods: {
       onFileChange (e) {
-        var files = e.target.files || e.dataTransfer.files
-        console.log(files[0])
-        this.send(files)
+
       },
       send (data) {
         var self = this
