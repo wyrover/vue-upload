@@ -19,9 +19,10 @@ Vue.http.interceptors.push({
     return request
   },
   response (response) {
-    return response.ok
+    response.ok
       ? console.log(`%c - XHR success - ${response.request.url}`, 'background: #222; color: #bada55')
       : console.log(`%c - XHR failure - ${response.request.url}`, 'background: #222; color: #ff4136')
+    return response
   }
 })
 

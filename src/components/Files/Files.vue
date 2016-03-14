@@ -6,10 +6,38 @@
       <span
         class="col col-2"
         v-for="column in columns"
-        @click="sortBy(column)"
         :class="{ 'active': sortKey == column }">
         {{ column | capitalize }}
       </span>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="col col-12 m1 gray border-bottom border-gray" v-for="file in files">
+      <div class="col col-2">
+        <small>
+          {{ file.original_filename }}
+        </small>
+      </div>
+      <div class="col col-2">
+        <small>
+          {{ file.description ? file.description : 'No description'}}
+        </small>
+      </div>
+      <div class="col col-2">
+        <small>
+          {{ file.size }}
+        </small>
+      </div>
+      <div class="col col-2">
+        <small>
+          {{ file.extension }}
+        </small>
+      </div>
+      <div class="col">
+        <button class="btn btn-outline orange">Edit</button>
+        <button class="btn btn-primary">Download</button>
+      </div>
     </div>
 
     <div class="clearfix"></div>
@@ -20,26 +48,18 @@
 <script>
   var _ = require('lodash')
   import Common from '../../vue/Common'
-  import Modal from './../Modal'
+  import File from './File'
   export default {
     name: 'Files',
-    components: {
-      'modal': Modal
-    },
+    components: {},
     data () {
       return {
-        columns: ['name', 'description', 'type']
+        columns: ['name', 'description', 'size', 'type']
       }
     },
-    props: [
-      'routes',
-      'shared-state'
-    ],
-    computed: {
-    },
-    events: {
-    },
-    methods: {
-    }
+    props: [ 'routes', 'shared-state', 'files' ],
+    computed: {},
+    events: {},
+    methods: {}
   }
 </script>

@@ -10,6 +10,7 @@
     <router-view
       :routes="routes"
       :shared-state.sync="sharedState"
+      :files.sync="files"
       keep-alive>
     </router-view>
 
@@ -67,7 +68,7 @@ export default {
         function (response) {
           self.$set('files', response.data)
         },
-        function () {
+        function (response) {
           console.log('failed fetching files')
         }
       )
