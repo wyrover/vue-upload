@@ -82,13 +82,16 @@
 
         uploader.bind('FileUploaded', function (up, file) {
           // Add completed file uploads to the uploaded collection
+          console.log(file)
+          file.original_filename = file.name
+          file.extension = file.name.substr((~-file.name.lastIndexOf('.') >>> 0) + 2)
+
+          self.queue.$remove(file)
+          self.files.push(file)
           self.uploaded = this.files.filter(function (thing) {
             return thing.status === 5
           })
-          self.uploaded.map(function (thing) {
-            self.queue.$remove(thing)
-            self.files.push(thing)
-          })
+
         })
 
         uploader.bind('Error', function (up, err) {
