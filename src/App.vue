@@ -2,7 +2,7 @@
   <div>
     <!--vue-router-->
     <div class="col col-12 p2 m0">
-      <button v-link="{ path: '/files' }" class="btn silver">Files</button>
+      <button v-link="{ path: '/files' }" class="btn silver">Files (<span class="muted">{{ files.length }}</span>)</button>
       <button v-link="{ path: '/upload' }" class="btn silver">Upload</button>
     </div>
 

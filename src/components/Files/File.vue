@@ -2,20 +2,17 @@
   <div>
     <!--file info-->
     <div
-      class="col bg-blue white p1 mt1 rounded"
+      style="position: relative"
+      class="col bg-navy white p1 mt1 rounded"
       :class="{ 'muted': percent < 100 }">
       {{ name }}
+      <!--upload percentage-->
+      <progress
+        :percent.sync="percent"
+        :options="progressOptions">
+      </progress>
     </div>
-    <!--upload percentage-->
-    <div
-      class="col black p1 mt1 rounded">
-      {{ percent }}%
-    </div>
-    <!--vue-progress-->
-    <progress
-      :percent.sync="percent"
-      :options="progressOptions">
-    </progress>
+
   </div>
 </template>
 
@@ -30,9 +27,9 @@
         progressOptions: {
           show: true,
           canSuccess: true,
-          color: 'rgb(145, 255, 0)',
+          color: 'rgba(255, 255, 255, .8)',
           failedColor: 'red',
-          height: '16px'
+          height: '5px'
         }
       }
     },
@@ -45,7 +42,9 @@
 <style>
   .cov-progress {
     position: absolute;
-    height: 2px;
+    bottom: 0;
+    left: 0;
+    height: 15px;
     width: 0;
     transition: width 0.2s, opacity 0.6s;
     opacity: 1;

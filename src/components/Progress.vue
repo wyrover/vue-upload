@@ -1,6 +1,6 @@
 <template>
   <div
-    class="cov-progress"
+    class="cov-progress rounded"
     :style="{
       'width': percent + '%',
       'height': options.height,

@@ -8,21 +8,21 @@
 
     <!--dialog-->
     <div class="clearfix"></div>
-    <div class="col-2 mx-auto uploader border border-silver rounded">
+    <div class="col-3 mx-auto uploader border border-silver rounded">
       <!--browse button-->
       <button  class="col col-12 btn btn-primary rounded bg-blue white p4" id="browse">Browse&hellip;</button>
       <div class="clearfix"></div>
       <!--start upload button-->
-      <button v-show="files.length" class="col col-8 p2 btn  rounded  blue" id="start-upload">{{ files.length ? 'Upload!' : 'Done!' }}</button>
+      <button v-show="queue.length" class="col col-8 p2 btn  rounded  blue" id="start-upload">{{ queue.length ? 'Upload!' : 'Done!' }}</button>
       <!--cancel button-->
-      <button @click="cancel" v-show="files.length" class="col col-3 p2 ml2 h1 btn red">&times;</button>
+      <button @click="cancel" v-show="queue.length" class="col col-3 p2 ml2 h1 btn red">&times;</button>
       <div class="clearfix"></div>
     </div>
 
     <div class="clearfix"></div>
 
-    <div class="col-6 mx-auto my2">
-      <div v-for="file in files">
+    <div class="col-3 mx-auto my2">
+      <div v-for="file in queue">
         <file
           style="position: relative"
           :size="file.size"
@@ -53,10 +53,11 @@
     data () {
       return {
         files: [],
+        queue: [],
         uploaded: []
       }
     },
-    props: ['routes', 'shared-state'],
+    props: ['routes', 'shared-state', 'files'],
     computed: {},
     events: {},
     ready () {
@@ -75,14 +76,8 @@
         uploader.bind('FilesAdded', function (up, files) {
           // var html = ''
           plupload.each(files, function (file) {
-            self.files.push(file)
-            // html += '<li class="bg-blue white p1 mt1 rounded list-reset" id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></li>'
+            self.queue.push(file)
           })
-          // document.getElementById('filelist').innerHTML += html
-        })
-
-        uploader.bind('UploadProgress', function (up, file) {
-          // document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + '%</span>'
         })
 
         uploader.bind('FileUploaded', function (up, file) {
@@ -91,7 +86,8 @@
             return thing.status === 5
           })
           self.uploaded.map(function (thing) {
-            self.files.$remove(thing)
+            self.queue.$remove(thing)
+            self.files.push(thing)
           })
         })
 
@@ -130,5 +126,4 @@
     box-shadow: 5px 14px 68px 18px;
     color: silver;
   }
-
 </style>

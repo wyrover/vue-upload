@@ -46,6 +46,8 @@
             class="btn green">
             Preview
           </button>
+          <!--delete button-->
+          <button @click="destroy(file)" class="btn red h1">&times;</button>
         </div>
       </div>
     </div>
@@ -73,7 +75,7 @@
     events: {},
     methods: {
       canPreview (file) {
-        return !this.previewable.indexOf(file.extension.toLowerCase())
+        return !this.previewable.indexOf(file.extension ? file.extension.toLowerCase() : false)
       }
     }
   }
