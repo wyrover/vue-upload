@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--vue-router-->
-    <div class="col col-12 bg-black p2 m0">
+    <div class="col col-12 p2 m0">
       <button v-link="{ path: '/files' }" class="btn silver">Files</button>
       <button v-link="{ path: '/upload' }" class="btn silver">Upload</button>
     </div>

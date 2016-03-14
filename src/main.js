@@ -17,6 +17,10 @@ Vue.use(VueRouter)
 
 var router = new VueRouter()
 
+var Progress = require('vue-progressbar')
+
+Vue.use(Progress)
+
 router.map({
   '/files': { component: Files },
   '/upload': { component: Upload }

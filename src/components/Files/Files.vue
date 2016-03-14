@@ -13,30 +13,40 @@
 
     <div class="clearfix"></div>
 
-    <div class="col col-12 m1 gray border-bottom border-gray" v-for="file in files">
-      <div class="col col-2">
-        <small>
-          {{ file.original_filename }}
-        </small>
-      </div>
-      <div class="col col-2">
-        <small>
-          {{ file.description ? file.description : 'No description'}}
-        </small>
-      </div>
-      <div class="col col-2">
-        <small>
-          {{ file.size }}
-        </small>
-      </div>
-      <div class="col col-2">
-        <small>
-          {{ file.extension }}
-        </small>
-      </div>
-      <div class="col">
-        <button class="btn btn-outline orange">Edit</button>
-        <button class="btn btn-primary">Download</button>
+    <div v-for="file in files" class="col col-12 m1 py1 gray border-bottom border-gray">
+      <div class="">
+        <div class="col col-2">
+          <small>
+            {{ file.original_filename }}
+          </small>
+        </div>
+        <div class="col col-2">
+          <small>
+            {{ file.description ? file.description : 'No description'}}
+          </small>
+        </div>
+        <div class="col col-2">
+          <small>
+            {{ file.size }}
+          </small>
+        </div>
+        <div class="col col-2">
+          <small>
+            {{ file.extension }}
+          </small>
+        </div>
+        <div class="col">
+          <!--edit button-->
+          <button class="btn btn-primary">Edit</button>
+          <!--download button-->
+          <button class="btn blue">Download</button>
+          <!--preview button-->
+          <button
+            v-show="canPreview(file)"
+            class="btn green">
+            Preview
+          </button>
+        </div>
       </div>
     </div>
 
@@ -54,12 +64,17 @@
     components: {},
     data () {
       return {
-        columns: ['name', 'description', 'size', 'type']
+        columns: ['name', 'description', 'size', 'type'],
+        previewable: ['mp3', 'dev']
       }
     },
     props: [ 'routes', 'shared-state', 'files' ],
     computed: {},
     events: {},
-    methods: {}
+    methods: {
+      canPreview (file) {
+        return !this.previewable.indexOf(file.extension.toLowerCase())
+      }
+    }
   }
 </script>

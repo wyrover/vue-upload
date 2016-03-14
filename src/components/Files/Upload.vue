@@ -9,9 +9,12 @@
     <!--dialog-->
     <div class="clearfix"></div>
     <div class="col-2 mx-auto uploader border border-silver rounded">
-      <button  class="col col-12 btn btn-primary rounded bg-silver muted black p4" id="browse">Browse&hellip;</button>
+      <!--browse button-->
+      <button  class="col col-12 btn btn-primary rounded bg-blue white p4" id="browse">Browse&hellip;</button>
       <div class="clearfix"></div>
+      <!--start upload button-->
       <button v-show="files.length" class="col col-8 p2 btn  rounded  blue" id="start-upload">{{ files.length ? 'Upload!' : 'Done!' }}</button>
+      <!--cancel button-->
       <button @click="cancel" v-show="files.length" class="col col-3 p2 ml2 h1 btn red">&times;</button>
       <div class="clearfix"></div>
     </div>
@@ -21,11 +24,13 @@
     <div class="col-6 mx-auto my2">
       <div v-for="file in files">
         <file
+          style="position: relative"
           :size="file.size"
           :description="file.description"
           :percent.sync="file.percent"
           :name="file.name">
         </file>
+        <div class="clearfix"></div>
       </div>
     </div>
 
@@ -51,7 +56,7 @@
         uploaded: []
       }
     },
-    props: [ 'routes', 'shared-state' ],
+    props: ['routes', 'shared-state'],
     computed: {},
     events: {},
     ready () {
