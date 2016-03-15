@@ -7,6 +7,7 @@
       :class="{ 'test': percent < 100 }">
       <!--remove button-->
       <button @click="this.$emit('remove')" class="right btn p1 h1 red">&times;</button>
+      <button @click="this.$emit('edit')" class="right btn p1 h2 yellow">&#9998;</button>
       <!--file name-->
       {{ name }}
       <!--upload percentage-->
