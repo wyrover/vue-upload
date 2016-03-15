@@ -11,7 +11,7 @@
     </div>
 
     <div v-else="files.length" class="col col-12 h1 p4 center" v-cloak>
-      <p class="silver">No files here... Yet!</p>
+      <p class="silver">No files here&hellip; Yet!</p>
       <a v-link="{ path: '/upload' }"  class="btn btn-primary p3 silver">Add files</a>
     </div>
 

@@ -8,7 +8,7 @@
 
     <!--dialog-->
     <div class="clearfix"></div>
-    <div class="col-3 mx-auto uploader border border-silver rounded">
+    <div class="col-3 mx-auto mt4 uploader border border-silver rounded">
       <!--browse button-->
       <button class="col col-12 btn btn-primary rounded bg-blue white p4" id="browse">Browse&hellip;</button>
       <div class="clearfix"></div>
