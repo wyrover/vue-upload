@@ -1,6 +1,7 @@
 <template>
   <div
-    class="cov-progress rounded"
+    class="cov-progress border-top rounded"
+    style="border-color: rgba(255, 255, 255, 0.5)"
     :style="{
       'width': percent + '%',
       'height': options.height,
@@ -26,7 +27,7 @@
             color: 'rgb(143, 255, 199)',
             failedColor: 'red',
             show: false,
-            height: '5px'
+            height: '8px'
           }
         }
       }
