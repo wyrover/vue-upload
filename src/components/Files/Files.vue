@@ -4,51 +4,53 @@
     <!--Column headings-->
     <div class="col col-12 p1 bold blue">
       <span
-        class="col col-2"
         v-for="column in columns"
-        :class="{ 'active': sortKey == column }">
-        {{ column | capitalize }}
+        class="col {{ 'col-' + column.size }}">
+        {{ column.name | capitalize }}
       </span>
     </div>
 
     <div class="clearfix"></div>
 
     <div v-for="file in files" class="col col-12 m1 py1 gray border-bottom border-gray">
-      <div class="">
-        <div class="col col-2">
-          <small>
-            {{ file.original_filename }}
-          </small>
-        </div>
-        <div class="col col-2">
-          <small>
-            {{ file.description ? file.description : 'No description'}}
-          </small>
-        </div>
-        <div class="col col-2">
-          <small>
-            {{ file.size }}
-          </small>
-        </div>
-        <div class="col col-2">
-          <small>
-            {{ file.extension }}
-          </small>
-        </div>
-        <div class="col">
-          <!--edit button-->
-          <button class="btn btn-primary">Edit</button>
-          <!--download button-->
-          <a :href="file.downloadPath" class="btn blue">Download</a>
-          <!--preview button-->
-          <button
-            v-show="canPreview(file)"
-            class="btn green">
-            Preview
-          </button>
-          <!--delete button-->
-          <button @click="destroy(file)" class="btn red h1">&times;</button>
-        </div>
+      <div class="col col-3">
+        <small>
+          {{ file.original_filename }}
+        </small>
+      </div>
+      <div class="col col-2">
+        <small>
+          {{ file.description ? file.description : 'No description'}}
+        </small>
+      </div>
+      <div class="col col-1">
+        <small>
+          {{ file.size }}
+        </small>
+      </div>
+      <div class="col col-1">
+        <small>
+          {{ file.created_at }}
+        </small>
+      </div>
+      <div class="col col-1">
+        <small>
+          {{ file.extension }}
+        </small>
+      </div>
+      <div class=" col-3 right">
+        <!--edit button-->
+        <button class="btn btn-primary">Edit</button>
+        <!--download button-->
+        <a :href="file.downloadPath" class="btn blue">Download</a>
+        <!--preview button-->
+        <button
+          v-show="canPreview(file)"
+          class="btn green">
+          Preview
+        </button>
+        <!--delete button-->
+        <button @click="destroy(file)" class="btn red h1">&times;</button>
       </div>
     </div>
 
@@ -60,14 +62,21 @@
 <script>
   var _ = require('lodash')
   import Common from '../../vue/Common'
+  var fileTypes = require('./../../data/fileTypes.json')
   import File from './File'
   export default {
     name: 'Files',
     components: {},
     data () {
       return {
-        columns: ['name', 'description', 'size', 'type'],
-        previewable: ['mp3', 'dev']
+        columns: [
+          { name: 'name', size: 3 },
+          { name: 'description', size: 2 },
+          { name: 'size', size: 1 },
+          { name: 'uploaded', size: 1 },
+          { name: 'type', size: 1 }
+        ],
+        previewable: fileTypes['preview']
       }
     },
     props: [ 'routes', 'shared-state', 'files' ],
@@ -76,6 +85,17 @@
     methods: {
       canPreview (file) {
         return !this.previewable.indexOf(file.extension ? file.extension.toLowerCase() : false)
+      },
+      destroy (file) {
+        var self = this
+        Common.destroy(`${this.routes.deleteFile}/${file.hash}`).then(
+          function (response) {
+            self.files.$remove(file)
+          },
+          function () {
+            console.log('failed deleting file(s)')
+          }
+        )
       }
     }
   }

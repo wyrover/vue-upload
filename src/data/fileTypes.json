@@ -1,0 +1,4 @@
+{
+  "allowed": ["mp3", "jpg", "gif"],
+  "preview": ["jpg", "mp3", "gif", "png"]
+}

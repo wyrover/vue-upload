@@ -45,6 +45,7 @@
   var $ = require('jquery')
 
   var plupload = require('Plupload/js/plupload.full.min.js')
+  var fileTypes = require('./../../data/fileTypes.json')
 
   import Common from '../../vue/Common'
   import File from './File'
@@ -56,7 +57,8 @@
       return {
         queue: [],
         uploaded: [],
-        uploading: false
+        uploading: false,
+        allowedFileTypes: fileTypes['allowed']
       }
     },
     props: ['routes', 'shared-state', 'files'],
@@ -91,8 +93,7 @@
         })
 
         uploader.bind('FileUploaded', function (up, file) {
-          // Add completed file uploads to the uploaded collection
-          console.log(file)
+          // Add completed file uploads to the uploaded collection after adding some more info
           file.original_filename = file.name
           file.extension = file.name.substr((~-file.name.lastIndexOf('.') >>> 0) + 2)
           file.hash = file.id
