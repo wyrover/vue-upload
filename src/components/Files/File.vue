@@ -29,7 +29,7 @@
         progressOptions: {
           show: true,
           canSuccess: true,
-          color: 'rgba(255, 255, 255, .8)',
+          color: '#bada55',
           failedColor: 'red',
           height: '5px'
         }

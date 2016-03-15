@@ -2,12 +2,17 @@
   <div>
 
     <!--Column headings-->
-    <div class="col col-12 p1 bold blue">
+    <div v-if="files.length" class="col col-12 p1 bold blue" v-cloak>
       <span
         v-for="column in columns"
         class="col {{ 'col-' + column.size }}">
         {{ column.name | capitalize }}
       </span>
+    </div>
+
+    <div v-else="files.length" class="col col-12 h1 p4 center" v-cloak>
+      <p class="silver">No files here... Yet!</p>
+      <a v-link="{ path: '/upload' }"  class="btn btn-primary p3 silver">Add files</a>
     </div>
 
     <div class="clearfix"></div>

@@ -11,7 +11,8 @@
       :routes="routes"
       :shared-state.sync="sharedState"
       :files.sync="files"
-      keep-alive>
+      keep-alive
+      v-cloak>
     </router-view>
 
   </div>
@@ -88,12 +89,16 @@ export default {
     color: #bada55;
   }
 
-   select, input {
-     color: #8a8a8a;
-     border-radius: 5px;
-     margin: 5px;
-     padding: 0.5rem;
-   }
+  [v-cloak] {
+    display: none;
+  }
+
+  select, input {
+    color: #8a8a8a;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 0.5rem;
+  }
 
   select:hover, select:focus,
   input:hover, input:focus{
