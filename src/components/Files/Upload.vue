@@ -71,12 +71,12 @@
     ready () {
       var self = this
       this.$nextTick(function () {
-        // https://github.com/moxiecode/plupload/wiki/Chunking
-        // http://www.plupload.com/docs/Options
         var uploader = new plupload.Uploader({
           browse_button: 'browse', // this can be an id of a DOM element or the DOM element itself
           url: self.routes.postFile
         })
+          // https://github.com/moxiecode/plupload/wiki/Chunking
+          // http://www.plupload.com/docs/Options
 
         uploader.init()
 

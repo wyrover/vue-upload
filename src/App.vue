@@ -4,6 +4,7 @@
     <div class="col col-12 p2 m0 h2">
       <button v-link="{ path: '/files' }" class="btn silver">Files (<span class="muted">{{ files.length }}</span>)</button>
       <button v-link="{ path: '/upload' }" class="btn silver">Upload</button>
+      <button v-link="{ path: '/gallery' }" class="btn silver">Gallery</button>
     </div>
 
     <!-- use router-view element as (dynamic component) route outlet -->
