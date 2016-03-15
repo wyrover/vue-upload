@@ -12,7 +12,7 @@
 
     <div v-else="files.length" class="col col-12 h1 p4 center" v-cloak>
       <p class="silver">No files here&hellip; Yet!</p>
-      <a v-link="{ path: '/upload' }"  class="btn btn-primary p3 silver">Add files</a>
+      <a v-link="{ path: '/upload' }"  class="btn btn-primary p3 white">Add files</a>
     </div>
 
     <div class="clearfix"></div>

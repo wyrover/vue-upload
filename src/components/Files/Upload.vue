@@ -10,7 +10,7 @@
     <div class="clearfix"></div>
     <div class="col-3 mx-auto mt4 uploader border border-silver rounded">
       <!--browse button-->
-      <button class="col col-12 btn btn-primary rounded bg-blue white p4" id="browse">Browse&hellip;</button>
+      <button class="col col-12 btn btn-primary rounded bg-blue white p4 h1" id="browse">Browse&hellip;</button>
       <div class="clearfix"></div>
       <!--cancel button-->
       <button @click="cancel" v-show="queue.length" class="right p2 ml2 h1 btn red">&times;</button>
@@ -71,7 +71,6 @@
     ready () {
       var self = this
       this.$nextTick(function () {
-
         // https://github.com/moxiecode/plupload/wiki/Chunking
         // http://www.plupload.com/docs/Options
         var uploader = new plupload.Uploader({
