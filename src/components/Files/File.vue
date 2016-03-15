@@ -1,18 +1,20 @@
 <template>
   <div>
     <!--file info-->
-    <div
+    <span
       style="position: relative"
-      class="col bg-navy white p1 mt1 rounded"
-      :class="{ 'muted': percent < 100 }">
+      class="col col-12 bg-navy white right p1 mt1 rounded"
+      :class="{ 'test': percent < 100 }">
+      <!--remove button-->
+      <button @click="this.$emit('remove')" class="right btn p1 h1 red">&times;</button>
+      <!--file name-->
       {{ name }}
       <!--upload percentage-->
       <progress
         :percent.sync="percent"
         :options="progressOptions">
       </progress>
-    </div>
-
+    </span>
   </div>
 </template>
 
@@ -21,7 +23,7 @@
   export default {
     name: 'File',
     components: { 'progress': Progress },
-    props: [ 'name', 'description', 'size', 'percent', 'extension' ],
+    props: [ 'name', 'original_filename', 'description', 'size', 'percent', 'extension', 'base-path' ],
     data () {
       return {
         progressOptions: {

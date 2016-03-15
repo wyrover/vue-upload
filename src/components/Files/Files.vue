@@ -39,7 +39,7 @@
           <!--edit button-->
           <button class="btn btn-primary">Edit</button>
           <!--download button-->
-          <a href="{{ routes.getFile + '/' + file.name }}" class="btn blue">Download</a>
+          <a :href="file.downloadPath" class="btn blue">Download</a>
           <!--preview button-->
           <button
             v-show="canPreview(file)"
