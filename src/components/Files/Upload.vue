@@ -23,7 +23,7 @@
     <div class="clearfix"></div>
 
     <div class="col-3 mx-auto my2">
-      <div v-for="file in queue">
+      <div v-for="file in queue | filterBy searchQuery">
         <file
           @remove="remove(file)"
           style="position: relative"
@@ -61,7 +61,7 @@
         allowedFileTypes: fileTypes['allowed']
       }
     },
-    props: ['routes', 'shared-state', 'files'],
+    props: ['search-query', 'routes', 'shared-state', 'files'],
     computed: {
       uploading: function () {
         return this.queue.length > 0
@@ -97,6 +97,7 @@
           file.extension = file.name.substr((~-file.name.lastIndexOf('.') >>> 0) + 2)
           file.hash = file.id
           file.downloadPath = `${self.routes.getFile}/${file.hash}`
+          file.created_at = new Date()
           self.queue.$remove(file)
           self.files.push(file)
           self.uploaded = this.files.filter(function (thing) {

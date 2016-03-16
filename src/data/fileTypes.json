@@ -1,6 +1,6 @@
 {
   "allowed": ["mp3", "jpg", "gif"],
-  "preview": ["jpg", "mp3", "gif", "png"],
+  "preview": ["jpg", "mp3", "gif", "png", "m4a"],
   "archive": ["zip", "7z", "tar", "gz"],
   "text": ["txt"],
   "pdf": ["pdf"],

@@ -2,15 +2,25 @@
   <div>
     <!--vue-router-->
     <div class="col col-12 p2 m0 h2">
-      <input class="h3 right silver" v-model="searchQuery" type="text" name="search" placeholder="&#128269; Search&hellip;" style="border: none">
-      <button v-link="{ path: '/files' }" class="btn silver">Files (<span class="muted">{{ files.length }}</span>)</button>
+      <div class="right relative">
+          <!--search bar-->
+          <input class="h3 silver p1 m0" v-model="searchQuery" type="text" name="search" placeholder="&#128269; Search&hellip;" style="border: none">
+          <button @click.prevent="searchQuery = ''" class="btn h1 red muted absolute top-0 right-0 p1">&times;</button>
+      </div>
+      <!--main navigation-->
       <button v-link="{ path: '/upload' }" class="btn silver">Upload</button>
+      <button v-link="{ path: '/files' }" class="btn silver">Files (<span class="muted">{{ files.length }}</span>)</button>
       <button v-link="{ path: '/gallery' }" class="btn silver">Gallery</button>
     </div>
-
-
+    <!--sweet alerts, bruh-->
+    <sweet-alert
+     :title="'A title'"
+     :text="'Easy there buddy...'"
+     :type="'danger'">
+    </sweet-alert>
     <!-- use router-view element as (dynamic component) route outlet -->
     <router-view
+      @deletedSomething="this.$sweetAlert.$emit('alert')"
       :search-query="searchQuery"
       :routes="routes"
       :shared-state.sync="sharedState"
@@ -18,7 +28,6 @@
       keep-alive
       v-cloak>
     </router-view>
-
   </div>
 </template>
 
@@ -35,9 +44,7 @@ export default {
   store,
   name: 'App',
   replace: false,
-  components: {
-    SweetAlert
-  },
+  components: { 'sweet-alert': SweetAlert },
   data () {
     return {
       searchQuery: '',

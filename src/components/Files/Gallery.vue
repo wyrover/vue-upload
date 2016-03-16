@@ -4,8 +4,7 @@
       v-for="file in files | filterBy searchQuery"
       v-show="canPreview(file)">
         <img
-          @click=""
-          class="col col-1 mt2 rounded"
+          class="col col-1 m1 rounded"
           :src="'http://laravel-storage.app/files/images/preview/' + file.hash + '.' + file.extension"
           :alt="file.original_filename" :title="file.original_filename">
     </div>
@@ -32,6 +31,11 @@
     methods: {
       canPreview (file) {
         return fileTypes['preview'].indexOf(file.extension.toLowerCase()) > -1
+      },
+      isFileType (type, name) {
+        console.log(fileTypes[type])
+        console.log(fileTypes[type].indexOf(name))
+        return fileTypes[type].indexOf(name) > -1
       }
     }
   }

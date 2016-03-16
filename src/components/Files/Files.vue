@@ -8,9 +8,6 @@
         class="col {{ 'col-' + column.size }}">
         {{ column.name | capitalize }}
       </span>
-      <span>
-        <input type="checkbox" class="mr2" style="-webkit-transform: scale(2); color: transparent">
-      </span>
     </div>
 
     <div v-else="files.length" class="col col-12 h1 p4 center" v-cloak>
@@ -45,8 +42,6 @@
         <file-icon :extension="file.extension"></file-icon>
       </div>
       <div class="col-3 right">
-        <!--row select checkbox-->
-        <input @click="selectAll" v-model="file.selected" type="checkbox" class="mr2" style="-webkit-transform: scale(2); color: transparent">
         <!--edit button-->
         <button class="btn btn-primary">Edit</button>
         <!--download button-->
