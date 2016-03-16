@@ -8,6 +8,9 @@
         class="col {{ 'col-' + column.size }}">
         {{ column.name | capitalize }}
       </span>
+      <span>
+        <input type="checkbox" class="mr2" style="-webkit-transform: scale(2); color: transparent">
+      </span>
     </div>
 
     <div v-else="files.length" class="col col-12 h1 p4 center" v-cloak>
@@ -17,7 +20,7 @@
 
     <div class="clearfix"></div>
 
-    <div v-for="file in files" class="col col-12 m1 py1 gray border-bottom border-gray">
+    <div v-for="file in files | filterBy searchQuery" v-el="row" class="col col-12 m1 py1 gray border-bottom border-gray">
       <div class="col col-3">
         <small>
           {{ file.original_filename }}
@@ -39,11 +42,11 @@
         </small>
       </div>
       <div class="col col-1">
-        <small>
-          {{ file.extension }}
-        </small>
+        <file-icon :extension="file.extension"></file-icon>
       </div>
-      <div class=" col-3 right">
+      <div class="col-3 right">
+        <!--row select checkbox-->
+        <input @click="selectAll" v-model="file.selected" type="checkbox" class="mr2" style="-webkit-transform: scale(2); color: transparent">
         <!--edit button-->
         <button class="btn btn-primary">Edit</button>
         <!--download button-->
@@ -69,9 +72,12 @@
   import Common from '../../vue/Common'
   var fileTypes = require('./../../data/fileTypes.json')
   import File from './File'
+  import FileIcon from './FileIcon'
   export default {
     name: 'Files',
-    components: {},
+    components: {
+      'file-icon': FileIcon
+    },
     data () {
       return {
         columns: [
@@ -81,13 +87,18 @@
           { name: 'uploaded', size: 1 },
           { name: 'type', size: 1 }
         ],
+        fileTypes: {},
         previewable: fileTypes['preview']
       }
     },
-    props: [ 'routes', 'shared-state', 'files' ],
-    computed: {},
-    events: {},
+    props: ['search-query', 'routes', 'shared-state', 'files'],
     methods: {
+      selectAll () {
+        this.files.forEach(function (thisFile) {
+          thisFile.selected = true
+          console.log(thisFile.selected)
+        })
+      },
       canPreview (file) {
         return !this.previewable.indexOf(file.extension ? file.extension.toLowerCase() : false)
       },

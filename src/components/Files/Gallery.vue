@@ -1,18 +1,38 @@
 <template>
-    <div>
-        <div
-          v-for="file in files"
-          v-show="file.extension === 'jpg'">
-            <img :src="'/files/' + file.hash" :alt="file.original_filename">
-        </div>
+  <div class="mx-auto col-8">
+    <div
+      v-for="file in files | filterBy searchQuery"
+      v-show="canPreview(file)">
+        <img
+          @click=""
+          class="col col-1 mt2 rounded"
+          :src="'http://laravel-storage.app/files/images/preview/' + file.hash + '.' + file.extension"
+          :alt="file.original_filename" :title="file.original_filename">
     </div>
+  </div>
 </template>
 
 <script>
-    export default {
-      name: 'Gallery',
-      props: [
-        'files'
-      ]
+  var fileTypes = require('./../../data/fileTypes.json')
+  export default {
+    name: 'Gallery',
+    data () {
+      return {
+        editing: false,
+        progressOptions: {
+          show: true,
+          canSuccess: true,
+          color: '#bada55',
+          failedColor: 'red',
+          height: '5px'
+        }
+      }
+    },
+    props: ['search-query', 'files'],
+    methods: {
+      canPreview (file) {
+        return fileTypes['preview'].indexOf(file.extension.toLowerCase()) > -1
+      }
     }
+  }
 </script>

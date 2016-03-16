@@ -1,4 +1,15 @@
 {
   "allowed": ["mp3", "jpg", "gif"],
-  "preview": ["jpg", "mp3", "gif", "png"]
+  "preview": ["jpg", "mp3", "gif", "png"],
+  "archive": ["zip", "7z", "tar", "gz"],
+  "text": ["txt"],
+  "pdf": ["pdf"],
+  "presentation": ["ppt", "pptx"],
+  "document": ["rtf", "doc", "docx"],
+  "spreadsheet": ["xls", "xlsx"],
+  "email": ["oft", "eml"],
+  "image": ["gif", "jpg", "jpeg", "png", "tif", "psd", "ai"],
+  "video": ["avi", "mov", "mpeg", "mp4", "wmv"],
+  "audio": ["3gp", "act", "aiff", "aac", "amr", "au", "awb", "dct", "dss", "dvf", "flac", "gsm", "iklax", "ivs", "m4a", "mid", "m4p", "mmf", "mp3", "mpc", "msv", "ogg", "o", "opus", "ra", "rm", "raw", "sln", "tta", "vox", "wav", "wma", "wv", "webm"],
+  "code": ["php", "js", "rb", "py", "md", "sql", "html", "html", "css", "less", "sass", "scss", "jade", "haml"]
 }

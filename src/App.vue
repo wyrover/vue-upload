@@ -2,13 +2,16 @@
   <div>
     <!--vue-router-->
     <div class="col col-12 p2 m0 h2">
+      <input class="h3 right silver" v-model="searchQuery" type="text" name="search" placeholder="&#128269; Search&hellip;" style="border: none">
       <button v-link="{ path: '/files' }" class="btn silver">Files (<span class="muted">{{ files.length }}</span>)</button>
       <button v-link="{ path: '/upload' }" class="btn silver">Upload</button>
       <button v-link="{ path: '/gallery' }" class="btn silver">Gallery</button>
     </div>
 
+
     <!-- use router-view element as (dynamic component) route outlet -->
     <router-view
+      :search-query="searchQuery"
       :routes="routes"
       :shared-state.sync="sharedState"
       :files.sync="files"
@@ -37,6 +40,7 @@ export default {
   },
   data () {
     return {
+      searchQuery: '',
       routes: Routes,
       sharedState: {
         state: {
@@ -62,13 +66,16 @@ export default {
   },
   methods: {
     fetch () {
-      this.fetchResources()
+      this.fetchFiles()
     },
-    fetchResources () {
+    fetchFiles () {
       var self = this
       Common.fetch(this.routes.allFiles).then(
         function (response) {
           self.$set('files', response.data)
+          self.files.map(function (file) {
+            file.selected = false
+          })
         },
         function (response) {
           console.log('failed fetching files')
