@@ -69,16 +69,19 @@
     },
     events: {},
     ready () {
+      console.log('original - ' + this.routes.postFile)
       var self = this
       this.$nextTick(function () {
         var uploader = new plupload.Uploader({
           browse_button: 'browse', // this can be an id of a DOM element or the DOM element itself
-          url: self.routes.postFile
+          url: `https://halesway-storage.azurewebsites.net/files/upload`
         })
           // https://github.com/moxiecode/plupload/wiki/Chunking
           // http://www.plupload.com/docs/Options
 
         uploader.init()
+
+        console.log('culprit - ' + self.routes.postFile)
 
         uploader.bind('FilesAdded', function (up, files) {
           // var html = ''
@@ -123,17 +126,6 @@
       },
       remove (file) {
         this.queue.$remove(file)
-      },
-      send (data) {
-        var self = this
-        Common.post(this.routes.postFile, JSON.stringify(data)).then(
-          function (response) {
-            self.$set('files', response.data)
-          },
-          function () {
-            console.log('failed uploading file(s)')
-          }
-        )
       }
     }
   }

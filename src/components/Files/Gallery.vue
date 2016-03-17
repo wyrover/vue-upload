@@ -5,7 +5,7 @@
       v-show="canPreview(file)">
         <img
           class="col col-1 m1 rounded"
-          :src="'http://laravel-storage.app/files/images/preview/' + file.hash + '.' + file.extension"
+          :src="routes.previewFile + '/' + file.hash + '.' + file.extension"
           :alt="file.original_filename" :title="file.original_filename">
     </div>
   </div>
@@ -27,7 +27,7 @@
         }
       }
     },
-    props: ['search-query', 'files'],
+    props: ['routes', 'search-query', 'files'],
     methods: {
       canPreview (file) {
         return fileTypes['preview'].indexOf(file.extension.toLowerCase()) > -1
