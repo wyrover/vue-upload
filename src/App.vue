@@ -1,17 +1,47 @@
 <template>
   <div>
-    <!--vue-router-->
+    <!--vue-router - main navigation-->
     <div class="col col-12 p2 m0 h2">
+      <!--invite link-->
       <div class="right relative">
-          <!--search bar-->
-          <input class="h3 silver p1 m0" v-model="searchQuery" type="text" name="search" placeholder="&#128269; Search&hellip;" style="border: none">
-          <button @click.prevent="searchQuery = ''" class="btn h1 red muted absolute top-0 right-0 p1">&times;</button>
+        <button @click="this.$emit('open-invite-link-modal')" class="btn btn-primary bg-white blue right">&#128587;<!--&#128588;--></button>
       </div>
-      <!--main navigation-->
-      <button v-link="{ path: '/upload' }" class="btn silver">Upload</button>
-      <button v-link="{ path: '/files' }" class="btn silver">Files (<span class="muted">{{ files.length }}</span>)</button>
+      <!--search bar-->
+      <div v-if="this.$route.path !== '/upload'" class="right relative">
+        <input class="h3 silver p1 m0" v-model="searchQuery" type="text" name="search" placeholder="&#128269; Search&hellip;" style="border: none">
+        <button @click.prevent="searchQuery = ''" class="btn h1 red muted absolute top-0 right-0 p1">&times;</button>
+      </div>
+      <!--upload component-->
+      <button v-link="{ path: '/upload' }" class="btn silver">
+        <span v-if="this.$route.path === '/upload'">&#8686;</span><span v-else="">&#8679;</span> Upload
+      </button>
+      <!--files view component-->
+      <button v-link="{ path: '/files' }" class="btn silver">
+        <span v-if="this.$route.path === '/files'">&#128194;</span><span v-else="">&#128193;</span> Files (<small class="muted">{{ files.length }}</small>)
+      </button>
+      <!--gallery component-->
       <button v-link="{ path: '/gallery' }" class="btn silver">Gallery</button>
     </div>
+    <!--invite link dialog/modal-->
+    <invite-link-modal :show.sync="showInviteLinkModal">
+      <h3 class="center blue" slot="header">Invite someone! &#128588;</h3>
+      <div slot="body" class="center border-top border-bottom border-silver">
+        <p class="gray">Click to save an invitation link to your clipboard</p>
+        <textarea v-model="inviteLink" class="clipboard col-4 border-blue p2 m2 rounded"></textarea>
+        <!--link-copied-to-clipboard notification-->
+        <p v-show="copied" class="animated mt0 p2 blue border-blue rounded " transition="bounce">Copied to clipboard!</p>
+        <p class="gray">
+          <em>Or&hellip;</em>
+        </p>
+        <input
+          v-model="inviteEmailAddress"
+          class="mx-auto col-3 p2 m2 rounded border-none"
+          placeholder="Enter the email address of the person(s) you would like to invite" />
+
+      </div>
+      <div slot="buttons"></div>
+      <div slot="footer"></div>
+    </invite-link-modal>
     <!--sweet alerts, bruh-->
     <sweet-alert
      :title="'A title'"
@@ -25,8 +55,7 @@
       :routes="routes"
       :shared-state.sync="sharedState"
       :files.sync="files"
-      keep-alive
-      v-cloak>
+      keep-alive v-cloak>
     </router-view>
   </div>
 </template>
@@ -37,14 +66,20 @@ import Vue from 'vue'
 import store from './store/content/index'
 
 import SweetAlert from './components/SweetAlert'
+import Modal from './components/Modal'
 import Common from './vue/Common'
 import Messages from './vue/Messages'
+
+var Clipboard = require('clipboard')
 
 export default {
   store,
   name: 'App',
   replace: false,
-  components: { 'sweet-alert': SweetAlert },
+  components: {
+    'sweet-alert': SweetAlert,
+    'invite-link-modal': Modal
+  },
   data () {
     return {
       searchQuery: '',
@@ -60,13 +95,29 @@ export default {
           return this.state.selectedFile
         }
       },
-      files: []
+      files: [],
+      showInviteLinkModal: false,
+      inviteLink: 'https://a-link.com',
+      copied: false
     }
   },
   ready () {
     this.fetch()
   },
   events: {
+    'open-invite-link-modal' () {
+      var self = this
+      var clipboard = new Clipboard('.clipboard', {
+        text: function (trigger) {
+          self.copied = true
+          return trigger.value
+        }
+      })
+      if (this.showInviteModal) {
+        clipboard.destroy()
+      }
+      this.$set('showInviteLinkModal', !this.showInviteLinkModal)
+    },
     'fetch' () {
       this.fetch()
     }
@@ -95,7 +146,7 @@ export default {
 
 <style>
   @import '../node_modules/ace-css/css/ace.min.css';
-  @import '../node_modules/animate.css/source/_base.css';
+  @import '../node_modules/animate.css/animate.css';
 
   body {
     font-family: Helvetica, sans-serif;

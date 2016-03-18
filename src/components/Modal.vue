@@ -17,7 +17,6 @@
                 </div>
                 <div class="modal-footer">
                     <slot name="close">
-                        default footer
                         <button @click="show = false" class="btn btn-primary modal-default-button">
                             Close
                         </button>
@@ -54,7 +53,6 @@
 
 <style scoped>
     .modal-mask {
-
         background-color: rgba(255, 255, 255, 0.90);
         display: table;
         transition: opacity .3s ease;
@@ -64,9 +62,9 @@
         vertical-align: middle;
     }
     .modal-container {
-        /*position: absolute;*/
-        /*top: 0px;*/
-        /*bottom: 0px;*/
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
         min-height: 500px;
         margin: 0px auto;
         padding: 20px 30px;

@@ -3,10 +3,7 @@
 var Vue = require('vue')
 
 // Animate.css transitions
-Vue.transition('bounce', {
-  enterClass: 'bounceInLeft',
-  leaveClass: 'bounceOutRight'
-})
+Vue.transition('bounce', { enterClass: 'bounceIn', leaveClass: 'bounceOut' })
 
 Vue.transition('stagger', {
   stagger: function (index) {
@@ -15,5 +12,3 @@ Vue.transition('stagger', {
     return Math.min(300, index * 50)
   }
 })
-
-console.log('transitions loaded')

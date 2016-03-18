@@ -3,6 +3,7 @@ import Vue from 'vue'
 import './vue/Config'
 import './vue/Filters'
 import './vue/Transitions'
+import './vue/Directives'
 
 // Example json loading
 var contentAreas = require('./data/contentAreas.json')

@@ -74,14 +74,15 @@
       this.$nextTick(function () {
         var uploader = new plupload.Uploader({
           browse_button: 'browse', // this can be an id of a DOM element or the DOM element itself
-          url: `https://halesway-storage.azurewebsites.net/files/upload`
+          url: this.routes.postFile
         })
           // https://github.com/moxiecode/plupload/wiki/Chunking
           // http://www.plupload.com/docs/Options
 
         uploader.init()
+        uploader.settings.url = self.routes.postFile
 
-        console.log('culprit - ' + self.routes.postFile)
+        console.log('new - ' + uploader.settings.url)
 
         uploader.bind('FilesAdded', function (up, files) {
           // var html = ''

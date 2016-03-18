@@ -3,10 +3,14 @@
     <div
       v-for="file in files | filterBy searchQuery"
       v-show="canPreview(file)">
-        <img
-          class="col col-1 m1 rounded"
-          :src="routes.previewFile + '/' + file.hash + '.' + file.extension"
-          :alt="file.original_filename" :title="file.original_filename">
+        <div class="col col-1 m1 relative">
+          <img
+            class="rounded"
+            :src="routes.previewFile + '/' + file.hash + '.' + file.extension"
+            :alt="file.original_filename" :title="file.original_filename">
+            <!--delete button-->
+            <button @click="destroy(file)" class="absolute top-0 right-0 delete btn p1 red h1">&times;</button>
+        </div>
     </div>
   </div>
 </template>
@@ -30,7 +34,7 @@
     props: ['routes', 'search-query', 'files'],
     methods: {
       canPreview (file) {
-        return fileTypes['preview'].indexOf(file.extension.toLowerCase()) > -1
+        return fileTypes['previewVisual'].indexOf(file.extension.toLowerCase()) > -1
       },
       isFileType (type, name) {
         console.log(fileTypes[type])
