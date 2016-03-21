@@ -13,7 +13,7 @@ export default {
     // Add the app's key
     credentials.app_key = APP_KEY
     context.$http.post(LOGIN_URL, credentials, (data) => {
-      localStorage.setItem('id_token', data.id_token)
+      localStorage.setItem('id_token', data.token)
       this.user.authenticated = true
       if (redirect) {
         router.go(redirect)

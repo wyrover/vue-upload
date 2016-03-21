@@ -83,9 +83,9 @@ import {SIGNUP_URL} from './auth'
 
 import SweetAlert from './components/SweetAlert'
 import Modal from './components/Modal'
+import Login from './components/Auth/Login'
 import Common from './vue/Common'
 import Messages from './vue/Messages'
-import Login from './vue/auth/Login'
 
 var Clipboard = require('clipboard')
 
