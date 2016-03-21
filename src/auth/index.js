@@ -1,61 +1,46 @@
-//  src/auth/index.js
-
 import {router} from '../main'
+import {APP_KEY} from '../main'
 
-const API_URL = 'http://localhost:3001/'
-const LOGIN_URL = API_URL + 'sessions/create/'
-const SIGNUP_URL = API_URL + 'users/'
+export const API_URL = '//laravel-auth.app/'
+export const LOGIN_URL = API_URL + 'auth/login/'
+export const SIGNUP_URL = API_URL + 'register/'
 
 export default {
-
   user: {
     authenticated: false
   },
-
-  login (context, creds, redirect) {
-    context.$http.post(LOGIN_URL, creds, (data) => {
+  login (context, credentials, redirect) {
+    // Add the app's key
+    credentials.app_key = APP_KEY
+    context.$http.post(LOGIN_URL, credentials, (data) => {
       localStorage.setItem('id_token', data.id_token)
-
       this.user.authenticated = true
-
       if (redirect) {
         router.go(redirect)
       }
-
     }).error((err) => {
       context.error = err
     })
   },
-
-  signup (context, creds, redirect) {
-    context.$http.post(SIGNUP_URL, creds, (data) => {
+  signup (context, credentials, redirect) {
+    context.$http.post(SIGNUP_URL, credentials, (data) => {
       localStorage.setItem('id_token', data.id_token)
-
       this.user.authenticated = true
-
       if (redirect) {
         router.go(redirect)
       }
-
     }).error((err) => {
       context.error = err
     })
   },
-
   logout () {
     localStorage.removeItem('id_token')
     this.user.authenticated = false
   },
-
   checkAuth () {
     var jwt = localStorage.getItem('id_token')
-    if (jwt) {
-      this.user.authenticated = true
-    } else {
-      this.user.authenticated = false
-    }
+    this.user.authenticated = !!jwt
   },
-
   getAuthHeader () {
     return {
       'Authorization': 'Bearer ' + localStorage.getItem('id_token')

@@ -2,15 +2,15 @@
   <div class="col-sm-4 col-sm-offset-4">
     <h2>Log In</h2>
     <p>Log in to your account below.</p>
-    <div class="alert alert-danger" v-if="error">
+    <div class="red" v-if="error">
       <p>{{ error }}</p>
     </div>
     <div class="form-group">
       <input 
         type="text" 
         class="form-control"
-        placeholder="Enter your username"
-        v-model="credentials.username"
+        placeholder="Enter your email"
+        v-model="credentials.email"
       >
     </div>
     <div class="form-group">
@@ -21,38 +21,33 @@
         v-model="credentials.password"
       >
     </div>
-    <button class="btn btn-primary" @click="submit()">Access</button>
+    <button class="btn btn-primary m1" @click="submit()">Access</button>
   </div>
 </template>
 
 <script>
-import auth from '../auth'
+import auth from '../../auth'
 
 export default {
 
-  data() {
+  data () {
     return {
       credentials: {
-        username: '',
-        password: ''
+        email: 'admin@example.com',
+        password: 'password123'
       },
       error: ''
     }
   },
 
   methods: {
-
-    submit() {
-
+    submit () {
       var credentials = {
-        username: this.credentials.username,
+        email: this.credentials.email,
         password: this.credentials.password
       }
-
       auth.login(this, credentials, 'secretquote')
-
     }
   }
-  
 }
 </script>
