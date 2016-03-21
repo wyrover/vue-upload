@@ -4,11 +4,11 @@
     <div class="col col-12 p2 m0 h2">
       <!--invite link-->
       <div class="right relative">
-        <button @click="this.$emit('open-invite-link-modal')" class="btn btn-primary border-gray bg-white blue right">&#128587;<!--&#128588;--></button>
+        <button @click="this.$emit('open-invite-modal')" class="btn btn-primary border-gray bg-white blue right">&#128587;<!--&#128588;--></button>
       </div>
       <!--login link-->
       <div class="right mr2 relative">
-        <button @click="" class="btn btn-primary h5 border-gray bg-white gray right">Login<!--&#128273;--></button>
+        <button @click="this.$emit('open-login-modal')" class="btn btn-primary h5 border-gray bg-white gray right">Login&#128273;</button>
       </div>
       <!--search bar-->
       <div v-if="this.$route.path !== '/upload'" class="right mr2 relative">
@@ -42,13 +42,13 @@
       keep-alive v-cloak>
     </router-view>
     <!--invite link dialog/modal-->
-    <invite-link-modal :show.sync="showInviteLinkModal">
+    <invite-modal :show.sync="showInviteModal">
       <h3 class="center blue" slot="header">Invite someone! &#128588;</h3>
       <div slot="body" class="center border-top border-bottom border-silver">
         <p class="gray">Click to save an invitation link to your clipboard</p>
         <textarea v-model="inviteLink" class="clipboard col-4 border-blue p2 m2 rounded"></textarea>
         <!--link-copied-to-clipboard notification-->
-        <p v-show="copied" class="animated mt0 p2 blue border-blue rounded " transition="bounce">Copied to clipboard!</p>
+        <p v-show="inviteLinkCopied" class="animated mt0 p2 blue border-blue rounded " transition="bounce">Copied to clipboard!</p>
         <p class="gray">
           <em>Or&hellip;</em>
         </p>
@@ -59,7 +59,17 @@
       </div>
       <div slot="buttons"></div>
       <div slot="footer"></div>
-    </invite-link-modal>
+    </invite-modal>
+    <!--login dialog/modal-->
+    <login-modal :show.sync="showLoginModal">
+      <h3 class="center blue" slot="header">Login</h3>
+      <div slot="body" class="center border-top border-bottom border-silver">
+        <login-component>
+        </login-component>
+      </div>
+      <div slot="buttons"></div>
+      <div slot="footer"></div>
+    </login-modal>
   </div>
 </template>
 
@@ -68,10 +78,14 @@ import Routes from './routes'
 import Vue from 'vue'
 import store from './store/content/index'
 
+import auth from './auth'
+import {SIGNUP_URL} from './auth'
+
 import SweetAlert from './components/SweetAlert'
 import Modal from './components/Modal'
 import Common from './vue/Common'
 import Messages from './vue/Messages'
+import Login from './vue/auth/Login'
 
 var Clipboard = require('clipboard')
 
@@ -81,10 +95,13 @@ export default {
   replace: false,
   components: {
     'sweet-alert': SweetAlert,
-    'invite-link-modal': Modal
+    'invite-modal': Modal,
+    'login-modal': Modal,
+    'login-component': Login
   },
   data () {
     return {
+      user: auth.user,
       searchQuery: '',
       routes: Routes,
       sharedState: {
@@ -99,30 +116,37 @@ export default {
         }
       },
       files: [],
-      showInviteLinkModal: false,
-      inviteLink: 'https://a-link.com',
-      copied: false
+      showInviteModal: false,
+      showLoginModal: false,
+      inviteLink: SIGNUP_URL,
+      inviteLinkCopied: false
     }
   },
   ready () {
     this.fetch()
   },
   events: {
-    'open-invite-link-modal' () {
+    'open-login-modal' () {
+      this.$set('showLoginModal', !this.showLoginModal)
+    },
+    'open-invite-modal' () {
       var self = this
       var clipboard = new Clipboard('.clipboard', {
         text: function (trigger) {
-          self.copied = true
+          self.inviteLinkCopied = true
           return trigger.value
         }
       })
       if (this.showInviteModal) {
         clipboard.destroy()
       }
-      this.$set('showInviteLinkModal', !this.showInviteLinkModal)
+      this.$set('showInviteModal', !this.showInviteModal)
     },
     'fetch' () {
       this.fetch()
+    },
+    'logout' () {
+      auth.logout()
     }
   },
   methods: {

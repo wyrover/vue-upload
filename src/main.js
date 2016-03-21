@@ -1,5 +1,7 @@
 import Vue from 'vue'
 
+export const APP_KEY = '456'
+
 import './vue/Config'
 import './vue/Filters'
 import './vue/Transitions'
@@ -27,6 +29,10 @@ router.map({
   '/files': { component: Files },
   '/upload': { component: Upload },
   '/gallery': { component: Gallery }
+})
+
+router.redirect({
+  '*': '/upload'
 })
 
 router.start(App, '#app')
