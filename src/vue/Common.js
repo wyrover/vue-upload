@@ -5,13 +5,13 @@ import createLogger from '../middlewares/logger'
 
 // Config
 Vue.http.options.root = '/'
+
 // Legacy servers config
 Vue.http.options.emulateJSON = false
 Vue.http.options.emulateHTTP = false
+
 // Common, global HTTP headers
-// Vue.http.headers.common['Authorization'] = 'Basic YXBpOnBhc3N3b3Jk'
-// Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
-// Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#csrf_token').getAttribute('value')
+Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token')
 
 // Interceptors
 Vue.http.interceptors.push({

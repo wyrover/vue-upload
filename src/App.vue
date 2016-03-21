@@ -4,10 +4,14 @@
     <div class="col col-12 p2 m0 h2">
       <!--invite link-->
       <div class="right relative">
-        <button @click="this.$emit('open-invite-link-modal')" class="btn btn-primary bg-white blue right">&#128587;<!--&#128588;--></button>
+        <button @click="this.$emit('open-invite-link-modal')" class="btn btn-primary border-gray bg-white blue right">&#128587;<!--&#128588;--></button>
+      </div>
+      <!--login link-->
+      <div class="right mr2 relative">
+        <button @click="" class="btn btn-primary h5 border-gray bg-white gray right">Login<!--&#128273;--></button>
       </div>
       <!--search bar-->
-      <div v-if="this.$route.path !== '/upload'" class="right relative">
+      <div v-if="this.$route.path !== '/upload'" class="right mr2 relative">
         <input class="h3 silver p1 m0" v-model="searchQuery" type="text" name="search" placeholder="&#128269; Search&hellip;" style="border: none">
         <button @click.prevent="searchQuery = ''" class="btn h1 red muted absolute top-0 right-0 p1">&times;</button>
       </div>
@@ -22,6 +26,21 @@
       <!--gallery component-->
       <button v-link="{ path: '/gallery' }" class="btn silver">Gallery</button>
     </div>
+    <!--sweet alerts, bruh-->
+    <sweet-alert
+     :title="'A title'"
+     :text="'Whoa, easy there buddy&hellip;'"
+     :type="'danger'">
+    </sweet-alert>
+    <!-- use router-view element as (dynamic component) route outlet -->
+    <router-view
+      @deletedSomething="this.$sweetAlert.$emit('alert')"
+      :search-query="searchQuery"
+      :routes="routes"
+      :shared-state.sync="sharedState"
+      :files.sync="files"
+      keep-alive v-cloak>
+    </router-view>
     <!--invite link dialog/modal-->
     <invite-link-modal :show.sync="showInviteLinkModal">
       <h3 class="center blue" slot="header">Invite someone! &#128588;</h3>
@@ -37,26 +56,10 @@
           v-model="inviteEmailAddress"
           class="mx-auto col-3 p2 m2 rounded border-none"
           placeholder="Enter the email address of the person(s) you would like to invite" />
-
       </div>
       <div slot="buttons"></div>
       <div slot="footer"></div>
     </invite-link-modal>
-    <!--sweet alerts, bruh-->
-    <sweet-alert
-     :title="'A title'"
-     :text="'Easy there buddy...'"
-     :type="'danger'">
-    </sweet-alert>
-    <!-- use router-view element as (dynamic component) route outlet -->
-    <router-view
-      @deletedSomething="this.$sweetAlert.$emit('alert')"
-      :search-query="searchQuery"
-      :routes="routes"
-      :shared-state.sync="sharedState"
-      :files.sync="files"
-      keep-alive v-cloak>
-    </router-view>
   </div>
 </template>
 

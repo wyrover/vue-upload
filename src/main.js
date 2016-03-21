@@ -13,14 +13,14 @@ import Files from './components/Files/Files'
 import Upload from './components/Files/Upload'
 import Gallery from './components/Files/Gallery'
 
+import auth from './auth'
+auth.checkAuth()
+
 var VueRouter = require('vue-router')
-
 Vue.use(VueRouter)
-
-var router = new VueRouter()
+export var router = new VueRouter()
 
 var Progress = require('vue-progressbar')
-
 Vue.use(Progress)
 
 router.map({
