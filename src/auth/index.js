@@ -1,37 +1,28 @@
+import Common from '../vue/Common'
+import Routes from '../routes'
 import {router} from '../main'
 import {APP_KEY} from '../main'
-
-export const API_URL = '//laravel-auth.app/'
-export const LOGIN_URL = API_URL + 'auth/login/'
-export const SIGNUP_URL = API_URL + 'register/'
+import {API_AUTH_ROUTES} from '../routes'
 
 export default {
   user: {
     authenticated: false
   },
   login (context, credentials, redirect) {
+    var self = this
     // Add the app's key
     credentials.app_key = APP_KEY
-    context.$http.post(LOGIN_URL, credentials, (data) => {
-      localStorage.setItem('id_token', data.token)
-      this.user.authenticated = true
-      if (redirect) {
-        router.go(redirect)
-      }
-    }).error((err) => {
-      context.error = err
-    })
-  },
-  signup (context, credentials, redirect) {
-    context.$http.post(SIGNUP_URL, credentials, (data) => {
-      localStorage.setItem('id_token', data.id_token)
-      this.user.authenticated = true
-      if (redirect) {
-        router.go(redirect)
-      }
-    }).error((err) => {
-      context.error = err
-    })
+    Common.post(API_AUTH_ROUTES.LOGIN_URL, credentials).then(
+      function (response) {
+        localStorage.setItem('id_token', response.data.token)
+        self.user.authenticated = true
+        if (redirect) {
+          router.go(redirect)
+        }
+      },
+      function (response) {
+        context.error = 'add error checking'
+      })
   },
   logout () {
     localStorage.removeItem('id_token')
