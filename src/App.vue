@@ -2,18 +2,24 @@
   <div>
     <!--vue-router - main navigation-->
     <div class="col col-12 p2 m0 h2">
-      <!--invite link-->
-      <div class="right relative">
-        <button @click="this.$emit('open-invite-modal')" class="btn btn-primary border-gray bg-white blue right">&#128587;<!--&#128588;--></button>
+      <!--login/sign out link-->
+      <div class="right mr1 relative">
+        <button v-if="!user.authenticated" @click="this.$emit('open-login-modal')" class="btn btn-primary h4 border-blue bg-white blue right">Sign in&#128273;</button>
+        <button v-if="user.authenticated" @click="this.$emit('sign-out')" class="btn btn-primary border-silver h4 bg-white gray right">Sign out</button>
       </div>
-      <!--login link-->
+      <!--invite link-->
       <div class="right mr2 relative">
-        <button @click="this.$emit('open-login-modal')" class="btn btn-primary h5 border-gray bg-white gray right">Login&#128273;</button>
+        <button @click="this.$emit('open-invite-modal')" class="btn btn-primary h4 bg-white gray">Invites<span class="blue"> &#128587;</span><!--&#128588;--></button>
+      </div>
+      <!--welcome-->
+      <div v-if="user.authenticated" class="right mr2 relative">
+        <!--http://www.amp-what.com/unicode/search/face-->
+        <button class="btn btn-primary h4 bg-white gray">{{ user.name ? user.name : 'Unknown User' }}<span class="blue"> &#128060;</span></button>
       </div>
       <!--search bar-->
       <div v-if="this.$route.path !== '/upload'" class="right mr2 relative">
-        <input class="h3 silver p1 m0" v-model="searchQuery" type="text" name="search" placeholder="&#128269; Search&hellip;" style="border: none">
-        <button @click.prevent="searchQuery = ''" class="btn h1 red muted absolute top-0 right-0 p1">&times;</button>
+        <input class="silver p1 h4 m0" v-model="searchQuery" type="text" name="search" placeholder="Search&hellip;" style="border: none">
+        <button v-show="searchQuery" @click.prevent="searchQuery = ''" class="btn h1 red muted absolute top-0 right-0 p1">&times;</button>
       </div>
       <!--upload component-->
       <button v-link="{ path: '/upload' }" class="btn silver">

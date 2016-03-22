@@ -67,25 +67,23 @@
         return this.queue.length > 0
       }
     },
-    events: {},
     ready () {
       var self = this
       this.$nextTick(function () {
         var uploader = new plupload.Uploader({
           browse_button: 'browse', // this can be an id of a DOM element or the DOM element itself
-          url: this.routes.postFile
+          url: 'http://laravel-storage.app/files/upload'
         })
 
         // Set the browse button's z-index to 0 because plupload sets it to '1'
         var browseButton = document.querySelector('#browse').style.zIndex = 0
-
-        uploader.refresh()
 
         // https://github.com/moxiecode/plupload/wiki/Chunking
         // http://www.plupload.com/docs/Options
 
         uploader.init()
         uploader.settings.url = self.routes.postFile
+        uploader.refresh()
 
         uploader.bind('FilesAdded', function (up, files) {
           // var html = ''
