@@ -67,7 +67,7 @@
       <div slot="footer"></div>
     </invite-modal>
     <!--login dialog/modal-->
-    <login-modal :show.sync="showLoginModal">
+    <login-modal :show.sync="!user.authenticated">
       <h3 class="center blue" slot="header">Login</h3>
       <div slot="body" class="center border-top border-bottom border-silver">
         <login-component>
