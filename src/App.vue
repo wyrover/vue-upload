@@ -5,16 +5,16 @@
       <!--login/sign out link-->
       <div class="right mr1 relative">
         <button v-if="!user.authenticated" @click="this.$emit('open-login-modal')" class="btn btn-primary h4 border-blue bg-white blue right">Sign in&#128273;</button>
-        <button v-if="user.authenticated" @click="this.$emit('sign-out')" class="btn btn-primary border-silver h4 bg-white gray right">Sign out</button>
-      </div>
-      <!--invite link-->
-      <div class="right mr2 relative">
-        <button @click="this.$emit('open-invite-modal')" class="btn btn-primary h4 bg-white gray">Invites<span class="blue"> &#128587;</span><!--&#128588;--></button>
+        <button v-if="user.authenticated" @click="this.$emit('logout')" class="btn btn-primary border-silver h4 bg-white gray right">Sign out</button>
       </div>
       <!--welcome-->
       <div v-if="user.authenticated" class="right mr2 relative">
         <!--http://www.amp-what.com/unicode/search/face-->
         <button class="btn btn-primary h4 bg-white gray">{{ user.name ? user.name : 'Unknown User' }}<span class="blue"> &#128060;</span></button>
+      </div>
+      <!--invite link-->
+      <div class="right mr2 relative">
+        <button @click="this.$emit('open-invite-modal')" class="btn btn-primary h4 bg-white gray">Invites<span class="blue"> &#128587;</span><!--&#128588;--></button>
       </div>
       <!--search bar-->
       <div v-if="this.$route.path !== '/upload'" class="right mr2 relative">
