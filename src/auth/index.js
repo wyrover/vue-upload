@@ -8,6 +8,9 @@ export default {
   user: {
     authenticated: false
   },
+  /**
+   * Log a user in and set user's data from resulting decoded JWT
+   * */
   login (context, credentials, redirect) {
     var self = this
     // Add the app's key
@@ -29,33 +32,18 @@ export default {
         context.error = 'add error checking'
       })
   },
+  /**
+   * Remove the JWT from local storage
+   * */
   logout () {
     localStorage.removeItem('id_token')
     this.user.authenticated = false
-  },
-  getUser (context, credentials, redirect) {
-    var self = this
-    // Add the app's key
-    credentials.app_key = APP_KEY
-    Common.fetch(API_AUTH_ROUTES.LOGIN_URL, credentials).then(
-      function (response) {
-        localStorage.setItem('id_token', response.data.token)
-        self.user.authenticated = true
-        if (redirect) {
-          router.go(redirect)
-        }
-      },
-      function (response) {
-        context.error = 'add error checking'
-      })
   },
   checkAuth () {
     var jwt = localStorage.getItem('id_token')
     this.user.authenticated = !!jwt
   },
   getAuthHeader () {
-    return {
-      'Authorization': 'Bearer ' + localStorage.getItem('id_token')
-    }
+    return { 'Authorization': 'Bearer ' + localStorage.getItem('id_token') }
   }
 }
