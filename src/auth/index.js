@@ -14,8 +14,13 @@ export default {
     credentials.app_key = APP_KEY
     Common.post(API_AUTH_ROUTES.LOGIN_URL, credentials).then(
       function (response) {
-        localStorage.setItem('id_token', response.data.token)
+        var token = response.data.token
+        localStorage.setItem('id_token', token)
+        // Split by . -> base64 decode - Parse resulting JSON string
+        var payload = JSON.parse(atob(token.split('.')[1]))
         self.user.authenticated = true
+        self.user.email = payload.email
+        self.user.name = payload.name
         if (redirect) {
           router.go(redirect)
         }
