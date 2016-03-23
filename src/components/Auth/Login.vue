@@ -10,16 +10,14 @@
         type="text" 
         class="form-control"
         placeholder="Enter your email"
-        v-model="credentials.email"
-      >
+        v-model="credentials.email">
     </div>
     <div class="form-group">
       <input
         type="password"
         class="form-control"
         placeholder="Enter your password"
-        v-model="credentials.password"
-      >
+        v-model="credentials.password">
     </div>
     <button class="btn btn-primary m1" @click="submit()">Access</button>
   </div>

@@ -1,4 +1,5 @@
 import Common from '../vue/Common'
+import getPayload from '../vue/JWT'
 import Routes from '../routes'
 import {router} from '../main'
 import {APP_KEY} from '../main'
@@ -19,8 +20,7 @@ export default {
       function (response) {
         var token = response.data.token
         localStorage.setItem('id_token', token)
-        // Split by . -> base64 decode - Parse resulting JSON string
-        var payload = JSON.parse(atob(token.split('.')[1]))
+        var payload = getPayload(token)
         self.user.authenticated = true
         self.user.email = payload.email
         self.user.name = payload.name

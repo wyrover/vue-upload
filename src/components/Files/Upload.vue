@@ -10,6 +10,7 @@
     <div class="clearfix"></div>
     <div class="col-3 mx-auto mt4 uploader border border-silver rounded">
       <!--browse button-->
+      <!--n.b. see !important z-index setting in <style>, used to prevent button from appearing over modals, as z-index is set by plpuload-->
       <button class="col col-12 btn btn-primary rounded bg-blue white p4 h1" id="browse">Browse&hellip;</button>
       <div class="clearfix"></div>
       <!--cancel button-->
@@ -134,6 +135,9 @@
 </script>
 
 <style scoped>
+  #browse {
+    z-index: 0 !important;
+  }
   .uploader {
     box-shadow: 5px 14px 68px 18px;
     color: silver;
