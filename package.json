@@ -26,6 +26,7 @@
     "hint.css": "^2.1.0",
     "jquery": "^2.2.0",
     "json-loader": "^0.5.4",
+    "jwt-payload-decoder": "^1.2.0",
     "marked": "^0.3.5",
     "plupload": "git+https://github.com/moxiecode/plupload.git",
     "postcss-loader": "^0.8.1",

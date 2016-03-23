@@ -1,9 +1,10 @@
 import Common from '../vue/Common'
-import getPayload from '../vue/JWT'
 import Routes from '../routes'
 import {router} from '../main'
 import {APP_KEY} from '../main'
 import {API_AUTH_ROUTES} from '../routes'
+
+var jwtPayloadDecoder = require('jwt-payload-decoder')
 
 export default {
   user: {
@@ -20,7 +21,7 @@ export default {
       function (response) {
         var token = response.data.token
         localStorage.setItem('id_token', token)
-        var payload = getPayload(token)
+        var payload = jwtPayloadDecoder.getPayload(token)
         self.user.authenticated = true
         self.user.email = payload.email
         self.user.name = payload.name
