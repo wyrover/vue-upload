@@ -1,6 +1,5 @@
 <template>
-  <div class="col-sm-4 col-sm-offset-4">
-    <h2>Log In</h2>
+  <div class="col-sm-4 col-sm-offset-4 py2">
     <p>Log in to your account below.</p>
     <div class="red" v-if="error">
       <p>{{ error }}</p>
@@ -10,16 +9,22 @@
         type="text" 
         class="form-control"
         placeholder="Enter your email"
-        v-model="credentials.email">
+        v-model="credentials.email" />
     </div>
     <div class="form-group">
       <input
         type="password"
         class="form-control"
         placeholder="Enter your password"
-        v-model="credentials.password">
+        v-model="credentials.password" />
     </div>
-    <button class="btn btn-primary m1" @click="submit()">Access</button>
+    <div class="form-group py2">
+      <label class="col-1 p1 bg-gray white rounded h5">
+        Remember me for next time
+        <input type="checkbox" />
+      </label>
+    </div>
+    <button class="btn btn-primary m1" @click="submit()">Access your account</button>
   </div>
 </template>
 
