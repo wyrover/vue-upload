@@ -10,7 +10,17 @@
       <!--welcome-->
       <div v-if="user.authenticated" class="right mr2 relative">
         <!--http://www.amp-what.com/unicode/search/face-->
-        <button class="btn btn-primary h4 bg-white gray">{{ user.name ? user.name : 'Unknown User' }}<span class="blue"> &#128060;</span></button>
+        <button
+          class="btn btn-primary h4 bg-white gray">
+            <span v-if="user.authenticated">
+              <span v-if="user.admin">
+                <span class="muted">(<span class="blue">admin</span>)</span>
+              </span>
+              {{ user.first_name ? user.first_name : 'Unknown' }}
+              {{ user.last_name ? user.last_name : 'User' }}
+              <span class="blue"> &#128060;</span>
+            </span>
+        </button>
       </div>
       <!--invite link-->
       <div class="right mr2 relative">

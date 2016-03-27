@@ -1,5 +1,5 @@
 const API_STORAGE_LOCAL = 'http://laravel-storage.app'
-const API_AUTH_LOCAL = '//laravel-auth.app/'
+const API_AUTH_LOCAL = '//laravel-auth.app'
 // var API_STORAGE_LOCAL = 'https://halesway-storage.azurewebsites.net'
 
 // todo: refactor - should export each const as consts

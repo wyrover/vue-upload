@@ -22,9 +22,12 @@ export default {
         var token = response.data.token
         localStorage.setItem('id_token', token)
         var payload = jwtPayloadDecoder.getPayload(token)
+        // Set the user's details
         self.user.authenticated = true
+        self.user.admin = payload.permissions['user.admin'] === true
         self.user.email = payload.email
-        self.user.name = payload.name
+        self.user.first_name = payload.first_name
+        self.user.last_name = payload.last_name
         if (redirect) {
           router.go(redirect)
         }

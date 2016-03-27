@@ -12,6 +12,7 @@ Vue.http.options.emulateHTTP = false
 
 // Common, global HTTP headers
 Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token')
+Vue.http.headers.common['Set-Cookie'] = 'XDEBUG_SESSION=PHPSTORM'
 
 // Interceptors
 Vue.http.interceptors.push({
