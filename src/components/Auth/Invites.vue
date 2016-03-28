@@ -10,26 +10,22 @@
     <input
       v-model="inviteEmailAddresses"
       class="mx-auto col-3 p2 m2 rounded border-blue p2 m2"
-      placeholder="Enter the email address of the person(s) you would like to invite" />
-    <button @click="inviteUsers" class="btn btn-primary">Invite user(s)</button>
+      placeholder="Enter the email address of the person(s) you would like to invite (separated by commas)" />
+    <button @click="this.$emit('invite-users', inviteEmailAddresses)" class="btn btn-primary">Invite user(s)</button>
   </div>
 </template>
 
 <script>
-import auth from '../../auth'
 var Clipboard = require('clipboard')
 
 export default {
   data () {
     return {
-      inviteEmailAddresses: null,
-      inviteLinkCopied: false,
-      error: ''
+      inviteEmailAddresses: 'test@test.com, another@email.com',
+      inviteLinkCopied: false
     }
   },
-  props: {
-    inviteLink: ''
-  },
+  props: { inviteLink: '' },
   ready () {
     var self = this
     var clipboard = new Clipboard('.clipboard', {
@@ -40,11 +36,6 @@ export default {
     })
     if (this.showInviteModal) {
       clipboard.destroy()
-    }
-  },
-  methods: {
-    inviteUsers () {
-      console.log('invitee')
     }
   }
 }

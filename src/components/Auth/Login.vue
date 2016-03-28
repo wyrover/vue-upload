@@ -18,13 +18,11 @@
         placeholder="Enter your password"
         v-model="credentials.password" />
     </div>
-    <button class="btn btn-primary m1" @click="submit()">Access your account</button>
+    <button class="btn btn-primary m1" @click="this.$emit('login', credentials)">Access your account</button>
   </div>
 </template>
 
 <script>
-import auth from '../../auth'
-
 export default {
   data () {
     return {
@@ -33,15 +31,6 @@ export default {
         password: 'password123'
       },
       error: ''
-    }
-  },
-  methods: {
-    submit () {
-      var credentials = {
-        email: this.credentials.email,
-        password: this.credentials.password
-      }
-      auth.login(this, credentials, false)
     }
   }
 }

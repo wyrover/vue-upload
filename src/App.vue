@@ -62,7 +62,8 @@
       <h3 class="center blue" slot="header">Invite someone! &#128588;</h3>
       <div slot="body" class="center border-top border-bottom border-silver">
         <invites-component
-          :invite-link="inviteLink">
+          :invite-link="inviteLink"
+          @invite-users="inviteUsers">
         </invites-component>
       </div>
       <div slot="buttons"></div>
@@ -73,7 +74,8 @@
     <login-modal :show="!user.authenticated">
       <h3 class="center blue" slot="header">Login</h3>
       <div slot="body" class="center border-top border-bottom border-silver">
-        <login-component>
+        <login-component
+         @login="login">
         </login-component>
       </div>
       <div slot="buttons"></div>
@@ -89,6 +91,7 @@ import Vue from 'vue'
 import store from './store/content/index'
 
 import auth from './auth'
+import invite from './invite'
 import {API_AUTH_ROUTES} from './routes'
 import {API_INVITE_ROUTES} from './routes'
 
@@ -150,6 +153,17 @@ export default {
     }
   },
   methods: {
+    login (credentials) {
+      auth.login(this, credentials, false)
+    },
+    inviteUsers (inviteEmailAddresses) {
+      var newInvite = {
+        initiator_id: this.user.id,
+        // Split and trim invite emails list
+        recipients: inviteEmailAddresses.split(/[\s,]+/)
+      }
+      invite.send(this, newInvite, false)
+    },
     fetch () {
       this.fetchFiles()
     },

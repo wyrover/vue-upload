@@ -1,6 +1,7 @@
 var Vue = require('vue')
 Vue.use(require('vue-resource')) // https://github.com/vuejs/vue-resource
 
+import {APP_KEY} from '../main'
 import createLogger from '../middlewares/logger'
 
 // Config
@@ -14,9 +15,14 @@ Vue.http.options.emulateHTTP = false
 Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token')
 Vue.http.headers.common['Set-Cookie'] = 'XDEBUG_SESSION=PHPSTORM'
 
-// Interceptors
+// HTTP Interceptors
 Vue.http.interceptors.push({
   request (request) {
+    // todo: check app key using middleware on back-end
+    // If not this is not a GET request, attach the app key
+    if (request.method !== 'get') {
+      request.data.app_key = APP_KEY
+    }
     return request
   },
   response (response) {

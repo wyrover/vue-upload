@@ -19,6 +19,5 @@ export const API_AUTH_ROUTES = {
 }
 
 export const API_INVITE_ROUTES = {
-  INVITE_URL: `${API_AUTH_LOCAL}/invite`,
-  GET_INVITES_URL: `${API_AUTH_LOCAL}/invites`
+  INVITE_URL: `${API_AUTH_LOCAL}/invite`
 }
