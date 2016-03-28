@@ -1,5 +1,5 @@
 const API_STORAGE_LOCAL = 'http://laravel-storage.app'
-const API_AUTH_LOCAL = '//laravel-auth.app'
+const API_AUTH_LOCAL = 'http://laravel-auth.app'
 // var API_STORAGE_LOCAL = 'https://halesway-storage.azurewebsites.net'
 
 // todo: refactor - should export each const as consts
@@ -15,5 +15,10 @@ export default {
 export const API_AUTH_ROUTES = {
   GET_USER_URL: `${API_AUTH_LOCAL}/auth/user`,
   LOGIN_URL: `${API_AUTH_LOCAL}/auth/login`,
-  SIGNUP_URL: `${API_AUTH_LOCAL}/register`
+  SIGNUP_URL: `${API_AUTH_LOCAL}/signup`
+}
+
+export const API_INVITE_ROUTES = {
+  INVITE_URL: `${API_AUTH_LOCAL}/invite`,
+  GET_INVITES_URL: `${API_AUTH_LOCAL}/invites`
 }

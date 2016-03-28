@@ -18,12 +18,6 @@
         placeholder="Enter your password"
         v-model="credentials.password" />
     </div>
-    <div class="form-group py2">
-      <label class="col-1 p1 bg-gray white rounded h5">
-        Remember me for next time
-        <input type="checkbox" />
-      </label>
-    </div>
     <button class="btn btn-primary m1" @click="submit()">Access your account</button>
   </div>
 </template>
@@ -35,7 +29,7 @@ export default {
   data () {
     return {
       credentials: {
-        email: 'admin@example.com',
+        email: 'super@example.com',
         password: 'password123'
       },
       error: ''

@@ -16,15 +16,14 @@
               <span v-if="user.admin">
                 <span class="muted">(<span class="blue">admin</span>)</span>
               </span>
-              {{ user.first_name ? user.first_name : 'Unknown' }}
-              {{ user.last_name ? user.last_name : 'User' }}
+              {{ user.email }}
               <span class="blue"> &#128060;</span>
             </span>
         </button>
       </div>
       <!--invite link-->
       <div class="right mr2 relative">
-        <button @click="this.$emit('open-invite-modal')" class="btn btn-primary h4 bg-white gray">Invites<span class="blue"> &#128587;</span><!--&#128588;--></button>
+        <button v-if="user.authenticated" @click="this.$emit('open-invite-modal')" class="btn btn-primary h4 bg-white gray">Invites<span class="blue"> &#128587;</span><!--&#128588;--></button>
       </div>
       <!--search bar-->
       <div v-if="this.$route.path !== '/upload'" class="right mr2 relative">
@@ -57,25 +56,19 @@
       :files.sync="files"
       keep-alive v-cloak>
     </router-view>
+
     <!--invite link dialog/modal-->
     <invite-modal :show.sync="showInviteModal">
       <h3 class="center blue" slot="header">Invite someone! &#128588;</h3>
       <div slot="body" class="center border-top border-bottom border-silver">
-        <p class="gray">Click to save an invitation link to your clipboard</p>
-        <textarea v-model="inviteLink" class="clipboard col-4 border-blue p2 m2 rounded"></textarea>
-        <!--link-copied-to-clipboard notification-->
-        <p v-show="inviteLinkCopied" class="animated mt0 p2 blue border-blue rounded " transition="bounce">Copied to clipboard!</p>
-        <p class="gray">
-          <em>Or&hellip;</em>
-        </p>
-        <input
-          v-model="inviteEmailAddress"
-          class="mx-auto col-3 p2 m2 rounded border-none"
-          placeholder="Enter the email address of the person(s) you would like to invite" />
+        <invites-component
+          :invite-link="inviteLink">
+        </invites-component>
       </div>
       <div slot="buttons"></div>
       <div slot="footer"></div>
     </invite-modal>
+
     <!--login dialog/modal-->
     <login-modal :show="!user.authenticated">
       <h3 class="center blue" slot="header">Login</h3>
@@ -86,6 +79,7 @@
       <div slot="buttons"></div>
       <div slot="footer"></div>
     </login-modal>
+
   </div>
 </template>
 
@@ -95,15 +89,15 @@ import Vue from 'vue'
 import store from './store/content/index'
 
 import auth from './auth'
-import {SIGNUP_URL} from './auth'
+import {API_AUTH_ROUTES} from './routes'
+import {API_INVITE_ROUTES} from './routes'
 
 import SweetAlert from './components/SweetAlert'
 import Modal from './components/Modal'
 import Login from './components/Auth/Login'
+import Invites from './components/Auth/Invites'
 import Common from './vue/Common'
 import Messages from './vue/Messages'
-
-var Clipboard = require('clipboard')
 
 export default {
   store,
@@ -113,7 +107,8 @@ export default {
     'sweet-alert': SweetAlert,
     'invite-modal': Modal,
     'login-modal': Modal,
-    'login-component': Login
+    'login-component': Login,
+    'invites-component': Invites
   },
   data () {
     return {
@@ -134,8 +129,7 @@ export default {
       files: [],
       showInviteModal: false,
       showLoginModal: false,
-      inviteLink: SIGNUP_URL,
-      inviteLinkCopied: false
+      inviteLink: API_INVITE_ROUTES.INVITE_URL
     }
   },
   ready () {
@@ -146,16 +140,6 @@ export default {
       this.$set('showLoginModal', !this.showLoginModal)
     },
     'open-invite-modal' () {
-      var self = this
-      var clipboard = new Clipboard('.clipboard', {
-        text: function (trigger) {
-          self.inviteLinkCopied = true
-          return trigger.value
-        }
-      })
-      if (this.showInviteModal) {
-        clipboard.destroy()
-      }
       this.$set('showInviteModal', !this.showInviteModal)
     },
     'fetch' () {
