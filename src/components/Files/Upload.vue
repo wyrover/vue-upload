@@ -43,7 +43,6 @@
 
 <script>
   var _ = require('lodash')
-  var $ = require('jquery')
 
   var plupload = require('Plupload/js/plupload.full.min.js')
   var fileTypes = require('./../../data/fileTypes.json')

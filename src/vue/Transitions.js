@@ -4,6 +4,7 @@ var Vue = require('vue')
 
 // Animate.css transitions
 Vue.transition('bounce', { enterClass: 'bounceIn', leaveClass: 'bounceOut' })
+Vue.transition('fade', { enterClass: 'fadeIn', leaveClass: 'fadeOut' })
 
 Vue.transition('stagger', {
   stagger: function (index) {

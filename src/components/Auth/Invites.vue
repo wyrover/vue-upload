@@ -11,7 +11,16 @@
       v-model="inviteEmailAddresses"
       class="mx-auto col-3 p2 m2 rounded border-blue p2 m2"
       placeholder="Enter the email address of the person(s) you would like to invite (separated by commas)" />
-    <button @click="this.$emit('invite-users', inviteEmailAddresses)" class="btn btn-primary">Invite user(s)</button>
+    <div>
+      <textarea
+        v-show="inviteEmailAddresses.length > 0"
+        v-model="inviteComment"
+        class="animated col-2 border-gray p2 m2 rounded"
+        placeholder="Add a comment (optional)"
+        transition="fade">
+      </textarea>
+    </div>
+    <button @click="this.$emit('invite-users', this)" class="btn btn-primary">Invite user(s)</button>
   </div>
 </template>
 
@@ -22,6 +31,7 @@ export default {
   data () {
     return {
       inviteEmailAddresses: 'test@test.com, another@email.com',
+      inviteComment: '',
       inviteLinkCopied: false
     }
   },

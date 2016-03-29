@@ -18,6 +18,7 @@
         placeholder="Enter your password"
         v-model="credentials.password" />
     </div>
+
     <button class="btn btn-primary m1" @click="this.$emit('login', credentials)">Access your account</button>
   </div>
 </template>

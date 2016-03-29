@@ -156,11 +156,12 @@ export default {
     login (credentials) {
       auth.login(this, credentials, false)
     },
-    inviteUsers (inviteEmailAddresses) {
+    inviteUsers (vm) {
       var newInvite = {
         initiator_id: this.user.id,
         // Split and trim invite emails list
-        recipients: inviteEmailAddresses.split(/[\s,]+/)
+        recipients: vm.$data.inviteEmailAddresses.split(/[\s,]+/),
+        comment: vm.$data.inviteComment
       }
       invite.send(this, newInvite, false)
     },
