@@ -160,7 +160,7 @@ export default {
       var newInvite = {
         initiator_id: this.user.id,
         // Split and trim invite emails list
-        recipients: vm.$data.inviteEmailAddresses.split(/[\s,]+/),
+        'recipients[]': vm.$data.inviteEmailAddresses.split(/[\s,]+/),
         comment: vm.$data.inviteComment
       }
       invite.send(this, newInvite, false)
