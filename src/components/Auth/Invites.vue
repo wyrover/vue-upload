@@ -30,8 +30,8 @@ var Clipboard = require('clipboard')
 export default {
   data () {
     return {
-      inviteEmailAddresses: 'test@test.com, another@email.com',
-      inviteComment: '',
+      inviteEmailAddresses: 'purerizzo@gmail.com, purerizzo@gmail.com',
+      inviteComment: 'Hello there!',
       inviteLinkCopied: false
     }
   },
