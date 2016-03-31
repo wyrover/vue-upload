@@ -13,7 +13,6 @@ Vue.http.options.emulateHTTP = false
 
 // Common, global HTTP headers
 Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token')
-Vue.http.headers.common['Set-Cookie'] = 'XDEBUG_SESSION=PHPSTORM'
 
 // HTTP Interceptors
 Vue.http.interceptors.push({
@@ -22,6 +21,8 @@ Vue.http.interceptors.push({
     // If not this is not a GET request, attach the app key
     if (request.method !== 'get') {
       request.data.app_key = APP_KEY
+      // Set Xdebug key
+      request.params.XDEBUG_SESSION_START = 'vagrant'
     }
     return request
   },
