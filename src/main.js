@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-export const APP_KEY = '456'
+export const APP_KEY = '789'
 
 import './vue/Config'
 import './vue/Filters'
