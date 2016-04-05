@@ -1,5 +1,5 @@
 import Common from '../vue/Common'
-import {router} from '../main'
+import {doRedirect} from '../vue/Common'
 import {API_AUTH_ROUTES} from '../routes'
 
 var jwtPayloadDecoder = require('jwt-payload-decoder')
@@ -20,7 +20,7 @@ export default {
         localStorage.setItem('id_token', token)
         self.decode(token)
         // Redirect if necessary
-        self.redirect(redirect)
+        doRedirect(redirect)
       },
       function (response) {
         // Failed response
@@ -37,11 +37,6 @@ export default {
     this.user.first_name = payload.first_name
     this.user.last_name = payload.last_name
   },
-  redirect (redirect) {
-    if (redirect) {
-      router.go(redirect)
-    }
-  },
   /**
    * Remove the JWT from local storage
    * */
@@ -53,7 +48,7 @@ export default {
     var jwt = localStorage.getItem('id_token')
     this.user.authenticated = !!jwt
     if (!this.user.authenticated) {
-      this.redirect('login')
+      doRedirect('login')
     }
     return this.user.authenticated
   },

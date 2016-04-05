@@ -1,6 +1,7 @@
 var Vue = require('vue')
 Vue.use(require('vue-resource')) // https://github.com/vuejs/vue-resource
 
+import {router} from '../main'
 import {APP_KEY} from '../main'
 import createLogger from '../middlewares/logger'
 
@@ -36,6 +37,13 @@ Vue.http.interceptors.push({
 
 // var resource = Vue.resource
 var http = Vue.http
+
+// Redirects
+export function doRedirect (redirect) {
+  if (redirect) {
+    router.go(redirect)
+  }
+}
 
 export default {
   fetch (url, data, options) {
