@@ -21,6 +21,7 @@ Vue.http.interceptors.push({
     // todo: check app key using middleware on back-end
     // If not this is not a GET request, attach the app key
     if (request.method !== 'get') {
+      // Set the app key on each request
       request.data.app_key = APP_KEY
       // Set Xdebug key
       request.params.XDEBUG_SESSION_START = 'vagrant'
