@@ -15,7 +15,8 @@ export default {
 export const API_AUTH_ROUTES = {
   GET_USER_URL: `${API_AUTH_LOCAL}/auth/user`,
   LOGIN_URL: `${API_AUTH_LOCAL}/auth/login`,
-  SIGNUP_URL: `${API_AUTH_LOCAL}/signup`
+  SIGNUP_URL: `${API_AUTH_LOCAL}/signup`,
+  HEARTBEAT_URL: `${API_AUTH_LOCAL}/heartbeat`
 }
 
 export const API_INVITE_ROUTES = {

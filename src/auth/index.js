@@ -44,6 +44,24 @@ export default {
     localStorage.removeItem('id_token')
     this.user.authenticated = false
   },
+  /**
+   * Periodically check to see if the user's token has expired
+   */
+  heartbeat () {
+    Common.post(API_AUTH_ROUTES.HEARTBEAT_URL, credentials).then(
+      function (response) {
+
+        self.decode(token)
+
+        // Redirect if necessary
+
+        doRedirect('/login')
+      },
+      function (response) {
+        // Failed response
+        context.error = 'add error checking'
+      })
+  },
   checkAuth () {
     var jwt = localStorage.getItem('id_token')
     this.user.authenticated = !!jwt
