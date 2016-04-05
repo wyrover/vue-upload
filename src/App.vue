@@ -66,7 +66,9 @@
     </router-view>
 
     <!--invite link dialog/modal-->
-    <invite-modal :show.sync="showInviteModal">
+    <invite-modal
+      :show.sync="showInviteModal"
+      v-if="user.authenticated">
       <h3 class="center blue" slot="header">Invite someone! &#128588;</h3>
       <div slot="body" class="center border-top border-bottom border-silver">
         <invites-component

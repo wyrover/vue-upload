@@ -52,6 +52,9 @@ export default {
   checkAuth () {
     var jwt = localStorage.getItem('id_token')
     this.user.authenticated = !!jwt
+    if (!this.user.authenticated) {
+      this.redirect('login')
+    }
     return this.user.authenticated
   },
   getAuthHeader () {

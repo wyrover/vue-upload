@@ -27,10 +27,7 @@ Vue.use(Progress)
 
 // Attempt to log in
 if (auth.checkAuth()) {
-
-  // Get the JWT and decode it
   auth.decode(localStorage.getItem('id_token'))
-
 }
 
 // Use authenticated routes
