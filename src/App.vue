@@ -7,11 +7,14 @@
         <button v-if="!user.authenticated" @click="this.$emit('open-login-modal')" class="btn btn-primary h4 border-blue bg-white blue right">Sign in&#128273;</button>
         <button v-if="user.authenticated" @click="this.$emit('logout')" class="btn btn-primary border-silver h4 bg-white gray right">Sign out</button>
       </div>
-      <!--welcome-->
-      <div v-if="user.authenticated" class="right mr2 relative">
-        <!--http://www.amp-what.com/unicode/search/face-->
-        <button
-          class="btn btn-primary h4 bg-white gray">
+      <!--only show the following when logged in-->
+      <div v-if="user.authenticated">
+
+        <!--welcome-->
+        <div v-if="user.authenticated" class="right mr2 relative">
+          <!--http://www.amp-what.com/unicode/search/face-->
+          <button
+                  class="btn btn-primary h4 bg-white gray">
             <span v-if="user.authenticated">
               <span v-if="user.admin">
                 <span class="muted">(<span class="blue">admin</span>)</span>
@@ -19,27 +22,30 @@
               {{ user.email }}
               <span class="blue"> &#128060;</span>
             </span>
+          </button>
+        </div>
+        <!--invite link-->
+        <div class="right mr2 relative">
+          <button v-if="user.authenticated" @click="this.$emit('open-invite-modal')" class="btn btn-primary h4 bg-white gray">Invites<span class="blue"> &#128587;</span><!--&#128588;--></button>
+        </div>
+        <!--search bar-->
+        <div v-if="this.$route.path !== '/upload'" class="right mr2 relative">
+          <input class="silver p1 h4 m0" v-model="searchQuery" type="text" name="search" placeholder="Search&hellip;" style="border: none">
+          <button v-show="searchQuery" @click.prevent="searchQuery = ''" class="btn h1 red muted absolute top-0 right-0 p1">&times;</button>
+        </div>
+        <!--upload component-->
+        <button v-link="{ path: '/upload' }" class="btn silver">
+          <span v-if="this.$route.path === '/upload'">&#8686;</span><span v-else="">&#8679;</span> Upload
         </button>
+        <!--files view component-->
+        <button v-link="{ path: '/files' }" class="btn silver">
+          <span v-if="this.$route.path === '/files'">&#128194;</span><span v-else="">&#128193;</span> Files (<small class="muted">{{ files.length }}</small>)
+        </button>
+        <!--gallery component-->
+        <button v-link="{ path: '/gallery' }" class="btn silver">Gallery</button>
+
       </div>
-      <!--invite link-->
-      <div class="right mr2 relative">
-        <button v-if="user.authenticated" @click="this.$emit('open-invite-modal')" class="btn btn-primary h4 bg-white gray">Invites<span class="blue"> &#128587;</span><!--&#128588;--></button>
-      </div>
-      <!--search bar-->
-      <div v-if="this.$route.path !== '/upload'" class="right mr2 relative">
-        <input class="silver p1 h4 m0" v-model="searchQuery" type="text" name="search" placeholder="Search&hellip;" style="border: none">
-        <button v-show="searchQuery" @click.prevent="searchQuery = ''" class="btn h1 red muted absolute top-0 right-0 p1">&times;</button>
-      </div>
-      <!--upload component-->
-      <button v-link="{ path: '/upload' }" class="btn silver">
-        <span v-if="this.$route.path === '/upload'">&#8686;</span><span v-else="">&#8679;</span> Upload
-      </button>
-      <!--files view component-->
-      <button v-link="{ path: '/files' }" class="btn silver">
-        <span v-if="this.$route.path === '/files'">&#128194;</span><span v-else="">&#128193;</span> Files (<small class="muted">{{ files.length }}</small>)
-      </button>
-      <!--gallery component-->
-      <button v-link="{ path: '/gallery' }" class="btn silver">Gallery</button>
+
     </div>
     <!--sweet alerts, bruh-->
     <sweet-alert
@@ -47,8 +53,10 @@
      :text="'Whoa, easy there buddy&hellip;'"
      :type="'danger'">
     </sweet-alert>
+
     <!-- use router-view element as (dynamic component) route outlet -->
     <router-view
+      v-if="user.authenticated"
       @deletedSomething="this.$sweetAlert.$emit('alert')"
       :search-query="searchQuery"
       :routes="routes"
@@ -71,7 +79,9 @@
     </invite-modal>
 
     <!--login dialog/modal-->
-    <login-modal :show="!user.authenticated">
+    <login-modal
+      :show="!user.authenticated"
+      :can-close="false">
       <h3 class="center blue" slot="header">Login</h3>
       <div slot="body" class="center border-top border-bottom border-silver">
         <login-component

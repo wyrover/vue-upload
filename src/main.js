@@ -14,9 +14,9 @@ import App from './App'
 import Files from './components/Files/Files'
 import Upload from './components/Files/Upload'
 import Gallery from './components/Files/Gallery'
+import Login from './components/Auth/Login'
 
 import auth from './auth'
-auth.checkAuth()
 
 var VueRouter = require('vue-router')
 Vue.use(VueRouter)
@@ -25,6 +25,15 @@ export var router = new VueRouter()
 var Progress = require('vue-progressbar')
 Vue.use(Progress)
 
+// Attempt to log in
+if (auth.checkAuth()) {
+
+  // Get the JWT and decode it
+  auth.decode(localStorage.getItem('id_token'))
+
+}
+
+// Use authenticated routes
 router.map({
   '/files': { component: Files },
   '/upload': { component: Upload },

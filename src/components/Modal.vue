@@ -16,7 +16,7 @@
                     </slot>
                 </div>
                 <div class="modal-footer">
-                    <slot name="close">
+                    <slot v-if="canClose" name="close">
                         <button @click="show = false" class="btn btn-primary modal-default-button">
                             Close
                         </button>
@@ -39,6 +39,12 @@
         type: Boolean,
         required: true,
         twoWay: true
+      },
+      canClose: {
+        type: Boolean,
+        required: false,
+        twoWay: true,
+        default: true
       },
       content: '',
       name: ''

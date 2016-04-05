@@ -18,23 +18,29 @@ export default {
         // Process the token
         var token = response.data.token
         localStorage.setItem('id_token', token)
-        var payload = jwtPayloadDecoder.getPayload(token)
-        // Set the user's details
-        self.user.authenticated = true
-        self.user.id = payload.id
-        self.user.admin = payload.permissions['user.admin'] === true
-        self.user.email = payload.email
-        self.user.first_name = payload.first_name
-        self.user.last_name = payload.last_name
+        self.decode(token)
         // Redirect if necessary
-        if (redirect) {
-          router.go(redirect)
-        }
+        self.redirect(redirect)
       },
       function (response) {
         // Failed response
         context.error = 'add error checking'
       })
+  },
+  decode (token) {
+    var payload = jwtPayloadDecoder.getPayload(token)
+    // Set the user's details
+    this.user.authenticated = true
+    this.user.id = payload.id
+    this.user.admin = payload.permissions['user.admin'] === true
+    this.user.email = payload.email
+    this.user.first_name = payload.first_name
+    this.user.last_name = payload.last_name
+  },
+  redirect (redirect) {
+    if (redirect) {
+      router.go(redirect)
+    }
   },
   /**
    * Remove the JWT from local storage
@@ -46,6 +52,7 @@ export default {
   checkAuth () {
     var jwt = localStorage.getItem('id_token')
     this.user.authenticated = !!jwt
+    return this.user.authenticated
   },
   getAuthHeader () {
     return { 'Authorization': 'Bearer ' + localStorage.getItem('id_token') }
