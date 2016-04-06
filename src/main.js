@@ -1,14 +1,10 @@
+import ENV from './.env'
 import Vue from 'vue'
-
-export const APP_KEY = '789'
 
 import './vue/Config'
 import './vue/Filters'
 import './vue/Transitions'
 import './vue/Directives'
-
-// Example json loading
-var contentAreas = require('./data/contentAreas.json')
 
 import App from './App'
 import Files from './components/Files/Files'
@@ -30,6 +26,8 @@ Vue.use(Progress)
 if (auth.checkAuth()) {
   auth.decode(localStorage.getItem('id_token'))
 }
+
+auth.heartbeat(ENV.HEARTBEAT_FREQUENCY)
 
 // Use authenticated routes
 router.map({

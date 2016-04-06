@@ -1,8 +1,9 @@
+import ENV from '../.env'
+
 var Vue = require('vue')
 Vue.use(require('vue-resource')) // https://github.com/vuejs/vue-resource
 
 import {router} from '../main'
-import {APP_KEY} from '../main'
 import createLogger from '../middlewares/logger'
 
 // Config
@@ -12,23 +13,39 @@ Vue.http.options.root = '/'
 Vue.http.options.emulateJSON = false
 Vue.http.options.emulateHTTP = false
 
-// Common, global HTTP headers
-Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token')
-
 // HTTP Interceptors
 Vue.http.interceptors.push({
   request (request) {
-    // todo: check app key using middleware on back-end
+    Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token')
     // If not this is not a GET request, attach the app key
     if (request.method !== 'get') {
       // Set the app key on each request
-      request.data.app_key = APP_KEY
+      request.data.app_key = ENV.APP_KEY
       // Set Xdebug key
-      request.params.XDEBUG_SESSION_START = 'vagrant'
+      if (ENV.DEBUG) {
+        request.params.XDEBUG_SESSION_START = 'vagrant'
+      }
     }
     return request
   },
   response (response) {
+    var headers
+
+    if (response.headers()) {
+      headers = response.headers()
+      var authorization = headers.authorization
+    }
+    if (authorization) {
+      var token = authorization.split(/^Bearer\s/i).pop()
+    }
+    if (token) {
+      localStorage.setItem('id_token', token)
+      localStorage.setItem('time', new Date())
+    }
+
+    // If there is a new token
+    // get from header
+
     response.ok
       ? console.log(`%c - XHR success - [${response.request.method}] - ${response.request.url}`, 'background: #222; color: #bada55')
       : console.log(`%c - XHR failure - [${response.request.method}] - ${response.request.url}`, 'background: #222; color: #ff4136')
@@ -64,5 +81,8 @@ export default {
   },
   jsonp (url, data, options) {
     return http.jsonp(url, data, options)
+  },
+  refreshToken (newToken) {
+    localStorage.setItem('id_token', newToken)
   }
 }
