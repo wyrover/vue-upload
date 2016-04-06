@@ -22,7 +22,6 @@ export default {
    * POST required info for a shareable invite url
    * */
   getShareable (context) {
-    var self = this
     return Common.post(API_INVITE_ROUTES.INVITE_URL, {}).then(
       function (response) {
         var shareableUrl = response.data

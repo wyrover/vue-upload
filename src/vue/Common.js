@@ -17,6 +17,7 @@ Vue.http.options.emulateHTTP = false
 // HTTP Interceptors
 Vue.http.interceptors.push({
   request (request) {
+    // Set the Authorization header from the JWT on localStorage
     Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token')
     // If not this is not a GET request, attach the app key
     if (request.method !== 'get') {
@@ -30,28 +31,28 @@ Vue.http.interceptors.push({
     return request
   },
   response (response) {
-    var headers
-
     // todo: ensure synchronous
+    // if (response.status === 401 || response.status === 400) {
+    //   // Remove the token, could not authorize
+    //   console.log('should remove token')
+    //   localStorage.removeItem('id_token')
+    // }
     if (response.headers()) {
-      headers = response.headers()
+      var headers = response.headers()
       var authorization = headers.authorization
     }
     if (authorization) {
       var token = authorization.split(Regex.HTTP_AUTH_BEARER_TOKEN).pop()
-      console.log(token)
     }
     if (token) {
       localStorage.setItem('id_token', token)
       localStorage.setItem('time', new Date())
     }
 
-    // If there is a new token
-    // get from header
-
     response.ok
       ? console.log(`%c - XHR success - [${response.request.method}] - ${response.request.url}`, 'background: #222; color: #bada55')
       : console.log(`%c - XHR failure - [${response.request.method}] - ${response.request.url}`, 'background: #222; color: #ff4136')
+
     return response
   }
 })
