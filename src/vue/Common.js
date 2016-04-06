@@ -3,6 +3,7 @@ import ENV from '../.env'
 var Vue = require('vue')
 Vue.use(require('vue-resource')) // https://github.com/vuejs/vue-resource
 
+import {Regex} from '../vue/Regex'
 import {router} from '../main'
 import createLogger from '../middlewares/logger'
 
@@ -36,7 +37,8 @@ Vue.http.interceptors.push({
       var authorization = headers.authorization
     }
     if (authorization) {
-      var token = authorization.split(/^Bearer\s/i).pop()
+      var token = authorization.split(Regex.HTTP_AUTH_BEARER_TOKEN).pop()
+      console.log(token)
     }
     if (token) {
       localStorage.setItem('id_token', token)
@@ -81,8 +83,5 @@ export default {
   },
   jsonp (url, data, options) {
     return http.jsonp(url, data, options)
-  },
-  refreshToken (newToken) {
-    localStorage.setItem('id_token', newToken)
   }
 }
