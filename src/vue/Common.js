@@ -32,6 +32,7 @@ Vue.http.interceptors.push({
   response (response) {
     var headers
 
+    // todo: ensure synchronous
     if (response.headers()) {
       headers = response.headers()
       var authorization = headers.authorization
