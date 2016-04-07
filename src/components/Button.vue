@@ -3,7 +3,6 @@
     class="btn"
     :class="[
       transition.length ? 'animated': '',
-      bgRed,
       black, gray, silver, white, aqua, blue, navy, teal, green, olive, lime, yellow, orange, red, fuchsia, purple, maroon, darken1, darken2, darken3, darken4, lighten1, lighten2, lighten3, lighten4,
       bgBlack, bgGray, bgSilver, bgWhite, bgAqua, bgBlue, bgNavy, bgTeal, bgGreen, bgOlive, bgLime, bgYellow, bgOrange, bgRed, bgFuchsia, bgPurple, bgMaroon, bgDarken1, bgDarken2, bgDarken3, bgDarken4, bgLighten1, bgLighten2, bgLighten3, bgLighten4,
       borderBlack, borderGray, borderSilver, borderWhite, borderAqua, borderBlue, borderNavy, borderTeal, borderGreen, borderOlive, borderLime, borderYellow, borderOrange, borderRed, borderFuchsia, borderPurple, borderMaroon, darkenBorder1, darkenBorder2, darkenBorder3, darkenBorder4, lightenBorder1, lightenBorder2, lightenBorder3, lightenBorder4,

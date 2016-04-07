@@ -11,6 +11,7 @@
       :html="'<span>Click me!</span>'"
       :transition="bounce"
       :primary
+      :disabled="true"
       :rounded
       :circle
       :rounded-top

@@ -3,7 +3,7 @@
  */
 export default {
   props: {
-    'black': { type: String, default: 'black', required: false },
+    'black': { type: String, default: 'black', required: false }, // Colors
     'gray': { type: String, default: 'gray', required: false },
     'silver': { type: String, default: 'silver', required: false },
     'white': { type: String, default: 'white', required: false },
@@ -28,7 +28,7 @@ export default {
     'lighten-2': { type: String, default: 'lighten-2', required: false },
     'lighten-3': { type: String, default: 'lighten-3', required: false },
     'lighten-4': { type: String, default: 'lighten-4', required: false },
-    'bg-black': { type: String, default: 'bg-black', required: false },
+    'bg-black': { type: String, default: 'bg-black', required: false }, // Background Colors
     'bg-gray': { type: String, default: 'bg-gray', required: false },
     'bg-silver': { type: String, default: 'bg-silver', required: false },
     'bg-white': { type: String, default: 'bg-white', required: false },
@@ -52,6 +52,31 @@ export default {
     'bg-lighten-1': { type: String, default: 'bg-lighten-1', required: false },
     'bg-lighten-2': { type: String, default: 'bg-lighten-2', required: false },
     'bg-lighten-3': { type: String, default: 'bg-lighten-3', required: false },
-    'bg-lighten-4': { type: String, default: 'bg-lighten-4', required: false }
+    'bg-lighten-4': { type: String, default: 'bg-lighten-4', required: false },
+    'border-black': { type: String, default: 'border-black', required: false }, // Border Colors
+    'border-gray': { type: String, default: 'border-gray', required: false },
+    'border-silver': { type: String, default: 'border-silver', required: false },
+    'border-white': { type: String, default: 'border-white', required: false },
+    'border-aqua': { type: String, default: 'border-aqua', required: false },
+    'border-blue': { type: String, default: 'border-blue', required: false },
+    'border-navy': { type: String, default: 'border-navy', required: false },
+    'border-teal': { type: String, default: 'border-teal', required: false },
+    'border-green': { type: String, default: 'border-green', required: false },
+    'border-olive': { type: String, default: 'border-olive', required: false },
+    'border-lime': { type: String, default: 'border-lime', required: false },
+    'border-yellow': { type: String, default: 'border-yellow', required: false },
+    'border-orange': { type: String, default: 'border-orange', required: false },
+    'border-red': { type: String, default: 'border-red', required: false },
+    'border-fuchsia': { type: String, default: 'border-fuchsia', required: false },
+    'border-purple': { type: String, default: 'border-purple', required: false },
+    'border-maroon': { type: String, default: 'border-maroon', required: false },
+    'border-darken-1': { type: String, default: 'border-darken-1', required: false },
+    'border-darken-2': { type: String, default: 'border-darken-2', required: false },
+    'border-darken-3': { type: String, default: 'border-darken-3', required: false },
+    'border-darken-4': { type: String, default: 'border-darken-4', required: false },
+    'border-lighten-1': { type: String, default: 'border-lighten-1', required: false },
+    'border-lighten-2': { type: String, default: 'border-lighten-2', required: false },
+    'border-lighten-3': { type: String, default: 'border-lighten-3', required: false },
+    'border-lighten-4': { type: String, default: 'border-lighten-4', required: false }
   }
 }

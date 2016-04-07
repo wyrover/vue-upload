@@ -1,5 +1,4 @@
 <template>
-  <span>
     <img
       :style="{ height: height + 'px', width: width + 'px' }"
       :class="{ 'rounded': rounded, 'circle': circle }"
