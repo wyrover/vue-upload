@@ -9,12 +9,14 @@
 </template>
 
 <script>
-  import DimensionProps from '../mixins/DimensionProps'
-  import ShapeProps from '../mixins/ShapeProps'
-  import StateProps from '../mixins/StateProps'
   var MD5 = require('crypto-js/md5')
+
+  import DimensionProps from '../mixins/DimensionProps'
+  import StateProps from '../mixins/StateProps'
+  import StyleProps from '../mixins/StyleProps'
+
   export default {
-    mixins: [DimensionProps, ShapeProps, StateProps],
+    mixins: [DimensionProps, StyleProps, StateProps],
     computed: {
       'gravatar' () {
         if (this.email && this.email.length) {

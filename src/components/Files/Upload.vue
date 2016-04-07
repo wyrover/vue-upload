@@ -17,12 +17,10 @@
         class="col col-12 p4 h1"
         :text="'Browse&hellip;'"
         :transition="bounce"
-        :primary
-        :disabled
-        :border
-        :border-color="borderBlue"
-        :bg-red="bgRed"
-        :color="red">
+        :disabled="true"
+        :rounded="false"
+        :bg-color="bgNavy"
+        :color="white">
       </button-component>
 
       <div class="clearfix"></div>
@@ -68,12 +66,11 @@
   import ColorProps from '../../mixins/ColorProps'
   import StyleProps from '../../mixins/StyleProps'
   import DimensionProps from '../../mixins/DimensionProps'
-  import ShapeProps from '../../mixins/ShapeProps'
   import StateProps from '../../mixins/StateProps'
 
   export default {
     name: 'Upload',
-    mixins: [ButtonMixin, DimensionProps, ShapeProps, StateProps, StyleProps, ColorProps],
+    mixins: [ButtonMixin, DimensionProps, StateProps, StyleProps, ColorProps],
     components: { File },
     data () {
       return {

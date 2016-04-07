@@ -3,6 +3,8 @@
  */
 export default {
   props: {
+    'color': { type: String, default: '', required: false }, // Selectors
+    'bg-color': { type: String, default: '', required: false },
     'black': { type: String, default: 'black', required: false }, // Colors
     'gray': { type: String, default: 'gray', required: false },
     'silver': { type: String, default: 'silver', required: false },

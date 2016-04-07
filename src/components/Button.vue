@@ -29,13 +29,13 @@
 
 <script>
   import DimensionProps from '../mixins/DimensionProps'
-  import ShapeProps from '../mixins/ShapeProps'
   import StateProps from '../mixins/StateProps'
   import StyleProps from '../mixins/StyleProps'
   import ColorProps from '../mixins/ColorProps'
+
   export default {
     componentName: 'Dynamic button',
-    mixins: [DimensionProps, ShapeProps, StateProps, StyleProps, ColorProps],
+    mixins: [DimensionProps, StateProps, StyleProps, ColorProps],
     data () {
       return {
         presets: ['primary', 'secondary', 'tertiary', 'info']
@@ -51,6 +51,8 @@
       if (this.text && this.html) {
         this.warnAgainstUsingTextAndHtml()
       }
+      console.log(this.disabled)
+
     },
     methods: {
       warnAgainstUsingTextAndHtml () {
