@@ -6,6 +6,23 @@
       <div id="console"></div>
     </div>
 
+    <button-component
+      @click="this.$emit('button-clicked', this)"
+      :html="'<span>Click me!</span>'"
+      :transition="bounce"
+      :primary
+      :rounded
+      :circle
+      :rounded-top
+      :rounded-bottom
+      :rounded-left
+      :rounded-right
+      :border
+      :border-color="borderRed"
+      :bg-red="bgRed"
+      :color="red">
+    </button-component>
+
     <!--dialog-->
     <div class="clearfix"></div>
     <div class="col-3 mx-auto mt4 uploader border border-silver rounded">
@@ -50,8 +67,11 @@
   import Common from '../../vue/Common'
   import File from './File'
 
+  import ButtonMixin from '../../mixins/Button'
+
   export default {
     name: 'Upload',
+    mixins: [ButtonMixin],
     components: { File },
     data () {
       return {
