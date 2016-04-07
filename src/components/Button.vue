@@ -1,21 +1,29 @@
 <template>
   <button
     class="btn"
+    id="{{ id }}"
     :class="[
-      transition.length ? 'animated': '',
-      black, gray, silver, white, aqua, blue, navy, teal, green, olive, lime, yellow, orange, red, fuchsia, purple, maroon, darken1, darken2, darken3, darken4, lighten1, lighten2, lighten3, lighten4,
-      bgBlack, bgGray, bgSilver, bgWhite, bgAqua, bgBlue, bgNavy, bgTeal, bgGreen, bgOlive, bgLime, bgYellow, bgOrange, bgRed, bgFuchsia, bgPurple, bgMaroon, bgDarken1, bgDarken2, bgDarken3, bgDarken4, bgLighten1, bgLighten2, bgLighten3, bgLighten4,
-      borderBlack, borderGray, borderSilver, borderWhite, borderAqua, borderBlue, borderNavy, borderTeal, borderGreen, borderOlive, borderLime, borderYellow, borderOrange, borderRed, borderFuchsia, borderPurple, borderMaroon, darkenBorder1, darkenBorder2, darkenBorder3, darkenBorder4, lightenBorder1, lightenBorder2, lightenBorder3, lightenBorder4,
-      primary,
-      circle,
-      rounded,
-      btnOutline,
-      rounded-top, rounded-right, rounded-bottom, roundedLeft
-      border-top, border-right, border-bottom, border-left
+      transition ? 'animated' : '',
+      primary ? 'btn-primary' : '',
+      border ? 'btn-outline' : '',
+      color ? color : '',
+      bgColor ? bgColor : '',
+      borderColor ? borderColor : '',
+      circle ? 'circle' : '',
+      rounded ? 'rounded' : '',
+      roundedTop ? 'rounded-top' : '',
+      roundedRight ? 'rounded-right' : '',
+      roundedBottom ? 'rounded-bottom' : '',
+      roundedLeft ? 'rounded-left' : '',
+      borderTop ? 'border-top' : '',
+      borderRight ? 'border-right' : '',
+      borderBottom ? 'border-bottom' : '',
+      borderLeft ? 'border-left' : '',
     ]"
     :disabled="disabled"
     transition="transition">
       {{{ html }}}
+       {{ text }}
   </button>
 </template>
 
@@ -34,11 +42,10 @@
       }
     },
     props: {
+      'id': { type: String, default: null, required: false },
       'show': { type: Boolean, default: true, required: false },
       'html': { type: String, default: null, required: false },
-      'text': { type: String, default: null, required: false },
-      'primary': { type: String, default: 'btn-primary', required: false },
-      'progress': { type: Boolean, default: false, required: false }
+      'text': { type: String, default: null, required: false }
     },
     ready () {
       if (this.text && this.html) {
@@ -54,5 +61,5 @@
 </script>
 
 <style>
-  :disabled { cursor: not-allowed; }
+ :disabled { cursor: not-allowed; }
 </style>

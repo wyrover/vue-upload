@@ -69,14 +69,6 @@ export default {
     'border-red': { type: String, default: 'border-red', required: false },
     'border-fuchsia': { type: String, default: 'border-fuchsia', required: false },
     'border-purple': { type: String, default: 'border-purple', required: false },
-    'border-maroon': { type: String, default: 'border-maroon', required: false },
-    'border-darken-1': { type: String, default: 'border-darken-1', required: false },
-    'border-darken-2': { type: String, default: 'border-darken-2', required: false },
-    'border-darken-3': { type: String, default: 'border-darken-3', required: false },
-    'border-darken-4': { type: String, default: 'border-darken-4', required: false },
-    'border-lighten-1': { type: String, default: 'border-lighten-1', required: false },
-    'border-lighten-2': { type: String, default: 'border-lighten-2', required: false },
-    'border-lighten-3': { type: String, default: 'border-lighten-3', required: false },
-    'border-lighten-4': { type: String, default: 'border-lighten-4', required: false }
+    'border-maroon': { type: String, default: 'border-maroon', required: false }
   }
 }

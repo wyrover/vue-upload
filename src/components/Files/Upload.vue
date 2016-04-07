@@ -6,31 +6,25 @@
       <div id="console"></div>
     </div>
 
-    <button-component
-      @click="this.$emit('button-clicked', this)"
-      :html="'<span>Click me!</span>'"
-      :text="'Hi!'"
-      :transition="bounce"
-      :primary
-      :disabled="false"
-      :rounded
-      :circle
-      :rounded-top
-      :rounded-bottom
-      :rounded-left
-      :rounded-right
-      :border
-      :border-color="borderRed"
-      :bg-red="bgRed"
-      :color="red">
-    </button-component>
-
     <!--dialog-->
     <div class="clearfix"></div>
     <div class="col-3 mx-auto mt4 uploader border border-silver rounded">
       <!--browse button-->
-      <!--n.b. see !important z-index setting in <style>, used to prevent button from appearing over modals, as z-index is set by plpuload-->
-      <button class="col col-12 btn btn-primary rounded bg-blue white p4 h1" id="browse">Browse&hellip;</button>
+      <!--n.b. see !important z-index setting in <style>, used to prevent button from appearing over modals, as z-index is set by plupload-->
+
+      <button-component
+        :id="'browse'"
+        class="col col-12 p4 h1"
+        :text="'Browse&hellip;'"
+        :transition="bounce"
+        :primary
+        :disabled
+        :border
+        :border-color="borderBlue"
+        :bg-red="bgRed"
+        :color="red">
+      </button-component>
+
       <div class="clearfix"></div>
       <!--cancel button-->
       <button @click="cancel" v-show="queue.length" class="right p2 ml2 h1 btn red">&times;</button>
@@ -71,9 +65,15 @@
 
   import ButtonMixin from '../../mixins/Button'
 
+  import ColorProps from '../../mixins/ColorProps'
+  import StyleProps from '../../mixins/StyleProps'
+  import DimensionProps from '../../mixins/DimensionProps'
+  import ShapeProps from '../../mixins/ShapeProps'
+  import StateProps from '../../mixins/StateProps'
+
   export default {
     name: 'Upload',
-    mixins: [ButtonMixin],
+    mixins: [ButtonMixin, DimensionProps, ShapeProps, StateProps, StyleProps, ColorProps],
     components: { File },
     data () {
       return {

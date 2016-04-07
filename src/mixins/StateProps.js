@@ -7,6 +7,6 @@ export default {
     'active': { type: Boolean, default: false, required: false },
     'hover': { type: Boolean, default: false, required: false },
     'visited': { type: Boolean, default: false, required: false},
-    'disabled': { type: Boolean, default: false, required: false }
+    'disabled': { type: Boolean, default: true, required: false }
   }
 }
