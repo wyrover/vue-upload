@@ -1,6 +1,6 @@
 <template>
   <button
-    class="btn animated"
+    class="btn animated shadow"
     id="{{ id }}"
     :class="[
       transition ? transition : '',
@@ -62,6 +62,10 @@
   }
 </script>
 
-<style>
+<style scoped>
  :disabled { cursor: not-allowed; }
+ .shadow {
+   box-shadow: 5px 14px 68px 18px;
+   color: silver;
+ }
 </style>

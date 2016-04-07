@@ -156,8 +156,4 @@
   #browse {
     z-index: 0 !important;
   }
-  .uploader {
-    box-shadow: 5px 14px 68px 18px;
-    color: silver;
-  }
 </style>
