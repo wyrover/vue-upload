@@ -74,6 +74,7 @@
     </sweet-alert>
 
     <!-- use router-view element as (dynamic component) route outlet -->
+    <!-- todo: investigate potential indexOf error -->
     <router-view
       v-if="user.authenticated"
       @deletedSomething="this.$sweetAlert.$emit('alert')"
@@ -148,10 +149,12 @@ import Management from '../components/Auth/Management'
 import Common from '../vue/Common'
 import Messages from '../vue/Messages'
 import Gravatar from '../components/Gravatar'
+import ButtonMixin from '../mixins/Button'
 
 export default {
   store,
   name: 'App',
+  mixins: [ButtonMixin],
   replace: false,
   components: {
     'sweet-alert': SweetAlert,
@@ -190,6 +193,9 @@ export default {
     this.fetch()
   },
   events: {
+    'button-clicked' () {
+      console.log('clicked')
+    },
     'open-login-modal' () {
       this.$set('showLoginModal', !this.showLoginModal)
     },

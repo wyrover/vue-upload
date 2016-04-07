@@ -9,7 +9,6 @@
     "test": "karma start build/karma.conf.js --single-run"
   },
   "dependencies": {
-    "Plupload": "git+https://github.com/moxiecode/plupload.git",
     "ace-css": "^1.0.0",
     "animate.css": "^3.5.1",
     "autoprefixer": "^6.3.3",
