@@ -6,7 +6,14 @@ var jwtPayloadDecoder = require('jwt-payload-decoder')
 
 export default {
   user: {
-    authenticated: false
+    super: false,
+    admin: false,
+    id: -1,
+    roles: [],
+    permissions: [],
+    email: null,
+    first_name: null,
+    last_name: null
   },
   /**
    * Log a user in and set user's data from resulting decoded JWT
@@ -32,7 +39,9 @@ export default {
     // Set the user's details
     this.user.authenticated = true
     this.user.id = payload.id
-    this.user.admin = payload.permissions['user.admin'] === true
+    this.user.roles = payload.roles
+    this.user.permissions = payload.permissions
+    this.user.admin = this.user.permissions['user.admin'] === true
     this.user.email = payload.email
     this.user.first_name = payload.first_name
     this.user.last_name = payload.last_name

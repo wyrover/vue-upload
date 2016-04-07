@@ -27,6 +27,7 @@ if (auth.checkAuth()) {
   auth.decode(localStorage.getItem('id_token'))
 }
 
+// Start app heartbeat
 auth.heartbeat(ENV.HEARTBEAT_FREQUENCY)
 
 // Use authenticated routes
