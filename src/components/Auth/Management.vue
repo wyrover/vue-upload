@@ -7,7 +7,7 @@
       :email="emailNew"
       :circle="true">
     </gravatar-component>
-
+    <div v-show="user.email !== emailNew" class="bold blue" transition="bounce">Is this you?</div>
     <!--errors-->
     <div class="red" v-if="error">
       <p>{{ error }}</p>
@@ -19,7 +19,8 @@
         type="text"
         class="form-control"
         :value="user.email"
-        v-model="emailNew" />
+        v-model="emailNew"
+        debounce="800"/>
     </div>
     <div class="form-group">
       <input

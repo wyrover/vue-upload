@@ -15,11 +15,8 @@
     computed: {
       'gravatar' () {
         if (this.email && this.email.length) {
-          return `http://www.gravatar.com/avatar/${this.hash}`
+          return `http://www.gravatar.com/avatar/${this.hash(this.email)}`
         }
-      },
-      'hash' () {
-        return MD5(this.email)
       }
     },
     data () {
@@ -28,12 +25,20 @@
       }
     },
     props: {
-      'email': { type: String, default: 'example@example.com', required: true },
+      'email': { type: String, required: true },
       'type': { type: String, default: false, required: false },
       'height': { type: Number, default: 80, required: false },
       'width': { type: Number, default: 80, required: false },
       'rounded': { type: Boolean, default: false, required: false },
-      'circle': { type: Boolean, default: false, required: false }
+      'circle': { type: Boolean, default: false, required: false },
+      'showChangedNotification': { type: Boolean, default: false, required: false }
+    },
+    ready () {
+    },
+    methods: {
+      hash (string) {
+        return MD5(string).toString()
+      }
     }
   }
 </script>
