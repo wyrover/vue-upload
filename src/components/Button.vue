@@ -1,9 +1,9 @@
 <template>
   <button
-    class="btn"
+    class="btn animated"
     id="{{ id }}"
     :class="[
-      transition ? 'animated' : '',
+      transition ? transition : '',
       primary ? 'btn-primary' : '',
       border ? 'btn-outline' : '',
       color ? color : '',
@@ -51,7 +51,7 @@
       if (this.text && this.html) {
         this.warnAgainstUsingTextAndHtml()
       }
-      console.log(this.disabled)
+      console.log(this.transition)
 
     },
     methods: {

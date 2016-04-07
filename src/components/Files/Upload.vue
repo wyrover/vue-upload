@@ -16,7 +16,7 @@
         :id="'browse'"
         class="col col-12 p4 h1"
         :text="'Browse&hellip;'"
-        :transition="bounce"
+        :transition="'bounce'"
         :disabled="true"
         :rounded="false"
         :bg-color="bgNavy"
