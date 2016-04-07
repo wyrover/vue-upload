@@ -34,10 +34,20 @@
     },
     props: {
       'show': { type: Boolean, default: true, required: false },
-      'html': { type: String, default: '<span>Click here</span>', required: false },
-      'text': { type: String, default: 'Click here', required: false },
+      'html': { type: String, default: null, required: false },
+      'text': { type: String, default: null, required: false },
       'primary': { type: String, default: 'btn-primary', required: false },
       'progress': { type: Boolean, default: false, required: false }
+    },
+    ready () {
+      if (this.text && this.html) {
+        this.warnAgainstUsingTextAndHtml()
+      }
+    },
+    methods: {
+      warnAgainstUsingTextAndHtml () {
+        console.log('%c - Button Warning - use either :text or :html properties, not both.', 'background: #000; color: yellow')
+      }
     }
   }
 </script>

@@ -9,9 +9,10 @@
     <button-component
       @click="this.$emit('button-clicked', this)"
       :html="'<span>Click me!</span>'"
+      :text="'Hi!'"
       :transition="bounce"
       :primary
-      :disabled="true"
+      :disabled="false"
       :rounded
       :circle
       :rounded-top
