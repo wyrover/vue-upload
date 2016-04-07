@@ -8,7 +8,7 @@
 
     <!--dialog-->
     <div class="clearfix"></div>
-    <div class="col-3 mx-auto mt4 uploader border border-silver rounded">
+    <div class="col-3 mx-auto mt4 uploader">
       <!--browse button-->
       <!--n.b. see !important z-index setting in <style>, used to prevent button from appearing over modals, as z-index is set by plupload-->
 
