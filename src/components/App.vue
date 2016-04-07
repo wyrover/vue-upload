@@ -16,7 +16,8 @@
         <div v-if="user.authenticated" class="right mr2 relative">
           <!--http://www.amp-what.com/unicode/search/face-->
           <button
-             class="btn btn-primary h4 bg-white gray">
+            @click="this.$emit('open-management-modal')"
+            class="btn btn-primary h4 bg-white gray">
             <span v-if="user.authenticated">
               <span v-if="user.admin">
                 <span class="muted">(<span class="blue">admin</span>)</span>
@@ -92,6 +93,19 @@
       <div slot="footer"></div>
     </invite-modal>
 
+    <management-modal
+     :show.sync="showManagementModal"
+     v-if="user.authenticated">
+      <h3 class="center blue" slot="header">Your profile</h3>
+      <div slot="body" class="center border-top border-bottom border-silver">
+        <management-component
+          :user.sync="user">
+        </management-component>
+      </div>
+      <div slot="buttons"></div>
+      <div slot="footer"></div>
+    </management-modal>
+
     <!--login dialog/modal-->
     <login-modal
       :show="!user.authenticated"
@@ -110,21 +124,22 @@
 </template>
 
 <script>
-import Routes from './routes'
+import Routes from '../routes'
 import Vue from 'vue'
-import store from './store/content/index'
+import store from '../store/content/index'
 
-import auth from './auth'
-import invite from './invite'
-import {API_AUTH_ROUTES} from './routes'
-import {API_INVITE_ROUTES} from './routes'
+import auth from '../auth'
+import invite from '../invite'
+import {API_AUTH_ROUTES} from '../routes'
+import {API_INVITE_ROUTES} from '../routes'
 
-import SweetAlert from './components/SweetAlert'
-import Modal from './components/Modal'
-import Login from './components/Auth/Login'
-import Invites from './components/Auth/Invites'
-import Common from './vue/Common'
-import Messages from './vue/Messages'
+import SweetAlert from '../components/SweetAlert'
+import Modal from '../components/Modal'
+import Login from '../components/Auth/Login'
+import Invites from '../components/Auth/Invites'
+import Management from '../components/Auth/Management'
+import Common from '../vue/Common'
+import Messages from '../vue/Messages'
 
 export default {
   store,
@@ -134,8 +149,10 @@ export default {
     'sweet-alert': SweetAlert,
     'invite-modal': Modal,
     'login-modal': Modal,
+    'management-modal': Modal,
+    'invites-component': Invites,
     'login-component': Login,
-    'invites-component': Invites
+    'management-component': Management
   },
   data () {
     return {
@@ -156,6 +173,7 @@ export default {
       files: [],
       showInviteModal: false,
       showLoginModal: false,
+      showManagementModal: false,
       inviteLink: 'Please wait'
     }
   },
@@ -165,6 +183,9 @@ export default {
   events: {
     'open-login-modal' () {
       this.$set('showLoginModal', !this.showLoginModal)
+    },
+    'open-management-modal' () {
+      this.$set('showManagementModal', !this.showManagementModal)
     },
     'open-invite-modal' () {
       var self = this
@@ -218,8 +239,8 @@ export default {
 </script>
 
 <style>
-  @import '../node_modules/ace-css/css/ace.min.css';
-  @import '../node_modules/animate.css/animate.css';
+  @import '../../node_modules/ace-css/css/ace.min.css';
+  @import '../../node_modules/animate.css/animate.css';
 
   body {
     font-family: Helvetica, sans-serif;

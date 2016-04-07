@@ -6,7 +6,7 @@ import './vue/Filters'
 import './vue/Transitions'
 import './vue/Directives'
 
-import App from './App'
+import App from './components/App'
 import Files from './components/Files/Files'
 import Upload from './components/Files/Upload'
 import Gallery from './components/Files/Gallery'
