@@ -26,6 +26,7 @@
   import StyleProps from '../mixins/StyleProps'
   import ColorProps from '../mixins/ColorProps'
   export default {
+    componentName: 'Dynamic button',
     mixins: [DimensionProps, ShapeProps, StateProps, StyleProps, ColorProps],
     data () {
       return {
@@ -46,7 +47,7 @@
     },
     methods: {
       warnAgainstUsingTextAndHtml () {
-        console.log('%c - Button Warning - use either :text or :html properties, not both.', 'background: #000; color: yellow')
+        console.log(`'%c - Warning - use either :text or :html properties in ${this.$options.componentName} components, not both.`, 'background: #000; color: yellow')
       }
     }
   }
