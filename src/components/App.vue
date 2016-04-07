@@ -275,4 +275,8 @@ export default {
     box-shadow: 0 0 20px;
   }
 
+  :disabled {
+    cursor: not-allowed;
+  }
+
 </style>

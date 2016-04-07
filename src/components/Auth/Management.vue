@@ -66,7 +66,13 @@
       </div>
 
       <!--update button-->
-      <button :class="{ 'muted': !canUpdate }" class="btn btn-primary m1" @click="this.$emit('login', credentials)">Update</button>
+      <button
+        :disabled="!canUpdate"
+        :class="{ 'bg-gray': !canUpdate }"
+        class="btn btn-primary m1"
+        @click="this.$emit('login', credentials)">
+        Update
+      </button>
 
     </div>
   </div>
@@ -87,8 +93,7 @@
         emailNew: '',
         passwordOld: '',
         passwordNew: '',
-        passwordConfirm: '',
-        canUpdate: false
+        passwordConfirm: ''
       }
     },
     ready () {
