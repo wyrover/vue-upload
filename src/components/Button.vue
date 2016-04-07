@@ -51,7 +51,7 @@
       if (this.text && this.html) {
         this.warnAgainstUsingTextAndHtml()
       }
-      console.log(this.transition)
+      console.log(this.color)
 
     },
     methods: {
@@ -65,7 +65,6 @@
 <style scoped>
  :disabled { cursor: not-allowed; }
  .shadow {
-   box-shadow: 5px 14px 68px 18px;
-   color: silver;
+   /*box-shadow: 5px 14px 68px 18px;*/
  }
 </style>

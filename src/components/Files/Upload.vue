@@ -18,7 +18,7 @@
         :text="'Browse&hellip;'"
         :transition="'bounce'"
         :disabled="true"
-        :rounded="false"
+        :rounded="true"
         :bg-color="bgNavy"
         :color="white">
       </button-component>
