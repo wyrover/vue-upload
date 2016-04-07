@@ -1,39 +1,46 @@
 <template>
   <div class="col-sm-4 col-sm-offset-4 py2">
     <p>Change user details etc.</p>
+
+    <!--gravatar-->
     <gravatar-component
-      :email="user.email"
+      :email="emailNew"
       :circle="true">
     </gravatar-component>
+
+    <!--errors-->
     <div class="red" v-if="error">
       <p>{{ error }}</p>
     </div>
+
+    <!--profile info form-->
     <div class="form-group">
       <input
         type="text"
         class="form-control"
-        v-model="user.email" />
+        :value="user.email"
+        v-model="emailNew" />
     </div>
     <div class="form-group">
       <input
         type="password"
         class="form-control"
         placeholder="Enter your old password"
-        v-model="user.passwordOld" />
+        v-model="passwordOld" />
     </div>
     <div class="form-group">
       <input
         type="password"
         class="form-control"
         placeholder="Enter your new password"
-        v-model="user.password" />
+        v-model="passwordNew" />
     </div>
     <div class="form-group">
       <input
         type="password"
         class="form-control"
         placeholder="Confirm your new password"
-        v-model="user.passwordConfirm" />
+        v-model="passwordConfirm" />
     </div>
     <button class="btn btn-primary m1" @click="this.$emit('login', credentials)">Update</button>
   </div>
@@ -42,11 +49,23 @@
 <script>
   import Gravatar from '../Gravatar'
   export default {
+    computed: {},
     components: {
       'gravatar-component': Gravatar
     },
     props: {
       'user': { type: Object, required: true }
+    },
+    data () {
+      return {
+        emailNew: '',
+        passwordOld: '',
+        passwordNew: '',
+        passwordConfirm: ''
+      }
+    },
+    ready () {
+      this.$set('emailNew', this.user.email)
     }
   }
 </script>

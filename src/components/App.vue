@@ -23,7 +23,13 @@
                 <span class="muted">(<span class="blue">admin</span>)</span>
               </span>
               {{ user.email }}
-              <span class="blue"> &#128060;</span>
+              <!--gravatar-->
+              <gravatar-component
+                :email="user.email"
+                :circle="true"
+                :height="12"
+                :width="12">
+              </gravatar-component>
             </span>
           </button>
         </div>
@@ -93,13 +99,14 @@
       <div slot="footer"></div>
     </invite-modal>
 
+    <!--user profile link dialog/modal-->
     <management-modal
      :show.sync="showManagementModal"
      v-if="user.authenticated">
       <h3 class="center blue" slot="header">Your profile</h3>
       <div slot="body" class="center border-top border-bottom border-silver">
         <management-component
-          :user.sync="user">
+          :user="user">
         </management-component>
       </div>
       <div slot="buttons"></div>
@@ -140,6 +147,7 @@ import Invites from '../components/Auth/Invites'
 import Management from '../components/Auth/Management'
 import Common from '../vue/Common'
 import Messages from '../vue/Messages'
+import Gravatar from '../components/Gravatar'
 
 export default {
   store,
@@ -152,7 +160,8 @@ export default {
     'management-modal': Modal,
     'invites-component': Invites,
     'login-component': Login,
-    'management-component': Management
+    'management-component': Management,
+    'gravatar-component': Gravatar
   },
   data () {
     return {

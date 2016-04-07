@@ -29,7 +29,7 @@
     },
     props: {
       'email': { type: String, default: 'example@example.com', required: true },
-      'type': { type: Boolean, default: false, required: false },
+      'type': { type: String, default: false, required: false },
       'height': { type: Number, default: 80, required: false },
       'width': { type: Number, default: 80, required: false },
       'rounded': { type: Boolean, default: false, required: false },

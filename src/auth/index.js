@@ -6,14 +6,14 @@ var jwtPayloadDecoder = require('jwt-payload-decoder')
 
 export default {
   user: {
+    email: null,
+    first_name: null,
+    last_name: null,
     super: false,
     admin: false,
     id: -1,
     roles: [],
-    permissions: [],
-    email: null,
-    first_name: null,
-    last_name: null
+    permissions: []
   },
   /**
    * Log a user in and set user's data from resulting decoded JWT
