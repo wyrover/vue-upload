@@ -1,11 +1,10 @@
 <template>
-    <img
-      :style="{ height: height + 'px', width: width + 'px' }"
-      :class="{ 'rounded': rounded, 'circle': circle }"
-      :src="gravatar"
-      alt="Gravatar for {{ email }}"
-      title="Gravatar for {{ email }}">
-  </span>
+  <img
+    :src="gravatar"
+    alt="Gravatar for {{ email }}"
+    :style="{ height: height + 'px', width: width + 'px' }"
+    :class="{ 'rounded': rounded, 'circle': circle }"
+    title="Gravatar for {{ email }}">
 </template>
 
 <script>
@@ -34,8 +33,7 @@
       'type': { type: String, default: false, required: false },
       'showChangedNotification': { type: Boolean, default: false, required: false }
     },
-    ready () {
-    },
+    ready () {},
     methods: {
       hash (string) {
         return MD5(string).toString()
