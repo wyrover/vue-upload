@@ -24,7 +24,7 @@
               <!--enable tooltips-->
               <button
                 v-if="user.authenticated"
-                @click="this.$emit('toggle-tooltips') | debounce 100"
+                @click="this.$emit('toggle-tooltips') | debounce 200"
                 class="btn btn-primary h4 bg-white gray">
                 Help <span v-if="tooltips" class="green animated" transition="bounce">&check;</span>
               </button>
@@ -289,6 +289,7 @@ export default {
     },
     fetch () {
       this.fetchFiles()
+      this.fetchInvites()
     },
     fetchFiles () {
       var self = this
@@ -303,6 +304,9 @@ export default {
           console.log('failed fetching files')
         }
       )
+    },
+    fetchInvites () {
+      this.$set('invites', invite.getAll())
     }
   }
 }

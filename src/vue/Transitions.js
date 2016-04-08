@@ -1,6 +1,6 @@
-/* http://vuejs.org/guide/transitions.html */
-
 var Vue = require('vue')
+
+// http://vuejs.org/guide/transitions.html
 
 // Animate.css transitions
 Vue.transition('bounce', { enterClass: 'bounceIn', leaveClass: 'bounceOut' })
