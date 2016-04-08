@@ -5,7 +5,7 @@
 
     <!--gravatar-->
     <gravatar-component
-      class="block m2"
+      class="m2"
       :email="emailNew"
       :circle="true"
       :height="100"
@@ -13,10 +13,10 @@
     </gravatar-component>
 
     <!--is-this-you?-->
-    <div v-show="user.email !== emailNew" class="col-1 m2 border border-silver rounded p1 mx-auto">
-      <div v-show="user.email !== emailNew" class="bold blue" transition="bounce">Is this you?</div>
+    <div v-show="user.email !== emailNew" class="col-1 animated m2 border border-silver rounded p1 mx-auto" transition="bounce">
+      <div v-show="user.email !== emailNew" class="bold blue">Is this you?</div>
       <button @click="this.$emit('reset-email-field')" class="btn btn-outline border-silver rounded m1 red">&cross;</button>
-      <button @click="this.$emit('apply-email-change')" class="btn btn-outline border-silver rounded m1 green">&check;</button>
+      <button @click="setEmailCorrectlySet" class="btn btn-outline border-silver rounded m1 green">&check;</button>
     </div>
 
     <!--errors-->
@@ -25,17 +25,18 @@
     </div>
 
     <!--user profile info form container-->
-    <div class="relative mx-auto">
+    <div class="mx-auto">
 
       <!--change email address-->
       <div class="form-group">
         <input
+          @keyup="checkEmailCorrectlySet"
           type="text"
           class="form-control"
+          :class="{ 'border-green': emailCorrectlySet }"
           :value="user.email"
           v-model="emailNew"
           debounce="800"/>
-        <span v-show="emailCorrectlySet" class="bold green absolute top-0 right-0">&check;</span>
       </div>
 
       <!--enter old password-->
@@ -43,6 +44,7 @@
         <input
           type="password"
           class="form-control"
+          :class="{ 'border-green': passwordOld.length }"
           placeholder="Enter your old password"
           v-model="passwordOld" />
       </div>
@@ -52,6 +54,7 @@
         <input
           type="password"
           class="form-control"
+          :class="{ 'border-green': passwordsMatch }"
           placeholder="Enter your new password"
           v-model="passwordNew" />
       </div>
@@ -61,14 +64,15 @@
         <input
           type="password"
           class="form-control"
+          :class="{ 'border-green': passwordsMatch }"
           placeholder="Confirm your new password"
           v-model="passwordConfirm" />
       </div>
 
       <!--update button-->
       <button
-        :disabled="!canUpdate"
-        :class="{ 'bg-gray': !canUpdate }"
+        :disabled="!formComplete"
+        :class="{ 'bg-gray': !formComplete }"
         class="btn btn-primary m1"
         @click="this.$emit('login', credentials)">
         Update
@@ -81,7 +85,17 @@
 <script>
   import Gravatar from '../Gravatar'
   export default {
-    computed: {},
+    computed: {
+      'formComplete' () {
+        return Boolean(
+          this.passwordOld &&
+          (this.passwordNew === this.passwordConfirm) && (this.passwordNew.length && this.passwordConfirm.length)
+        )
+      },
+      'passwordsMatch' () {
+        return Boolean(this.passwordNew === this.passwordConfirm) && (this.passwordNew.length && this.passwordConfirm.length)
+      }
+    },
     components: {
       'gravatar-component': Gravatar
     },
@@ -93,16 +107,23 @@
         emailNew: '',
         passwordOld: '',
         passwordNew: '',
-        passwordConfirm: ''
+        passwordConfirm: '',
+        emailCorrectlySet: true
       }
     },
     ready () {
       this.$set('emailNew', this.user.email)
+      this.$set('emailCorrectlySet', true)
+    },
+    methods: {
+      checkEmailCorrectlySet (email) {
+        this.$set('emailCorrectlySet', email === this.user.email)
+      },
+      setEmailCorrectlySet () {
+        this.$set('emailCorrectlySet', true)
+      }
     },
     events: {
-      'apply-email-change' () {
-        this.$set('emailCorrectlySet', true)
-      },
       'reset-email-field' () {
         this.$set('emailNew', this.user.email)
       }
