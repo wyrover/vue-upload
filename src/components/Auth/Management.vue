@@ -4,6 +4,8 @@
     <tabs-component>
       <tab-component header="My profile">
         <div class="col col-12 p2">
+          <h2>My profile</h2>
+
           <!--profile tab-->
           <div class="col-sm-4 col-sm-offset-4 py2">
             <p>Change your user profile details here.</p>
@@ -87,18 +89,29 @@
           </div>
         </div>
       </tab-component>
-      <tab-component header="Administration">
-        <div class="col col-12 p2">
-          <h4>Users</h4>
-          <table>
-            <thead></thead>
-          </table>
-          1	super@example.com	$2y$10$7EKaPDBS8Je/dctm8fLetu.X2Ktv11iqaIGC45UyCD4CFHT2V/v.m			Super	Man	2016-04-07 12:57:01	2016-04-07 12:57:01
-          2	user@example.com	$2y$10$T9AnmPpMkJ2dsDK23KuSu.2/BacXrHUrGwt7UAw36g8h3j/a0DOfa			John	Doe	2016-04-07 12:57:01	2016-04-07 12:57:01
 
-          <h4>Permissions</h4>
-        </div>
-      </tab-component>
+      <!--admin only area tab-->
+      <!--<div v-if="user.super || user.admin">-->
+
+        <tab-component header="Administration">
+          <div class="col col-12 p2">
+            <h2>Users</h2>
+            <users-component
+              :users="dummyUsers">
+            </users-component>
+          </div>
+        </tab-component>
+
+        <tab-component header="Invites">
+          <div class="col col-12 p2">
+            <h2>View all invites</h2>
+            <invites-component
+              :invites="dummyInvites">
+            </invites-component>
+          </div>
+        </tab-component>
+      <!--</div>-->
+
     </tabs-component>
 
   </div>
@@ -108,12 +121,14 @@
   import Gravatar from '../Gravatar'
   import Tabs from '../Tabs/Tabset'
   import Tab from '../Tabs/Tab'
+  import Users from '../Management/Users'
 
   export default {
     components: {
       'gravatar-component': Gravatar,
       'tabs-component': Tabs,
-      'tab-component': Tab
+      'tab-component': Tab,
+      'users-component': Users
     },
     computed: {
       'formComplete' () {
@@ -131,6 +146,13 @@
     },
     data () {
       return {
+        dummyUsers: [
+          { id: 1, email: 'purerizzo@gmail.com', firstName: 'Super', lastName: 'Dude', joined: '2016-04-07 12:57:01', updated: '2016-04-07 12:57:01', roles: ['Administrator', 'Super'], permissions: ['upload', 'user'] },
+          { id: 2, email: 'purerizzo@gmail.com', firstName: 'Super', lastName: 'Dude', joined: '2016-04-07 12:57:01', updated: '2016-04-07 12:57:01', roles: ['Administrator', 'Super'], permissions: ['upload', 'user'] },
+          { id: 3, email: 'purerizzo@gmail.com', firstName: 'Super', lastName: 'Dude', joined: '2016-04-07 12:57:01', updated: '2016-04-07 12:57:01', roles: ['Administrator', 'Super'], permissions: ['upload', 'user'] },
+          { id: 4, email: 'purerizzo@gmail.com', firstName: 'Super', lastName: 'Dude', joined: '2016-04-07 12:57:01', updated: '2016-04-07 12:57:01', roles: ['Administrator', 'Super'], permissions: ['upload', 'user'] },
+          { id: 5, email: 'purerizzo@gmail.com', firstName: 'Super', lastName: 'Dude', joined: '2016-04-07 12:57:01', updated: '2016-04-07 12:57:01', roles: ['Administrator', 'Super'], permissions: ['upload', 'user'] }
+        ],
         emailNew: '',
         passwordOld: '',
         passwordNew: '',

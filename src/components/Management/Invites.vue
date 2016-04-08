@@ -5,13 +5,15 @@
         <th v-for="column in columns" class="p2">{{ column | capitalize }}</th>
       </thead>
       <tbody>
-        <tr v-for="user in users" class="p2">
-          <td class="p2">{{ user.id }}</td>
-          <td class="p2">{{ user.email }}</td>
-          <td class="p2">{{ user.firstName }}</td>
-          <td class="p2">{{ user.lastName }}</td>
-          <td class="p2">{{ user.joined }}</td>
-          <td class="p2">{{ user.updated }}</td>
+        <tr v-for="invite in invites" class="p2">
+          <td class="p2">{{ id }}</td>
+          <td class="p2">{{ initiator }}</td>
+          <td class="p2">{{ recipient }}</td>
+          <td class="p2">{{ comment }}</td>
+          <td class="p2">{{ hash }}</td>
+          <td class="p2">{{ sent }}</td>
+          <td class="p2">{{ accepted }}</td>
+          <td class="p2">{{ created }}</td>
           <td class="p2">
             <button @click="manageRoles" class="btn rounded blue">manage</button>
           </td>
@@ -48,11 +50,11 @@
     },
     data () {
       return {
-        columns: ['id', 'email', 'first name', 'last name', 'joined', 'updated', 'roles', 'permissions', 'invites', 'gravatar']
+        columns: ['id', 'initiator', 'recipient', 'comment', 'link', 'sent', 'accepted', 'created', 'permissions']
       }
     },
     props: {
-      'users': { type: Array, required: true }
+      'invites': { type: Array, required: true }
     }
   }
 </script>

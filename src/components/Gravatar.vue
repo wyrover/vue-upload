@@ -3,7 +3,7 @@
     :src="gravatar"
     alt="Gravatar for {{ email }}"
     :style="{ height: height + 'px', width: width + 'px' }"
-    :class="{ 'rounded': rounded, 'circle': circle }"
+    :class="{ 'rounded': rounded, 'circle': circle, 'muted': highlight }"
     title="Gravatar for {{ email }}">
 </template>
 
@@ -21,6 +21,11 @@
         if (this.email && this.email.length) {
           return `http://www.gravatar.com/avatar/${this.hash(this.email)}`
         }
+      },
+      'highlight' () {
+        if (this.email === this.highlightUser) {
+          return true
+        }
       }
     },
     data () {
@@ -31,9 +36,9 @@
     props: {
       'email': { type: String, required: true },
       'type': { type: String, default: false, required: false },
-      'showChangedNotification': { type: Boolean, default: false, required: false }
+      'showChangedNotification': { type: Boolean, default: false, required: false },
+      'highlight-user': { type: String, required: false }
     },
-    ready () {},
     methods: {
       hash (string) {
         return MD5(string).toString()
