@@ -24,7 +24,14 @@
             </gravatar-component>
           </td>
           <td class="p2">
-            <button @click="invalidate" class="btn rounded red">invalidate</button>
+            <!--invite invalidation tooltip-->
+            <tooltip-component hint="Prevent recipient from using this invite link" placement="top">
+              <span slot="html">
+                <!--invite invalidation button-->
+                <!--only shown when invite has not yet been accepted-->
+                <button @click="invalidate" v-if="invite.accepted_at" class="btn rounded red">invalidate</button>
+              </span>
+            </tooltip-component>
           </td>
         </tr>
       </tbody>

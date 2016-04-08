@@ -1,20 +1,20 @@
 <template>
-    <span
-      :class="{
-        'hint--top': placement === 'top',
-        'hint--left': placement === 'left',
-        'hint--right': placement === 'right',
-        'hint--bottom': placement === 'bottom',
-        'hint--error': level === 'error',
-        'hint--warning': level === 'warning',
-        'hint--info': level === 'info',
-        'hint--success': level === 'success'
-      }"
-      class="hint--rounded"
-      data-hint="{{ hint }}">
-        <slot name="html">{{{ html }}}</slot>
-        <slot name="text">{{ text }}</slot>
-    </span>
+  <span
+    :class="{
+      'hint--top': placement === 'top',
+      'hint--left': placement === 'left',
+      'hint--right': placement === 'right',
+      'hint--bottom': placement === 'bottom',
+      'hint--error': level === 'error',
+      'hint--warning': level === 'warning',
+      'hint--info': level === 'info',
+      'hint--success': level === 'success'
+    }"
+    class="hint--rounded"
+    data-hint="{{{ hint }}}">
+      <slot name="html">{{{ html }}}</slot>
+      <slot name="text">{{ text }}</slot>
+  </span>
 </template>
 
 <script>

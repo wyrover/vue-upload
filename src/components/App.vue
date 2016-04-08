@@ -5,7 +5,7 @@
 
       <!--login/sign out link-->
       <div class="right mr1 relative">
-        <tooltip-component hint="Securely sign out. See you soon!" placement="left">
+        <tooltip-component hint="See you soon!" placement="bottom">
           <span slot="html">
            <button v-if="user.authenticated" @click="this.$emit('logout')" class="btn btn-primary border-silver h4 bg-white gray right">Sign out</button>
           </span>
@@ -50,7 +50,7 @@
 
         <!--invite link-->
         <div class="right mr2 relative">
-          <tooltip-component hint="Send invites to people!" placement="bottom">
+          <tooltip-component hint="Send invites to people!" placement="left">
             <span slot="html">
               <button
                 v-if="user.authenticated"
