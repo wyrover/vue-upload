@@ -8,20 +8,25 @@
 
     <!--dialog-->
     <div class="clearfix"></div>
-    <div class="col-3 mx-auto mt4 uploader">
+    <div class="col-4 center mx-auto mt4 uploader">
       <!--browse button-->
       <!--n.b. see !important z-index setting in <style>, used to prevent button from appearing over modals, as z-index is set by plupload-->
 
-      <button-component
-        :id="'browse'"
-        class="col col-12 p4 h1"
-        :text="'Browse&hellip;'"
-        :transition="'bounce'"
-        :disabled="true"
-        :rounded="true"
-        :bg-color="bgNavy"
-        :color="white">
-      </button-component>
+      <tooltip-component hint="Click to browse for files to upload" placement="top">
+        <span slot="html">
+
+          <button-component
+            :id="'browse'"
+            class="col p4 h1"
+            :text="'Browse&hellip;'"
+            :transition="'bounce'"
+            :rounded="true"
+            :bg-color="bgNavy"
+            :color="white">
+          </button-component>
+
+        </span>
+      </tooltip-component>
 
       <div class="clearfix"></div>
       <!--cancel button-->

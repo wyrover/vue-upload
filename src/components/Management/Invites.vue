@@ -6,34 +6,25 @@
       </thead>
       <tbody>
         <tr v-for="invite in invites" class="p2">
-          <td class="p2">{{ id }}</td>
-          <td class="p2">{{ initiator }}</td>
-          <td class="p2">{{ recipient }}</td>
-          <td class="p2">{{ comment }}</td>
-          <td class="p2">{{ hash }}</td>
-          <td class="p2">{{ sent }}</td>
-          <td class="p2">{{ accepted }}</td>
-          <td class="p2">{{ created }}</td>
-          <td class="p2">
-            <button @click="manageRoles" class="btn rounded blue">manage</button>
-          </td>
-          <td class="p2">
-            <button @click="managePermissions" class="btn rounded blue">manage</button>
-          </td>
-          <td class="p2">
-            <button @click="viewUserInvites" class="btn rounded blue">view</button>
-          </td>
+          <td class="p2">{{ invite.id }}</td>
+          <td class="p2">{{ invite.initiator }}</td>
+          <td class="p2">{{ invite.recipient }}</td>
+          <td class="p2">{{ invite.comment }}</td>
+          <td class="p2"><a :href="invite.hash">{{ invite.hash }}</a></td>
+          <td class="p2">{{ invite.sent_at }}</td>
+          <td class="p2">{{ invite.accepted_at }}</td>
+          <td class="p2">{{ invite.created_at }}</td>
           <td class="p2 center">
             <!--gravatar-->
             <gravatar-component
-              :email="user.email"
+              :email="invite.recipient"
               :circle="true"
               :height="50"
               :width="50">
             </gravatar-component>
           </td>
           <td class="p2">
-            <button class="btn rounded blue">edit</button>
+            <button @click="invalidate" class="btn rounded red">invalidate</button>
           </td>
         </tr>
       </tbody>
@@ -50,7 +41,7 @@
     },
     data () {
       return {
-        columns: ['id', 'initiator', 'recipient', 'comment', 'link', 'sent', 'accepted', 'created', 'permissions']
+        columns: ['id', 'initiator', 'recipient', 'comment', 'link', 'sent', 'accepted', 'created', 'gravatar']
       }
     },
     props: {

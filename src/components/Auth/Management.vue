@@ -10,14 +10,26 @@
           <div class="col-sm-4 col-sm-offset-4 py2">
             <p>Change your user profile details here.</p>
 
-            <!--gravatar-->
-            <gravatar-component
-              class="m2"
-              :email="emailNew"
-              :circle="true"
-              :height="100"
-              :width="100">
-            </gravatar-component>
+            <!--get gravatar tooltip-->
+            <tooltip-component hint="Don't have a Gravatar? Click to get one at gravatar.com" placement="right">
+              <span slot="html">
+
+                <!--gravatar link-->
+                <a href="http://gravatar.com" target="_blank">
+                  <!--gravatar-->
+                  <gravatar-component
+                    class="m2"
+                    :email="emailNew"
+                    :circle="true"
+                    :height="100"
+                    :width="100">
+                  </gravatar-component>
+
+                </a>
+              </span>
+            </tooltip-component>
+
+
 
             <!--is-this-you?-->
             <div v-show="user.email !== emailNew" class="col-1 animated m2 border border-silver rounded p1 mx-auto" transition="bounce">
@@ -93,7 +105,7 @@
       <!--admin only area tab-->
       <!--<div v-if="user.super || user.admin">-->
 
-        <tab-component header="Administration">
+        <tab-component header="Users">
           <div class="col col-12 p2">
             <h2>Users</h2>
             <users-component
@@ -110,6 +122,7 @@
             </invites-component>
           </div>
         </tab-component>
+
       <!--</div>-->
 
     </tabs-component>
@@ -122,13 +135,15 @@
   import Tabs from '../Tabs/Tabset'
   import Tab from '../Tabs/Tab'
   import Users from '../Management/Users'
+  import Invites from '../Management/Invites'
 
   export default {
     components: {
       'gravatar-component': Gravatar,
       'tabs-component': Tabs,
       'tab-component': Tab,
-      'users-component': Users
+      'users-component': Users,
+      'invites-component': Invites
     },
     computed: {
       'formComplete' () {
@@ -152,6 +167,13 @@
           { id: 3, email: 'purerizzo@gmail.com', firstName: 'Super', lastName: 'Dude', joined: '2016-04-07 12:57:01', updated: '2016-04-07 12:57:01', roles: ['Administrator', 'Super'], permissions: ['upload', 'user'] },
           { id: 4, email: 'purerizzo@gmail.com', firstName: 'Super', lastName: 'Dude', joined: '2016-04-07 12:57:01', updated: '2016-04-07 12:57:01', roles: ['Administrator', 'Super'], permissions: ['upload', 'user'] },
           { id: 5, email: 'purerizzo@gmail.com', firstName: 'Super', lastName: 'Dude', joined: '2016-04-07 12:57:01', updated: '2016-04-07 12:57:01', roles: ['Administrator', 'Super'], permissions: ['upload', 'user'] }
+        ],
+        dummyInvites: [
+          { id: 1, initiator: 'purerizzo@gmail.com', recipient: 'someone@example.com', comment: 'A comment', hash: 'http://something/invite/FG21AZ234324', sent_at: '2016-04-07 12:57:01', accepted_at: '2016-04-07 12:57:01', created_at: '2016-04-07 12:57:01' },
+          { id: 2, initiator: 'purerizzo@gmail.com', recipient: 'someone@example.com', comment: 'A comment', hash: 'http://something/invite/FG21AZ234324', sent_at: '2016-04-07 12:57:01', accepted_at: '2016-04-07 12:57:01', created_at: '2016-04-07 12:57:01' },
+          { id: 3, initiator: 'purerizzo@gmail.com', recipient: 'someone@example.com', comment: 'A comment', hash: 'http://something/invite/FG21AZ234324', sent_at: '2016-04-07 12:57:01', accepted_at: '2016-04-07 12:57:01', created_at: '2016-04-07 12:57:01' },
+          { id: 4, initiator: 'purerizzo@gmail.com', recipient: 'someone@example.com', comment: 'A comment', hash: 'http://something/invite/FG21AZ234324', sent_at: '2016-04-07 12:57:01', accepted_at: '2016-04-07 12:57:01', created_at: '2016-04-07 12:57:01' },
+          { id: 5, initiator: 'purerizzo@gmail.com', recipient: 'someone@example.com', comment: 'A comment', hash: 'http://something/invite/FG21AZ234324', sent_at: '2016-04-07 12:57:01', accepted_at: '2016-04-07 12:57:01', created_at: '2016-04-07 12:57:01' }
         ],
         emailNew: '',
         passwordOld: '',

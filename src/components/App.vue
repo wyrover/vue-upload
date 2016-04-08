@@ -5,8 +5,16 @@
 
       <!--login/sign out link-->
       <div class="right mr1 relative">
-        <button v-if="!user.authenticated" @click="this.$emit('open-login-modal')" class="btn btn-primary h4 border-blue bg-white blue right">Sign in&#128273;</button>
-        <button v-if="user.authenticated" @click="this.$emit('logout')" class="btn btn-primary border-silver h4 bg-white gray right">Sign out</button>
+        <tooltip-component hint="Securely sign out. See you soon!" placement="left">
+          <span slot="html">
+           <button v-if="user.authenticated" @click="this.$emit('logout')" class="btn btn-primary border-silver h4 bg-white gray right">Sign out</button>
+          </span>
+        </tooltip-component>
+        <tooltip-component hint="Sign in with your username and password" placement="bottom">
+          <span slot="html">
+           <button v-if="!user.authenticated" @click="this.$emit('open-login-modal')" class="btn btn-primary h4 border-blue bg-white blue right">Sign in&#128273;</button>
+          </span>
+        </tooltip-component>
       </div>
 
       <!--only show the following when logged in-->
@@ -15,33 +23,43 @@
         <!--welcome-->
         <div v-if="user.authenticated" class="right mr2 relative">
           <!--http://www.amp-what.com/unicode/search/face-->
-          <button
-            @click="this.$emit('open-management-modal')"
-            class="btn btn-primary h4 bg-white gray">
-            <span v-if="user.authenticated">
-              <span v-if="user.admin">
-                <span class="muted">(<span class="blue">admin</span>)</span>
+
+          <tooltip-component hint="Change your profile settings" placement="bottom">
+              <span slot="html">
+                <button
+                  @click="this.$emit('open-management-modal')"
+                  class="btn btn-primary h4 bg-white gray">
+                  <span v-if="user.authenticated">
+                    <span v-if="user.admin">
+                      <span class="muted">(<span class="blue">admin</span>)</span>
+                    </span>
+                    {{ user.email }}
+                    <!--gravatar-->
+                    <gravatar-component
+                      :email="user.email"
+                      :circle="true"
+                      :height="12"
+                      :width="12">
+                    </gravatar-component>
+                  </span>
+                </button>
               </span>
-              {{ user.email }}
-              <!--gravatar-->
-              <gravatar-component
-                :email="user.email"
-                :circle="true"
-                :height="12"
-                :width="12">
-              </gravatar-component>
-            </span>
-          </button>
+          </tooltip-component>
+
         </div>
 
         <!--invite link-->
         <div class="right mr2 relative">
-          <button
-            v-if="user.authenticated"
-            @click="this.$emit('open-invite-modal')"
-            class="btn btn-primary h4 bg-white gray">
-              Invites<span class="blue"> &#128587;</span><!--&#128588;-->
-          </button>
+          <tooltip-component hint="Send invites to people!" placement="bottom">
+            <span slot="html">
+              <button
+                v-if="user.authenticated"
+                @click="this.$emit('open-invite-modal')"
+                class="btn btn-primary h4 bg-white gray">
+                  Invites<span class="blue"> &#128587;</span>
+              </button>
+            </span>
+          </tooltip-component>
         </div>
 
         <!--search bar-->
@@ -138,6 +156,9 @@ import store from '../store/content/index'
 
 import auth from '../auth'
 import invite from '../invite'
+
+import Common from '../vue/Common'
+import Messages from '../vue/Messages'
 import {API_AUTH_ROUTES} from '../routes'
 import {API_INVITE_ROUTES} from '../routes'
 
@@ -146,15 +167,16 @@ import Modal from '../components/Modal'
 import Login from '../components/Auth/Login'
 import Invites from '../components/Auth/Invites'
 import Management from '../components/Auth/Management'
-import Common from '../vue/Common'
-import Messages from '../vue/Messages'
+
 import Gravatar from '../components/Gravatar'
+
 import ButtonMixin from '../mixins/Button'
+import GlobalMixin from '../mixins/Global'
 
 export default {
   store,
   name: 'App',
-  mixins: [ButtonMixin],
+  mixins: [GlobalMixin, ButtonMixin],
   replace: false,
   components: {
     'sweet-alert': SweetAlert,
