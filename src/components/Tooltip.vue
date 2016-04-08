@@ -36,7 +36,6 @@
     },
     events: {
       'show-tooltips' (state) {
-        console.log((state ? 'Showing' : 'Hiding') + ' tooltips')
         this.$set('show', state)
       }
     }

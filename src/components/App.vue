@@ -24,7 +24,7 @@
               <!--enable tooltips-->
               <button
                 v-if="user.authenticated"
-                @click="this.$emit('toggle-tooltips')"
+                @click="this.$emit('toggle-tooltips') | debounce 100"
                 class="btn btn-primary h4 bg-white gray">
                 Help <span v-if="tooltips" class="green animated" transition="bounce">&check;</span>
               </button>
@@ -84,17 +84,29 @@
         </div>
 
         <!--upload component-->
-        <button v-link="{ path: '/upload' }" class="btn silver">
-          <span v-if="this.$route.path === '/upload'">&#8686;</span><span v-else="">&#8679;</span> Upload
-        </button>
+        <tooltip-component hint="Upload your files!" placement="bottom">
+          <span slot="html">
+            <button v-link="{ path: '/upload' }" class="btn silver">
+              <span v-if="this.$route.path === '/upload'">&#8686;</span><span v-else="">&#8679;</span> Upload
+            </button>
+          </span>
+        </tooltip-component>
 
         <!--files view component-->
-        <button v-link="{ path: '/files' }" class="btn silver">
-          <span v-if="this.$route.path === '/files'">&#128194;</span><span v-else="">&#128193;</span> Files (<small class="muted">{{ files.length }}</small>)
-        </button>
+          <tooltip-component hint="View and edit all uploaded files" placement="bottom">
+          <span slot="html">
+            <button v-link="{ path: '/files' }" class="btn silver">
+              <span v-if="this.$route.path === '/files'">&#128194;</span><span v-else="">&#128193;</span> Files (<small class="muted">{{ files.length }}</small>)
+            </button>
+          </span>
+        </tooltip-component>
 
         <!--gallery component-->
-        <button v-link="{ path: '/gallery' }" class="btn silver">Gallery</button>
+        <tooltip-component hint="View and search for files in the Gallery" placement="right">
+          <span slot="html">
+            <button v-link="{ path: '/gallery' }" class="btn silver">Gallery</button>
+          </span>
+        </tooltip-component>
 
       </div>
     </div>
@@ -258,6 +270,7 @@ export default {
       auth.logout()
     },
     'toggle-tooltips' () {
+      // todo: set help var in localstorage/cookie
       this.$set('tooltips', !this.tooltips)
       this.$broadcast('show-tooltips', this.tooltips)
     }
