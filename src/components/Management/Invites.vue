@@ -29,7 +29,17 @@
               <span slot="html">
                 <!--invite invalidation button-->
                 <!--only shown when invite has not yet been accepted-->
-                <button @click="invalidate" v-if="invite.accepted_at" class="btn rounded red">invalidate</button>
+                <button @click="invalidate" v-if="invite.accepted_at" class="btn rounded h2 red">&times</button>
+              </span>
+            </tooltip-component>
+          </td>
+          <td class="p2">
+            <!--invite invalidation tooltip-->
+            <tooltip-component hint="Resend this invite" placement="top">
+              <span slot="html">
+                <!--invite invalidation button-->
+                <!--only shown when invite has not yet been accepted-->
+                <button @click="invalidate" v-if="invite.accepted_at" class="btn rounded h2 green">&#128232;</button>
               </span>
             </tooltip-component>
           </td>

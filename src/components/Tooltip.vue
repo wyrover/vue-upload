@@ -30,7 +30,7 @@
     data () {
       return {
         index: 0,
-        show: false,
+        show: true,
         animation: { type: String, required: true }
       }
     },

@@ -12,7 +12,11 @@
 
     <div v-else="files.length" class="col col-12 h1 p4 center" v-cloak>
       <p class="silver">No files here&hellip; Yet!</p>
-      <a v-link="{ path: '/upload' }"  class="btn btn-primary p3 white">Add files</a>
+      <tooltip-component hint="Click to go to the Uploader" placement="right">
+        <span slot="html">
+          <a v-link="{ path: '/upload' }"  class="btn btn-primary p3 white">Add files</a>
+        </span>
+      </tooltip-component>
     </div>
 
     <div class="clearfix"></div>
@@ -39,21 +43,47 @@
         </small>
       </div>
       <div class="col col-1">
-        <file-icon :extension="file.extension"></file-icon>
+
+        <tooltip-component hint="File type" placement="right">
+          <span slot="html">
+            <file-icon :extension="file.extension"></file-icon>
+          </span>
+        </tooltip-component>
+
       </div>
       <div class="col-3 right">
+
         <!--edit button-->
-        <button class="btn btn-primary">Edit</button>
+        <tooltip-component hint="Edit this files details" placement="top">
+          <span slot="html">
+            <button class="btn btn-primary">Edit</button>
+          </span>
+        </tooltip-component>
+
         <!--download button-->
+        <tooltip-component hint="Download this file to your computer" placement="top">
+          <span slot="html">
         <a :href="file.downloadPath" class="btn blue">Download</a>
+          </span>
+        </tooltip-component>
+
         <!--preview button-->
-        <button
-          v-show="canPreview(file)"
-          class="btn green">
-          Preview
-        </button>
+        <tooltip-component hint="Preview this file in a new window" placement="top">
+          <span slot="html">
+            <button
+              v-show="canPreview(file)"
+              class="btn green">
+              Preview
+            </button>
+          </span>
+        </tooltip-component>
+
         <!--delete button-->
-        <button @click="destroy(file)" class="btn red h1">&times;</button>
+        <tooltip-component hint="Permanently delete this file (cannot be undone)" placement="top" level="warning">
+          <span slot="html">
+            <button @click="destroy(file)" class="btn red h1">&times;</button>
+          </span>
+        </tooltip-component>
       </div>
     </div>
 
@@ -64,12 +94,17 @@
 
 <script>
   var _ = require('lodash')
-  import Common from '../../vue/Common'
   var fileTypes = require('./../../data/fileTypes.json')
+
+  import Common from '../../vue/Common'
   import File from './File'
   import FileIcon from './FileIcon'
+
+  import GlobalMixin from '../../mixins/Global'
+
   export default {
     name: 'Files',
+    mixins: [GlobalMixin],
     components: {
       'file-icon': FileIcon
     },

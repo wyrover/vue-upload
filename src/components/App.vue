@@ -39,7 +39,7 @@
         <div v-if="user.authenticated" class="right mr2 relative">
           <!--http://www.amp-what.com/unicode/search/face-->
 
-          <tooltip-component hint="Change your profile settings" placement="bottom">
+          <tooltip-component hint="Manage your user profile settings" placement="bottom">
               <span slot="html">
                 <button
                   @click="this.$emit('open-management-modal')"
@@ -65,7 +65,7 @@
 
         <!--invite link-->
         <div class="right mr2 relative">
-          <tooltip-component hint="Send invites to people!" placement="left">
+          <tooltip-component hint="Send invites to people!" placement="bottom">
             <span slot="html">
               <button
                 v-if="user.authenticated"
@@ -79,8 +79,12 @@
 
         <!--search bar-->
         <div v-if="this.$route.path !== '/upload'" class="right mr2 relative">
-          <input class="silver p1 h4 m0" v-model="searchQuery" type="text" name="search" placeholder="Search&hellip;" style="border: none">
-          <button v-show="searchQuery" @click.prevent="searchQuery = ''" class="btn h1 red muted absolute top-0 right-0 p1">&times;</button>
+          <tooltip-component hint="Search for files" placement="left">
+            <span slot="html">
+              <input class="silver p1 h4 m0" v-model="searchQuery" type="text" name="search" placeholder="Search&hellip;" style="border: none">
+              <button v-show="searchQuery" @click.prevent="searchQuery = ''" class="btn h1 red muted absolute top-0 right-0 p1">&times;</button>
+            </span>
+          </tooltip-component>
         </div>
 
         <!--upload component-->
@@ -236,7 +240,7 @@ export default {
       showLoginModal: false,
       showManagementModal: false,
       inviteLink: 'Please wait',
-      tooltips: false
+      tooltips: true
     }
   },
   ready () {
@@ -268,11 +272,6 @@ export default {
     },
     'logout' () {
       auth.logout()
-    },
-    'toggle-tooltips' () {
-      // todo: set help var in localstorage/cookie
-      this.$set('tooltips', !this.tooltips)
-      this.$broadcast('show-tooltips', this.tooltips)
     }
   },
   methods: {
