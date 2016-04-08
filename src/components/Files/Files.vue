@@ -11,7 +11,7 @@
     </div>
 
     <div v-else="files.length" class="col col-12 h1 p4 center" v-cloak>
-      <p class="silver">No files here&hellip; Yet!</p>
+      <p class="silver">Loading files&hellip; Please wait.</p>
       <tooltip-component hint="Click to go to the Uploader" placement="right">
         <span slot="html">
           <a v-link="{ path: '/upload' }"  class="btn btn-primary p3 white">Add files</a>

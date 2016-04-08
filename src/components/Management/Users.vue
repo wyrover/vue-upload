@@ -13,13 +13,25 @@
           <td class="p2">{{ user.joined }}</td>
           <td class="p2">{{ user.updated }}</td>
           <td class="p2">
-            <button @click="manageRoles" class="btn rounded blue">manage</button>
+            <tooltip-component hint="Manage this user's roles" placement="top">
+              <span slot="html">
+                <button @click="manageRoles" class="btn rounded blue">manage</button>
+              </span>
+            </tooltip-component>
           </td>
           <td class="p2">
-            <button @click="managePermissions" class="btn rounded blue">manage</button>
+            <tooltip-component hint="Manage this user's permissions" placement="top">
+              <span slot="html">
+                <button @click="managePermissions" class="btn rounded blue">manage</button>
+              </span>
+            </tooltip-component>
           </td>
           <td class="p2">
-            <button @click="viewUserInvites" class="btn rounded blue">view</button>
+            <tooltip-component hint="View invites made by this user" placement="top">
+              <span slot="html">
+                <button @click="viewUserInvites" class="btn rounded blue">view</button>
+              </span>
+            </tooltip-component>
           </td>
           <td class="p2 center">
             <!--gravatar-->
@@ -29,6 +41,13 @@
               :height="50"
               :width="50">
             </gravatar-component>
+          </td>
+          <td class="p2">
+            <tooltip-component hint="Deactivate this user" placement="top" level="warning">
+              <span slot="html">
+                <button @click="deactivate" v-if="!user.deactivated" class="btn rounded h2 blue">&times</button>
+              </span>
+            </tooltip-component>
           </td>
           <td class="p2">
             <button class="btn rounded blue">edit</button>

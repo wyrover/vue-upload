@@ -16,6 +16,7 @@
 
                 <!--gravatar link-->
                 <a href="http://gravatar.com" target="_blank">
+
                   <!--gravatar-->
                   <gravatar-component
                     class="m2"
@@ -28,8 +29,6 @@
                 </a>
               </span>
             </tooltip-component>
-
-
 
             <!--is-this-you?-->
             <div v-show="user.email !== emailNew" class="col-1 animated m2 border border-silver rounded p1 mx-auto" transition="bounce">
