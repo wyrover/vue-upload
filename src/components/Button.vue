@@ -28,14 +28,14 @@
 </template>
 
 <script>
-  import DimensionProps from '../mixins/DimensionProps'
-  import StateProps from '../mixins/StateProps'
-  import StyleProps from '../mixins/StyleProps'
-  import ColorProps from '../mixins/ColorProps'
+  import DimensionMixin from '../mixins/Dimension'
+  import StateMixin from '../mixins/State'
+  import StyleMixin from '../mixins/Style'
+  import ColorMixin from '../mixins/Color'
 
   export default {
     componentName: 'Dynamic button',
-    mixins: [DimensionProps, StateProps, StyleProps, ColorProps],
+    mixins: [DimensionMixin, StateMixin, StyleMixin, ColorMixin],
     data () {
       return {
         presets: ['primary', 'secondary', 'tertiary', 'info']

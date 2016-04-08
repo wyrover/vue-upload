@@ -10,12 +10,12 @@
 <script>
   var MD5 = require('crypto-js/md5')
 
-  import DimensionProps from '../mixins/DimensionProps'
-  import StateProps from '../mixins/StateProps'
-  import StyleProps from '../mixins/StyleProps'
+  import DimensionMixin from '../mixins/Dimension'
+  import StateMixin from '../mixins/State'
+  import StyleMixin from '../mixins/Style'
 
   export default {
-    mixins: [DimensionProps, StyleProps, StateProps],
+    mixins: [DimensionMixin, StyleMixin, StateMixin],
     computed: {
       'gravatar' () {
         if (this.email && this.email.length) {

@@ -68,14 +68,14 @@
 
   import ButtonMixin from '../../mixins/Button'
 
-  import ColorProps from '../../mixins/ColorProps'
-  import StyleProps from '../../mixins/StyleProps'
-  import DimensionProps from '../../mixins/DimensionProps'
-  import StateProps from '../../mixins/StateProps'
+  import ColorMixin from '../../mixins/Color'
+  import StyleMixin from '../../mixins/Style'
+  import DimensionMixin from '../../mixins/Dimension'
+  import StateMixin from '../../mixins/State'
 
   export default {
     name: 'Upload',
-    mixins: [ButtonMixin, DimensionProps, StateProps, StyleProps, ColorProps],
+    mixins: [ButtonMixin, DimensionMixin, StateMixin, StyleMixin, ColorMixin],
     components: { File },
     data () {
       return {
