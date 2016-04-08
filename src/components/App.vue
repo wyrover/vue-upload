@@ -17,6 +17,21 @@
         </tooltip-component>
       </div>
 
+      <!--enable/disable tooltips-->
+      <div class="right mr2 relative">
+        <tooltip-component hint="Enable helpful hints and tips" placement="bottom">
+            <span slot="html">
+              <!--enable tooltips-->
+              <button
+                v-if="user.authenticated"
+                @click="this.$emit('toggle-tooltips')"
+                class="btn btn-primary h4 bg-white gray">
+                Help <span v-if="tooltips" class="green animated" transition="bounce">&check;</span>
+              </button>
+            </span>
+        </tooltip-component>
+      </div>
+
       <!--only show the following when logged in-->
       <div v-if="user.authenticated">
 
@@ -208,11 +223,13 @@ export default {
       showInviteModal: false,
       showLoginModal: false,
       showManagementModal: false,
-      inviteLink: 'Please wait'
+      inviteLink: 'Please wait',
+      tooltips: false
     }
   },
   ready () {
     this.fetch()
+    this.$broadcast('show-tooltips', this.tooltips)
   },
   events: {
     'button-clicked' () {
@@ -239,6 +256,10 @@ export default {
     },
     'logout' () {
       auth.logout()
+    },
+    'toggle-tooltips' () {
+      this.$set('tooltips', !this.tooltips)
+      this.$broadcast('show-tooltips', this.tooltips)
     }
   },
   methods: {
