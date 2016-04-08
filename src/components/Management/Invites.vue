@@ -25,11 +25,11 @@
           </td>
           <td class="p2">
             <!--invite invalidation tooltip-->
-            <tooltip-component hint="Prevent recipient from using this invite link" placement="top">
+            <tooltip-component hint="Invalidate this invite" placement="top">
               <span slot="html">
                 <!--invite invalidation button-->
                 <!--only shown when invite has not yet been accepted-->
-                <button @click="invalidate" v-if="invite.accepted_at" class="btn rounded h2 red">&times</button>
+                <button @click="invalidate" v-if="invite.accepted_at" class="btn rounded h1 red">&times</button>
               </span>
             </tooltip-component>
           </td>
@@ -39,7 +39,7 @@
               <span slot="html">
                 <!--invite invalidation button-->
                 <!--only shown when invite has not yet been accepted-->
-                <button @click="invalidate" v-if="invite.accepted_at" class="btn rounded h2 green">&#128232;</button>
+                <button @click="invalidate" v-if="invite.accepted_at" class="btn rounded h1 green">&#128232;</button>
               </span>
             </tooltip-component>
           </td>

@@ -78,8 +78,8 @@
           </span>
         </tooltip-component>
 
-        <!--delete button-->
-        <tooltip-component hint="Permanently delete this file (cannot be undone)" placement="top" level="warning">
+        <!--delete button todo: add confirmation-->
+        <tooltip-component hint="Permanently delete this file (this CANNOT be undone)" placement="top" level="warning">
           <span slot="html">
             <button @click="destroy(file)" class="btn red h1">&times;</button>
           </span>

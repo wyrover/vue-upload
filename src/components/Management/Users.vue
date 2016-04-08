@@ -43,7 +43,7 @@
             </gravatar-component>
           </td>
           <td class="p2">
-            <tooltip-component hint="Deactivate this user" placement="top" level="warning">
+            <tooltip-component hint="Deactivate this user (this CAN be undone)" placement="top" level="warning">
               <span slot="html">
                 <button @click="deactivate" v-if="!user.deactivated" class="btn rounded h2 blue">&times</button>
               </span>
