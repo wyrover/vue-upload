@@ -19,14 +19,10 @@ Vue.http.interceptors.push({
   request (request) {
     // Set the Authorization header from the JWT on localStorage
     Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token')
-    // If not this is not a GET request, attach the app key
-    if (request.method !== 'get') {
-      // Set the app key on each request
-      request.data.app_key = ENV.APP_KEY
+    Vue.http.headers.common['App-Key'] = ENV.APP_KEY
+    if (ENV.DEBUG) {
       // Set Xdebug key
-      if (ENV.DEBUG) {
-        request.params.XDEBUG_SESSION_START = 'vagrant'
-      }
+      request.params.XDEBUG_SESSION_START = 'vagrant'
     }
     return request
   },

@@ -288,8 +288,8 @@ export default {
       invite.send(this, newInvite, false)
     },
     fetch () {
-      this.fetchFiles()
-      this.fetchInvites()
+      // this.fetchFiles()
+      // this.fetchInvites()
     },
     fetchFiles () {
       var self = this
