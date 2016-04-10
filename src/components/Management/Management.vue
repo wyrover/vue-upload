@@ -133,8 +133,8 @@
   import Gravatar from '../Gravatar'
   import Tabs from '../Tabs/Tabset'
   import Tab from '../Tabs/Tab'
-  import Users from '../Management/Users'
-  import Invites from '../Management/Invites'
+  import Users from './Users'
+  import Invites from './Invites'
 
   export default {
     components: {
@@ -156,7 +156,8 @@
       }
     },
     props: {
-      'user': { type: Object, required: true }
+      'user': { type: Object, required: true },
+      'invites': { type: Array, required: true }
     },
     data () {
       return {

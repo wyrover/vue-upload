@@ -149,7 +149,8 @@
       <h3 class="center blue" slot="header">Your profile</h3>
       <div slot="body" class="center border-top border-bottom border-silver">
         <management-component
-          :user="user">
+          :user="user"
+          :invites.sync="invites">
         </management-component>
       </div>
       <div slot="buttons"></div>
@@ -198,7 +199,7 @@ import Gravatar from '../components/Gravatar'
 
 import Login from '../components/Auth/Login'
 import Invites from '../components/Auth/Invites'
-import Management from '../components/Auth/Management'
+import Management from '../components/Management/Management'
 
 import ButtonMixin from '../mixins/Button'
 import GlobalMixin from '../mixins/Global'
@@ -235,6 +236,7 @@ export default {
         }
       },
       files: [],
+      invites: [],
       showInviteModal: false,
       showLoginModal: false,
       showManagementModal: false,
