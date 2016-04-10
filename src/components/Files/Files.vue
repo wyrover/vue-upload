@@ -134,9 +134,10 @@
       },
       destroy (file) {
         var self = this
+        self.files.$remove(file.dele)
         Common.destroy(`${this.routes.deleteFile}/${file.hash}`).then(
           function (response) {
-            self.files.$remove(file)
+
           },
           function () {
             console.log('failed deleting file(s)')

@@ -13,7 +13,6 @@ import Gallery from './components/Files/Gallery'
 import Login from './components/Auth/Login'
 
 import auth from './auth'
-import invite from './invite'
 
 var VueRouter = require('vue-router')
 Vue.use(VueRouter)

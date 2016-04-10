@@ -20,7 +20,7 @@ export default {
    * */
   login (context, credentials, redirect) {
     var self = this
-    Common.post(API_AUTH_ROUTES.LOGIN_URL, credentials).then(
+    return Common.post(API_AUTH_ROUTES.LOGIN, credentials).then(
       function (response) {
         // Process the token
         var token = response.data.token
@@ -28,6 +28,8 @@ export default {
         self.decode(token)
         // Redirect if necessary
         doRedirect(redirect)
+
+        return self.user
       },
       function (response) {
         // Failed response
@@ -59,7 +61,7 @@ export default {
   heartbeat (frequency) {
     window.setInterval(() => {
       if (this.user.authenticated) {
-        Common.post(API_AUTH_ROUTES.HEARTBEAT_URL, {})
+        Common.post(API_AUTH_ROUTES.HEARTBEAT, {})
       }
     }, frequency)
   },
@@ -70,8 +72,5 @@ export default {
       doRedirect('login')
     }
     return this.user.authenticated
-  },
-  getAuthHeader () {
-    return { 'Authorization': 'Bearer ' + localStorage.getItem('id_token') }
   }
 }

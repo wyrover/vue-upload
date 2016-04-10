@@ -5,11 +5,12 @@ import {API_INVITE_ROUTES} from '../routes'
 
 export default {
   shareableUrl: null,
+  invites: [],
   /**
    * PUT invite request(s) to the auth service in the form of a list of email addresses
    */
   send (context, invite, redirect) {
-    Common.put(API_INVITE_ROUTES.INVITE_URL, invite).then(
+    Common.put(API_INVITE_ROUTES.INVITE, invite).then(
       function (response) {
         console.log('successfully invited ' + invite)
         doRedirect(redirect)
@@ -22,7 +23,7 @@ export default {
    * POST required info for a shareable invite url
    */
   getShareable (context) {
-    return Common.post(API_INVITE_ROUTES.INVITE_URL, {}).then(
+    return Common.post(API_INVITE_ROUTES.INVITE, {}).then(
       function (response) {
         var shareableUrl = response.data
         console.log('successfully got shareable invite url: ' + shareableUrl)
@@ -37,12 +38,10 @@ export default {
   /**
    * GET all invites
    */
-  getAll (context) {
-    return Common.fetch(API_INVITE_ROUTES.INVITES_URL, {}).then(
+  all (context) {
+    return Common.fetch(API_INVITE_ROUTES.INVITES).then(
       function (response) {
-        var invites = response.data
-        console.log('all invites: ' + invites)
-        return invites
+        return response.data
       },
       function (response) {
         // todo: test with error

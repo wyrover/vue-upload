@@ -47,7 +47,7 @@
           :size="file.size"
           :description="file.description"
           :percent.sync="file.percent"
-          :base-path.sync="routes.getFile"
+          :base-path.sync="ROUTES.FIRST"
           :name="file.name">
         </file>
         <div class="clearfix"></div>
@@ -63,11 +63,14 @@
   var plupload = require('Plupload/js/plupload.full.min.js')
   var fileTypes = require('./../../data/fileTypes.json')
 
+  import {API_FILE_ROUTES} from '../../routes'
+
   import Common from '../../vue/Common'
   import File from './File'
 
-  import ButtonMixin from '../../mixins/Button'
+  import files from '../../files'
 
+  import ButtonMixin from '../../mixins/Button'
   import ColorMixin from '../../mixins/Color'
   import StyleMixin from '../../mixins/Style'
   import DimensionMixin from '../../mixins/Dimension'
@@ -82,10 +85,11 @@
         queue: [],
         uploaded: [],
         uploading: false,
-        allowedFileTypes: fileTypes['allowed']
+        allowedFileTypes: fileTypes['allowed'],
+        ROUTES: API_FILE_ROUTES
       }
     },
-    props: ['search-query', 'routes', 'shared-state', 'files'],
+    props: ['search-query', 'shared-state', 'files'],
     computed: {
       uploading: function () {
         return this.queue.length > 0
@@ -106,7 +110,7 @@
         // http://www.plupload.com/docs/Options
 
         uploader.init()
-        uploader.settings.url = self.routes.postFile
+        uploader.settings.url = API_FILE_ROUTES.UPLOAD
         uploader.refresh()
 
         uploader.bind('FilesAdded', function (up, files) {
@@ -125,7 +129,7 @@
           file.original_filename = file.name
           file.extension = file.name.substr((~-file.name.lastIndexOf('.') >>> 0) + 2)
           file.hash = file.id
-          file.downloadPath = `${self.routes.getFile}/${file.hash}`
+          file.downloadPath = `${API_FILE_ROUTES.FIRST}/${file.hash}`
           file.created_at = new Date()
           self.queue.$remove(file)
           self.files.push(file)

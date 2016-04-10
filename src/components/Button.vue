@@ -51,8 +51,6 @@
       if (this.text && this.html) {
         this.warnAgainstUsingTextAndHtml()
       }
-      console.log(this.color)
-
     },
     methods: {
       warnAgainstUsingTextAndHtml () {

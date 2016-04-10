@@ -115,13 +115,6 @@
       </div>
     </div>
 
-    <!--sweet alerts, bruh-->
-    <sweet-alert
-     :title="'A title'"
-     :text="'Whoa, easy there buddy&hellip;'"
-     :type="'danger'">
-    </sweet-alert>
-
     <!-- use router-view element as (dynamic component) route outlet -->
     <!-- todo: investigate potential indexOf error -->
     <router-view
@@ -177,6 +170,13 @@
       <div slot="footer"></div>
     </login-modal>
 
+    <!--sweet alerts, bruh-->
+    <sweet-alert
+      :title="'A title'"
+      :text="'Whoa, easy there buddy&hellip;'"
+      :type="'danger'">
+    </sweet-alert>
+
   </div>
 </template>
 
@@ -186,20 +186,19 @@ import Vue from 'vue'
 import store from '../store/content/index'
 
 import auth from '../auth'
-import invite from '../invite'
+import invites from '../invites'
+import files from '../files'
 
 import Common from '../vue/Common'
 import Messages from '../vue/Messages'
-import {API_AUTH_ROUTES} from '../routes'
-import {API_INVITE_ROUTES} from '../routes'
 
 import SweetAlert from '../components/SweetAlert'
 import Modal from '../components/Modal'
+import Gravatar from '../components/Gravatar'
+
 import Login from '../components/Auth/Login'
 import Invites from '../components/Auth/Invites'
 import Management from '../components/Auth/Management'
-
-import Gravatar from '../components/Gravatar'
 
 import ButtonMixin from '../mixins/Button'
 import GlobalMixin from '../mixins/Global'
@@ -244,7 +243,7 @@ export default {
     }
   },
   ready () {
-    this.fetch()
+    this.fetchIfAuthenticated()
     this.$broadcast('show-tooltips', this.tooltips)
   },
   events: {
@@ -259,7 +258,7 @@ export default {
     },
     'open-invite-modal' () {
       var self = this
-      var ajaxPromise = invite.getShareable(self.$data)
+      var ajaxPromise = invites.getShareable(self.$data)
       new Promise(function (resolve, reject) {
         self.$set('showInviteModal', !self.showInviteModal)
         resolve(ajaxPromise)
@@ -267,16 +266,19 @@ export default {
         self.$set('inviteLink', shareableUrl)
       })
     },
-    'fetch' () {
-      this.fetch()
-    },
     'logout' () {
       auth.logout()
     }
   },
   methods: {
     login (credentials) {
-      auth.login(this, credentials, false)
+      var self = this
+      var ajaxPromise = auth.login(this, credentials, false)
+      new Promise(function (resolve, reject) {
+        resolve(ajaxPromise)
+      }).then(function () {
+        self.fetchIfAuthenticated()
+      })
     },
     inviteUsers (vm) {
       var newInvite = {
@@ -285,28 +287,33 @@ export default {
         'recipients[]': vm.$data.inviteEmailAddresses.split(/[\s,]+/),
         comment: vm.$data.inviteComment
       }
-      invite.send(this, newInvite, false)
+      invites.send(this, newInvite, false)
     },
-    fetch () {
-      // this.fetchFiles()
-      // this.fetchInvites()
+    fetchIfAuthenticated () {
+      if (this.user.authenticated) {
+        this.fetchFiles()
+        this.fetchInvites()
+      }
     },
     fetchFiles () {
       var self = this
-      Common.fetch(this.routes.allFiles).then(
-        function (response) {
-          self.$set('files', response.data)
-          self.files.map(function (file) {
-            file.selected = false
-          })
-        },
-        function (response) {
-          console.log('failed fetching files')
-        }
-      )
+      var ajaxPromise = files.all()
+
+      new Promise(function (resolve, reject) {
+        resolve(ajaxPromise)
+      }).then(function (files) {
+        self.$set('files', files)
+      })
     },
     fetchInvites () {
-      this.$set('invites', invite.getAll())
+      var self = this
+      var ajaxPromise = invites.all()
+
+      new Promise(function (resolve, reject) {
+        resolve(ajaxPromise)
+      }).then(function (invites) {
+        self.$set('invites', invites)
+      })
     }
   }
 }
