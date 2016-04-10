@@ -117,7 +117,7 @@
           <div class="col col-12 p2">
             <h2>View all invites</h2>
             <invites-component
-              :invites="dummyInvites">
+              :invites="invites">
             </invites-component>
           </div>
         </tab-component>
@@ -167,13 +167,6 @@
           { id: 3, email: 'purerizzo@gmail.com', firstName: 'Super', lastName: 'Dude', joined: '2016-04-07 12:57:01', updated: '2016-04-07 12:57:01', roles: ['Administrator', 'Super'], permissions: ['upload', 'user'] },
           { id: 4, email: 'purerizzo@gmail.com', firstName: 'Super', lastName: 'Dude', joined: '2016-04-07 12:57:01', updated: '2016-04-07 12:57:01', roles: ['Administrator', 'Super'], permissions: ['upload', 'user'] },
           { id: 5, email: 'purerizzo@gmail.com', firstName: 'Super', lastName: 'Dude', joined: '2016-04-07 12:57:01', updated: '2016-04-07 12:57:01', roles: ['Administrator', 'Super'], permissions: ['upload', 'user'] }
-        ],
-        dummyInvites: [
-          { id: 1, initiator: 'purerizzo@gmail.com', recipient: 'someone@example.com', comment: 'A comment', hash: 'http://something/invite/FG21AZ234324', sent_at: '2016-04-07 12:57:01', accepted_at: '2016-04-07 12:57:01', created_at: '2016-04-07 12:57:01' },
-          { id: 2, initiator: 'purerizzo@gmail.com', recipient: 'someone@example.com', comment: 'A comment', hash: 'http://something/invite/FG21AZ234324', sent_at: '2016-04-07 12:57:01', accepted_at: '2016-04-07 12:57:01', created_at: '2016-04-07 12:57:01' },
-          { id: 3, initiator: 'purerizzo@gmail.com', recipient: 'someone@example.com', comment: 'A comment', hash: 'http://something/invite/FG21AZ234324', sent_at: '2016-04-07 12:57:01', accepted_at: '2016-04-07 12:57:01', created_at: '2016-04-07 12:57:01' },
-          { id: 4, initiator: 'purerizzo@gmail.com', recipient: 'someone@example.com', comment: 'A comment', hash: 'http://something/invite/FG21AZ234324', sent_at: '2016-04-07 12:57:01', accepted_at: '2016-04-07 12:57:01', created_at: '2016-04-07 12:57:01' },
-          { id: 5, initiator: 'purerizzo@gmail.com', recipient: 'someone@example.com', comment: 'A comment', hash: 'http://something/invite/FG21AZ234324', sent_at: '2016-04-07 12:57:01', accepted_at: '2016-04-07 12:57:01', created_at: '2016-04-07 12:57:01' }
         ],
         emailNew: '',
         passwordOld: '',

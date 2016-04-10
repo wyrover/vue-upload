@@ -5,7 +5,7 @@
         <th v-for="column in columns" class="p2">{{ column | capitalize }}</th>
       </thead>
       <tbody>
-        <tr v-for="invite in invites" class="p2">
+        <tr v-for="invite in invites" v-if="invite.recipient" class="p2">
           <td class="p2">{{ invite.id }}</td>
           <td class="p2">{{ invite.initiator }}</td>
           <td class="p2">{{ invite.recipient }}</td>
