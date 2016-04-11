@@ -108,7 +108,8 @@
           <div class="col col-12 p2">
             <h2>Users</h2>
             <users-component
-              :users="users">
+              :users="users"
+              :roles="roles">
             </users-component>
           </div>
         </tab-component>
@@ -158,17 +159,11 @@
     props: {
       'user': { type: Object, required: true },
       'users': { type: Array, required: true },
+      'roles': { type: Array, required: true },
       'invites': { type: Array, required: true }
     },
     data () {
       return {
-        dummyUsers: [
-          { id: 1, email: 'purerizzo@gmail.com', firstName: 'Super', lastName: 'Dude', joined: '2016-04-07 12:57:01', updated: '2016-04-07 12:57:01', roles: ['Administrator', 'Super'], permissions: ['upload', 'user'] },
-          { id: 2, email: 'purerizzo@gmail.com', firstName: 'Super', lastName: 'Dude', joined: '2016-04-07 12:57:01', updated: '2016-04-07 12:57:01', roles: ['Administrator', 'Super'], permissions: ['upload', 'user'] },
-          { id: 3, email: 'purerizzo@gmail.com', firstName: 'Super', lastName: 'Dude', joined: '2016-04-07 12:57:01', updated: '2016-04-07 12:57:01', roles: ['Administrator', 'Super'], permissions: ['upload', 'user'] },
-          { id: 4, email: 'purerizzo@gmail.com', firstName: 'Super', lastName: 'Dude', joined: '2016-04-07 12:57:01', updated: '2016-04-07 12:57:01', roles: ['Administrator', 'Super'], permissions: ['upload', 'user'] },
-          { id: 5, email: 'purerizzo@gmail.com', firstName: 'Super', lastName: 'Dude', joined: '2016-04-07 12:57:01', updated: '2016-04-07 12:57:01', roles: ['Administrator', 'Super'], permissions: ['upload', 'user'] }
-        ],
         emailNew: '',
         passwordOld: '',
         passwordNew: '',

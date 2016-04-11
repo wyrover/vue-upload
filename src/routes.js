@@ -11,7 +11,8 @@ export const API_FILE_ROUTES = {
 
 export const API_AUTH_ROUTES = {
   USER: `${API_AUTH_LOCAL}/auth/user`,
-  USERS: `${API_AUTH_LOCAL}/auth/user`,
+  USERS: `${API_AUTH_LOCAL}/auth/users`,
+  ROLES: `${API_AUTH_LOCAL}/auth/roles`,
   LOGIN: `${API_AUTH_LOCAL}/auth/login`,
   SIGNUP: `${API_AUTH_LOCAL}/signup`,
   HEARTBEAT: `${API_AUTH_LOCAL}/heartbeat`

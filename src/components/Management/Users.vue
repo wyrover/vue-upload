@@ -1,5 +1,13 @@
 <template>
   <div>
+
+    <select name="roles" v-model="selectedRole" class="col border-none" :class="{ 'bg-silver': role === selected, 'bg-white': role !== selected }">
+      <option value="all" selected>All roles</option>
+      <option v-for="role in roles" :value="role">{{ role.name }}</option>
+    </select>
+
+    <div class="clearfix"></div>
+
     <table class="left-align">
       <thead>
         <th v-for="column in columns" class="p2">{{ column | capitalize }}</th>
@@ -8,16 +16,32 @@
         <tr v-for="user in users" class="p2">
           <td class="p2">{{ user.id }}</td>
           <td class="p2">{{ user.email }}</td>
-          <td class="p2">{{ user.firstName }}</td>
-          <td class="p2">{{ user.lastName }}</td>
-          <td class="p2">{{ user.joined }}</td>
-          <td class="p2">{{ user.updated }}</td>
+          <td class="p2">{{ user.first_name }}</td>
+          <td class="p2">{{ user.last_name }}</td>
+          <td class="p2">{{ user.created_at }}</td>
+          <td class="p2">{{ user.updated_at }}</td>
           <td class="p2">
-            <tooltip-component hint="Manage this user's roles" placement="top">
+            <span v-for="role in user.roles">
+
+            <tooltip-component hint="Superuser" placement="top">
               <span slot="html">
-                <button @click="manageRoles" class="btn rounded blue">manage</button>
+                <input disabled type="checkbox" v-model="role.slug === 'superusers'">
               </span>
             </tooltip-component>
+
+            <tooltip-component hint="Administrator" placement="top">
+              <span slot="html">
+                <input type="checkbox" v-model="role.slug === 'administrators'">
+              </span>
+            </tooltip-component>
+
+            <tooltip-component hint="User" placement="top">
+              <span slot="html">
+                <input type="checkbox" v-model="role.slug === 'users'">
+              </span>
+            </tooltip-component>
+
+            </span>
           </td>
           <td class="p2">
             <tooltip-component hint="Manage this user's permissions" placement="top">
@@ -71,7 +95,8 @@
       }
     },
     props: {
-      'users': { type: Array, required: true }
+      'users': { type: Array, required: true },
+      'roles': { type: Array, required: true }
     }
   }
 </script>

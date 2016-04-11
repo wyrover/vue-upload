@@ -150,7 +150,9 @@
       <div slot="body" class="center border-top border-bottom border-silver">
         <management-component
           :user="user"
-          :invites.sync="invites">
+          :users="users"
+          :roles="roles"
+          :invites="invites">
         </management-component>
       </div>
       <div slot="buttons"></div>
@@ -188,6 +190,8 @@ import store from '../store/content/index'
 
 import auth from '../auth'
 import invites from '../invites'
+import users from '../users'
+import roles from '../roles'
 import files from '../files'
 
 import Common from '../vue/Common'
@@ -236,6 +240,8 @@ export default {
         }
       },
       files: [],
+      users: [],
+      roles: [],
       invites: [],
       showInviteModal: false,
       showLoginModal: false,
@@ -294,6 +300,8 @@ export default {
     fetchIfAuthenticated () {
       if (this.user.authenticated) {
         this.fetchFiles()
+        this.fetchUsers()
+        this.fetchRoles()
         this.fetchInvites()
       }
     },
@@ -305,6 +313,26 @@ export default {
         resolve(ajaxPromise)
       }).then(function (files) {
         self.$set('files', files)
+      })
+    },
+    fetchUsers () {
+      var self = this
+      var ajaxPromise = users.all()
+
+      new Promise(function (resolve, reject) {
+        resolve(ajaxPromise)
+      }).then(function (users) {
+        self.$set('users', users)
+      })
+    },
+    fetchRoles () {
+      var self = this
+      var ajaxPromise = roles.all()
+
+      new Promise(function (resolve, reject) {
+        resolve(ajaxPromise)
+      }).then(function (roles) {
+        self.$set('roles', roles)
       })
     },
     fetchInvites () {
