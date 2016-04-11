@@ -108,7 +108,7 @@
           <div class="col col-12 p2">
             <h2>Users</h2>
             <users-component
-              :users="dummyUsers">
+              :users="users">
             </users-component>
           </div>
         </tab-component>
@@ -157,6 +157,7 @@
     },
     props: {
       'user': { type: Object, required: true },
+      'users': { type: Array, required: true },
       'invites': { type: Array, required: true }
     },
     data () {
