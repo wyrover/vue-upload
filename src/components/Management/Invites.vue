@@ -6,7 +6,6 @@
       </thead>
       <tbody>
         <tr v-for="invite in invites" v-if="invite.recipient" class="p2">
-          <td class="p2">{{ invite.id }}</td>
           <td class="p2">{{ invite.initiator }}</td>
           <td class="p2">{{ invite.recipient }}</td>
           <td class="p2">{{ invite.comment }}</td>
@@ -58,7 +57,7 @@
     },
     data () {
       return {
-        columns: ['id', 'initiator', 'recipient', 'comment', 'link', 'sent', 'accepted', 'created', 'gravatar']
+        columns: ['initiator', 'recipient', 'comment', 'link', 'sent', 'accepted', 'created', 'gravatar']
       }
     },
     props: {

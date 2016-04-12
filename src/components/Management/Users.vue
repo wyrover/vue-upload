@@ -13,35 +13,19 @@
         <th v-for="column in columns" class="p2">{{ column | capitalize }}</th>
       </thead>
       <tbody>
-        <tr v-for="user in users" class="p2">
-          <td class="p2">{{ user.id }}</td>
+        <tr v-for="user in users | orderBy 'email'" class="p2">
           <td class="p2">{{ user.email }}</td>
           <td class="p2">{{ user.first_name }}</td>
           <td class="p2">{{ user.last_name }}</td>
           <td class="p2">{{ user.created_at }}</td>
           <td class="p2">{{ user.updated_at }}</td>
           <td class="p2">
-            <span v-for="role in user.roles">
 
-            <tooltip-component hint="Superuser" placement="top">
-              <span slot="html">
-                <input disabled type="checkbox" v-model="role.slug === 'superusers'">
-              </span>
-            </tooltip-component>
+            <roles-component
+              :user-roles="user.roles"
+              :roles="roles">
+            </roles-component>
 
-            <tooltip-component hint="Administrator" placement="top">
-              <span slot="html">
-                <input type="checkbox" v-model="role.slug === 'administrators'">
-              </span>
-            </tooltip-component>
-
-            <tooltip-component hint="User" placement="top">
-              <span slot="html">
-                <input type="checkbox" v-model="role.slug === 'users'">
-              </span>
-            </tooltip-component>
-
-            </span>
           </td>
           <td class="p2">
             <tooltip-component hint="Manage this user's permissions" placement="top">
@@ -82,16 +66,18 @@
   </div>
 </template>
 
-<script>
+<script type="text/babel">
+  import Roles from '../Management/Roles/Roles'
   import Gravatar from '../../components/Gravatar'
 
   export default {
     components: {
+      'roles-component': Roles,
       'gravatar-component': Gravatar
     },
     data () {
       return {
-        columns: ['id', 'email', 'first name', 'last name', 'joined', 'updated', 'roles', 'permissions', 'invites', 'gravatar']
+        columns: ['email', 'first name', 'last name', 'joined', 'updated', 'roles', 'permissions', 'invites', 'gravatar']
       }
     },
     props: {

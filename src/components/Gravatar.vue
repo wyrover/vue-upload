@@ -2,9 +2,9 @@
   <img
     :src="gravatar"
     alt="Gravatar for {{ email }}"
+    title="Gravatar for {{ email }}"
     :style="{ height: height + 'px', width: width + 'px' }"
-    :class="{ 'rounded': rounded, 'circle': circle, 'muted': highlight }"
-    :title="Gravatar for {{ email }}">
+    :class="{ 'rounded': rounded, 'circle': circle, 'muted': highlight }">
 </template>
 
 <script>
