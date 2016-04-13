@@ -1,6 +1,17 @@
 <template>
   <span>
-    <input :disabled="slug === 'superusers'" type="checkbox" v-model="selected">
+    <tooltip-component
+      :hint="selected ? 'Remove from ' + name : 'Add to ' + name"
+      :muted placement="top">
+      <span slot="html">
+        <input
+          @click="this.$emit(selected ? 'remove' : 'assign', this)"
+          :disabled="slug === 'superusers'"
+          type="checkbox"
+          v-model="selected"
+          debounce>
+        </span>
+      </tooltip-component>
   </span>
 </template>
 

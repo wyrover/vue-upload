@@ -1,15 +1,13 @@
 import Common from '../vue/Common'
-import {doRedirect} from '../vue/Common'
-
-import {API_AUTH_ROUTES} from '../routes'
+import {API_GROUP_ROUTES} from '../routes'
 
 export default {
-  roles: [],
+  groups: [],
   /**
-   * GET all invites
+   * GET all groups
    */
   all (context) {
-    return Common.fetch(API_AUTH_ROUTES.ROLES).then(
+    return Common.fetch(API_GROUP_ROUTES.GROUPS).then(
       function (response) {
         return response.data
       },
@@ -20,10 +18,10 @@ export default {
     )
   },
   /**
-   * Assign a role to a user
+   * Assign a group to a user
    */
-  assign (context, role, user) {
-    return Common.post(`${API_AUTH_ROUTES.ROLE_ASSIGN}/${role.id}/${user.id}`).then(
+  assign (context, group, user) {
+    return Common.post(`${API_GROUP_ROUTES.GROUP_ASSIGN}/${group.id}/${user.id}`).then(
       function (response) {
         return response.data
       },
@@ -34,10 +32,10 @@ export default {
     )
   },
   /**
-   * Remove a role from a user
+   * Remove a group from a user
    */
-  remove (context, role, user) {
-    return Common.post(`${API_AUTH_ROUTES.ROLE_REMOVE}/${role.id}/${user.id}`).then(
+  remove (context, group, user) {
+    return Common.post(`${API_GROUP_ROUTES.GROUP_REMOVE}/${group.id}/${user.id}`).then(
       function (response) {
         return response.data
       },

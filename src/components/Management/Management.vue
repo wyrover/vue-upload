@@ -106,11 +106,20 @@
 
         <tab-component header="Users">
           <div class="col col-12 p2">
-            <h2>Users</h2>
+            <h2>View all users</h2>
             <users-component
               :users="users"
               :roles="roles">
             </users-component>
+          </div>
+        </tab-component>
+
+        <tab-component header="Groups">
+          <div class="col col-12 p2">
+            <h2>View all groups</h2>
+            <groups-component
+              :groups="groups">
+            </groups-component>
           </div>
         </tab-component>
 
@@ -135,6 +144,7 @@
   import Tabs from '../Tabs/Tabset'
   import Tab from '../Tabs/Tab'
   import Users from './Users'
+  import Groups from './Groups'
   import Invites from './Invites'
 
   export default {
@@ -143,24 +153,28 @@
       'tabs-component': Tabs,
       'tab-component': Tab,
       'users-component': Users,
+      'groups-component': Groups,
       'invites-component': Invites
     },
     computed: {
-      'formComplete' () {
+      formComplete () {
         return Boolean(
           this.passwordOld &&
           (this.passwordNew === this.passwordConfirm) && (this.passwordNew.length && this.passwordConfirm.length)
         )
       },
-      'passwordsMatch' () {
-        return Boolean(this.passwordNew === this.passwordConfirm) && (this.passwordNew.length && this.passwordConfirm.length)
+      passwordsMatch () {
+        return Boolean(
+          this.passwordNew === this.passwordConfirm) && (this.passwordNew.length && this.passwordConfirm.length
+        )
       }
     },
     props: {
-      'user': { type: Object, required: true },
-      'users': { type: Array, required: true },
-      'roles': { type: Array, required: true },
-      'invites': { type: Array, required: true }
+      user: { type: Object, required: true },
+      users: { type: Array, required: true },
+      roles: { type: Array, required: true },
+      groups: { type: Array, required: true },
+      invites: { type: Array, required: true }
     },
     data () {
       return {

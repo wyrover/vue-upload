@@ -22,7 +22,7 @@
           <td class="p2">
 
             <roles-component
-              :user-roles="user.roles"
+              :user="user"
               :roles="roles">
             </roles-component>
 
