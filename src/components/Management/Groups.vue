@@ -6,8 +6,14 @@
       </thead>
       <tbody>
         <tr v-for="group in groups" class="p2">
-          <td class="p2">{{ group.name }}</td>
+          <td class="p2">{{ group.name | capitalize }}</td>
           <td class="p2">{{ group.description }}</td>
+          <td class="p2">
+            <button class="btn rounded blue">edit</button>
+          </td>
+          <td class="p2">
+            <button class="btn rounded blue">edit</button>
+          </td>
           <td class="p2">
             <!--group invalidation tooltip-->
             <tooltip-component hint="Invalidate this group" placement="top">
